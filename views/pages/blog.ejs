@@ -56,17 +56,7 @@
                                     <span class="my"><%= data[i].month %>,<%= data[i].year %></span>
                                 </div>
                                 <div class="avatar">
-                                    
-                                        <% if (data[i].imageUrl !='') { %>
-                                                 
-                                            <a href="/my_profile/1"><img src="/public/images/userphotos/<%= data[i].imageUrl %>" alt=""><span><%= data[i].firstname %> <%= data[i].lastname %></span></a>
-        
-                                            <% } else{ %>  
-                                                <a href="/my_profile/1"><img src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><span><%= data[i].firstname %> <%= data[i].lastname %></span></a>
-                                               
-                                            <% } %>
-                                    
-                                    <!-- <a href="/my_profile/1"><img src="<%= data[i].imageUrl %>" alt=""><span><%= data[i].firstname %> <%= data[i].lastname %></span></a> -->
+                                    <a href="/my_profile/1"><img src="<%= data[i].imageUrl %>" alt=""><span><%= data[i].firstname %> <%= data[i].lastname %></span></a>
                                 </div>
                             </div>
                             <div class="postContainer">
@@ -74,7 +64,7 @@
                                     <% if( data[i].image_blog == '' || data[i].image_blog == null ) { %>
                                     <img src="/public/images/blogDefault.png" alt="">
                                     <% } else { %>
-                                    <img src="/public/images/blogphotos/<%= data[i].image_blog %>" alt="">
+                                    <img src="<%= data[i].image_blog %>" alt="">
                                     <% } %>
                                 </a></div>
                                 <div class="entry-content blog-char-limit">

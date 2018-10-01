@@ -186,7 +186,6 @@ router.post('/resendLink', (req, res, next) => {
                 console.log(error);
                 if (error) {
                     res.send('Error in Sending Email. Please try again');
-                    console.log(error);
                     return;
                 } else {
                     res.send('Verification Link send on given email. please check it.');

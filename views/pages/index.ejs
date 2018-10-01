@@ -189,7 +189,7 @@
                             </div>
                             <div class="entry white_bg">
                                 <figure>
-                                    <!--img src="<%= recipeOftheDay[0].recipe_image %>" alt=""-->
+                                    <img src="<%= recipeOftheDay[0].recipe_image %>" alt="">
                                     <figcaption><a href="<%= url %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
                                 </figure>
                                 <div class="shortDesc">
@@ -214,21 +214,10 @@
                                 <i class="fa fa-star" aria-hidden="true"></i>
                             </div>
                             <div class="entry white_bg">
-                               
-                                 
-                                <% if (recipeOftheDay[0].imageUrl !='') { %>
-                                                 
-                                    <figure>
-                                            <!-- <img src="<%= recipeOftheDay[0].imageUrl %>" alt="">  -->
-                                            <img src="/public/images/userphotos/<%= recipeOftheDay[0].imageUrl %>">
-                                           <figcaption><a href="/dishmizer-profile/<%= recipeOftheDay[0].user_id %>"><i class="fa fa-eye"></i> <span>View member</span></a></figcaption>
-                                       </figure>
-
-                                    <% } else{ %>  
-                                        <div class="difficulty col-sm-12"><img class="img-circle" src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
-                                    <% } %>
-
-                                
+                                <figure>
+                                    <img src="<%= recipeOftheDay[0].imageUrl %>" alt="">
+                                    <figcaption><a href="/dishmizer-profile/<%= recipeOftheDay[0].user_id %>"><i class="fa fa-eye"></i> <span>View member</span></a></figcaption>
+                                </figure>
                                 <div class="authorInro">
                                     <h2><a href="/dishmizer-profile/<%= recipeOftheDay[0].user_id %>"><%= recipeOftheDay[0].firstname %> <%= recipeOftheDay[0].lastname %></a></h2>
                                     <div class="authorDesc"><i class="fa fa-quote-left" aria-hidden="true"></i><%= recipeOftheDay[0].content_description %></div>
@@ -270,9 +259,8 @@
                     }%>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="entry gray_bg">
-                            <figure style="width: 350px; height:200px;">
-                                <!--img src="<%= data[i].recipe_image %>" alt=""-->
-                                <img src="/public/images/recipephotos/<%= data[i].recipe_image %>" alt="Recipe Image" style="width: 350px;height:200px;">
+                            <figure>
+                                <img src="<%= data[i].recipe_image %>" alt="">
                                 <figcaption><a href="<%= url %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
                             </figure>
                             <div class="shortDesc">
@@ -280,19 +268,7 @@
                                 
                                 <div class="actions">
                                     <div class="rows">
-
-                                    
-                                            <% if (data[i].imageUrl !='') { %>
-                                                 
-                                                <div class="difficulty col-sm-12"><img class="img-circle" src="/public/images/userphotos/<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
-
-                                                <% } else{ %>  
-                                                    <div class="difficulty col-sm-12"><img class="img-circle" src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
-                                                <% } %>
-
-
-
-                                        <!-- <div class="difficulty col-sm-12"><img class="img-circle" src="<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div> -->
+                                        <div class="difficulty col-sm-12"><img class="img-circle" src="<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
                                         <div class="clearfix"></div>
                                         <% if( sess_val === undefined || data[i].likeStatus === 0 ) { %>
                                         <div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= data[i].recipe_id %>" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-<%= data[i].recipe_id %>"><%= data[i].like_count %></span> </a></div>
@@ -352,7 +328,7 @@
                         <div class="entry white_bg">
                             <figure>
                                 <% if (dataBlog[i].image_blog !== '') { %>
-                                <img src="/public/images/blogphotos/<%= dataBlog[i].image_blog %>" alt="">
+                                <img src="<%= dataBlog[i].image_blog %>" alt="">
                                 <% } else { %>
                                 <img src="/public/images/blogDefault.png" alt="">
                                 <% } %>

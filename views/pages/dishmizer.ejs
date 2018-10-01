@@ -47,86 +47,8 @@
                         if(data[i].user_id){
                     %> 
                     <div class="col-lg-3 col-md-3 col-sm-6 col-xs-12">
-                                                      
                         
-
-                        <!--div class="entry gray_bg">
-                            <figure style="width: 350px; height:200px;">
-                               
-                                <img src="<%= data[i].recipe_image %>" alt="Recipe Image" style="width: 350px;height:200px;">
-                                
-                            </figure>
-                            <div class="shortDesc">
-                                <h4></h4>
-                                
-                                <div class="actions">
-                                    <div class="rows">
-                                        <div class="difficulty col-sm-12"><img style="width:200px;height:350px;" src="<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"> <h3><%= data[i].value %></h3>
-                                            <p><%= data[i].username %></p>
-                                            <lable class="star-rating">
-                                                <input id="input-2-xs" name="input-2" data-readonly="true" class="rating rating-loading" data-min="0"  data-max="5" data-step="0.5" data-size="xs" value="<%= data[i].rating %>">
-                                            </lable>
-                                            </a>
-                                        </div>
-                                        <div class="clearfix"></div>
-                                        
-                                    </div>
-                                </div>
-                            </div>
-                        </div-->
-
-
-                        <div class="entry gray_bg">
-                               
-                                <% if (data[i].imageUrl !='') { %>
-                                       
-                                    
-                                    <figure style="width: 350px; height:200px;">
-                                            <img src="/public/images/userphotos/<%=data[i].imageUrl %>" alt="dishmizerImage" style="width: 250px;height:150px;"> 
-                                           <figcaption><a href="/dishmizer-profile/<%= data[i].user_id %>"><i class="fa fa-eye"></i> <span>View Profile</span></a></figcaption>
-                                       </figure> 
-
-
-                                    <% } else{ %>  
-                                        <figure style="width: 350px; height:200px;">
-                                                <img src="/public/images/unonmous.jpg" alt="dishmizerImage" style="width: 250px;height:150px;"> 
-                                               <figcaption><a href="/dishmizer-profile/<%= data[i].user_id %>"><i class="fa fa-eye"></i> <span>View Profile</span></a></figcaption>
-                                           </figure> 
-                                    <% } %>
-
-                         
-
-
-
-                                   
-                                    <!-- <div class="difficulty col-sm-12"><img class="img-circle" src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>  -->
-
-                           
-                            <div class="shortDesc">
-                                <h4><a href="/dishmizer-profile/<%= data[i].user_id %>"><%=data[i].username%></a></h4>
-                                
-                                <div class="actions">
-                                    <div class="rows">
-                                       
-                                        <div class="clearfix"></div>
-                                                                                                                     
-                                                                          
-                                       
-                                        
-                                        <div class="col-sm-6 RacStar"> 
-                                            <!--lable class="star-rating">
-                                                <div class="rating-container rating-xs rating-animate rating-disabled"><div class="rating-stars"><span class="empty-stars"><span class="star"><i class="fa fa-star-o"></i></span><span class="star"><i class="fa fa-star-o"></i></span><span class="star"><i class="fa fa-star-o"></i></span><span class="star"><i class="fa fa-star-o"></i></span><span class="star"><i class="fa fa-star-o"></i></span></span><span class="filled-stars" style="width: 0%;"><span class="star"><i class="fa fa-star"></i></span><span class="star"><i class="fa fa-star"></i></span><span class="star"><i class="fa fa-star"></i></span><span class="star"><i class="fa fa-star"></i></span><span class="star"><i class="fa fa-star"></i></span></span><input id="input-2-xs" name="input-2" data-readonly="true" class="rating-input" data-min="0" data-max="5" data-step="0.5" data-size="xs" value="" readonly="readonly"></div></div>
-                                            </lable--> 
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-
-
-
-                        <!--div class="col-chef">
+                        <div class="col-chef">
                             <div class="photo">
                                 <img src="<%= data[i].imageUrl %>" alt="">
                             </div>
@@ -135,10 +57,10 @@
                                 <p><%= data[i].content_description %></p>
                                 <lable class="star-rating">
                                     <input id="input-2-xs" name="input-2" data-readonly="true" class="rating rating-loading" data-min="0"  data-max="5" data-step="0.5" data-size="xs" value="<%= data[i].rating %>">
-                                </lable>
+                                </lable><!-- End stars -->
                                 </a>
-                            </div>
-                        </div-->
+                            </div><!-- End chef-overlay -->
+                        </div><!-- End col-chef -->
                     </div>
                 <% } }%>  
                 </div>

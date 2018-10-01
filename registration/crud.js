@@ -1,4 +1,3 @@
-process.env.NODE_TLS_REJECT_UNAUTHORIZED = '0';
 'use strict';
 const express = require('express');
 const images = require('../lib/images');
@@ -12,34 +11,6 @@ const fs = require('fs');
 const path = require('path');
 const flow = require('flow');
 const configPath = path.join(__dirname, '..', "config.json");
-var rand22=Math.floor((Math.random() * 9999999999) + 1);
-var multer=require('multer');
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null,'public/images/userphotos');
-	},
-	filename: function (req, file, cb) {
-		if (file.mimetype === 'image/png') {
-			cb(null,+rand22+'.png');
-		} else {
-			cb(null,+rand22+'.jpg');
-		}
-	}
-});
-const fileFilter = (req, file, cb) => {
-	if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-		cb(null, true);
-	} else {
-		cb(new Error('File Type Is Not Supported !!'), false);
-	}
-};
-
-const upload = multer({
-	storage: storage,
-	limits: { fileSize: 1024 * 1024 },
-	fileFilter: fileFilter
-});
-
 AWS.config.loadFromPath(configPath);
 
 function getModel() {
@@ -62,129 +33,70 @@ router.get('/', (req, res, next) => {
 });
 
 
-router.post('/',upload.any(),function(req,res,next){
-
-console.log('file');
-console.log(req.files);
-
-var dt = convertDate(new Date());
-         const data = {
-         'usertype': 'user',
-         'level': 0,
-         'firstname': req.body.firstname,
-         'lastname': req.body.lastname,
-         'username': req.body.username,
-         'email': req.body.email,
-         'password': req.body.password,
-         'date': dt,
-         'status': 1,
-         'confirmpassword': req.body.confirmpassword,
-         'check': req.body.check
-         };
-
-         if(req.files.length>0)
-         {
-            data.imageUrl='' + rand22 + '.jpg';
-         }
-
-         getModel().checkRegistration(data, (err, savedData) => {
-                        if (err == 'err') {
-                            req.flash('error', savedData, '/registration');
-                            next();
-                            return;
-                        } else if (err == 'success') {
-                          
-                            var queryString = Buffer.from(req.body.email).toString('base64');
-                            
-                            var mailOptions = {
-                                from: config.get('EMAIL_FROM'),
-                                to: req.body.email,
-                                subject: 'Email Verification | Dishmize',
-                                text: 'Hello, Thanks for signing up on Dishmize ' + req.headers.origin + '/registration/statusChange_email/?con=' + queryString
-                            };
-                            console.log('send verification');
-                           // mailOptions.ca = [ selfSignedRootCaPemCrtBuffer ];
-                            //agentOptions.key = clientPemKeyBuffer;
-                           //agentOptions.cert = clientPemCrtSignedBySelfSignedRootCaBuffer;
-                            console.log(mailOptions);
-                            sendMail_Verification(mailOptions, req, savedData);
-                        }
-                    });
-
-
-})
-
-
-// router.post(
-//     '/',
-//     images.multer.single('userPhoto'),
-//     images.sendUploadToGCS,
-//     (req, res, next) => {
+router.post(
+    '/',
+    images.multer.single('userPhoto'),
+    images.sendUploadToGCS,
+    (req, res, next) => {
 
         
-//         var dt = convertDate(new Date());
-//         const data = {
-//             'usertype': 'user',
-//             'level': 0,
-//             'firstname': req.body.firstname,
-//             'lastname': req.body.lastname,
-//             'username': req.body.username,
-//             'email': req.body.email,
-//             'password': req.body.password,
-//             'date': dt,
-//             'status': 1,
-//             'confirmpassword': req.body.confirmpassword,
-//             'check': req.body.check
-//         };
+        var dt = convertDate(new Date());
+        const data = {
+            'usertype': 'user',
+            'level': 0,
+            'firstname': req.body.firstname,
+            'lastname': req.body.lastname,
+            'username': req.body.username,
+            'email': req.body.email,
+            'password': req.body.password,
+            'date': dt,
+            'status': 1,
+            'confirmpassword': req.body.confirmpassword,
+            'check': req.body.check
+        };
 
-//         if (req.body && req.body.imageHidden) {
-//             var s3 = new AWS.S3();
-//             var rand = makeid();
-//             var s3Bucket = new AWS.S3({
-//                 params: {
-//                     Bucket: 'dishmize'
-//                 }
-//             });
-//             var buf = new Buffer(req.body.imageHidden.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-//             var data1 = {
-//                 Key: req.body.firstname + rand + '.jpg',
-//                 Body: buf
-//             };
-//             var urlParams = {
-//                 Bucket: 'dishmize',
-//                 Key: req.body.firstname + rand + '.jpg'
-//             };
+        if (req.body && req.body.imageHidden) {
+            var s3 = new AWS.S3();
+            var rand = makeid();
+            var s3Bucket = new AWS.S3({
+                params: {
+                    Bucket: 'dishmize'
+                }
+            });
+            var buf = new Buffer(req.body.imageHidden.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+            var data1 = {
+                Key: req.body.firstname + rand + '.jpg',
+                Body: buf
+            };
+            var urlParams = {
+                Bucket: 'dishmize',
+                Key: req.body.firstname + rand + '.jpg'
+            };
 
-//             s3Bucket.putObject(data1, function (err, data1) {
+            s3Bucket.putObject(data1, function (err, data1) {
                 
-//             });
-//             data.imageUrl = 'https://s3.us-east-2.amazonaws.com/dishmize/' + req.body.firstname + rand + '.jpg';
-//         }
+            });
+            data.imageUrl = 'https://s3.us-east-2.amazonaws.com/dishmize/' + req.body.firstname + rand + '.jpg';
+        }
 
-//         getModel().checkRegistration(data, (err, savedData) => {
-//             if (err == 'err') {
-//                 req.flash('error', savedData, '/registration');
-//                 next();
-//                 return;
-//             } else if (err == 'success') {
-              
-//                 var queryString = Buffer.from(req.body.email).toString('base64');
-                
-//                 var mailOptions = {
-//                     from: config.get('EMAIL_FROM'),
-//                     to: req.body.email,
-//                     subject: 'Email Verification | Dishmize',
-//                     text: 'Hello, Thanks for signing up on Dishmize ' + req.headers.origin + '/registration/statusChange_email/?con=' + queryString
-//                 };
-//                 console.log('send verification');
-//                // mailOptions.ca = [ selfSignedRootCaPemCrtBuffer ];
-//                 //agentOptions.key = clientPemKeyBuffer;
-//                //agentOptions.cert = clientPemCrtSignedBySelfSignedRootCaBuffer;
-//                 console.log(mailOptions);
-//                 sendMail_Verification(mailOptions, req, savedData);
-//             }
-//         });
-//     });
+        getModel().checkRegistration(data, (err, savedData) => {
+            if (err == 'err') {
+                req.flash('error', savedData, '/registration');
+                next();
+                return;
+            } else if (err == 'success') {
+
+                var queryString = Buffer.from(req.body.email).toString('base64');
+                var mailOptions = {
+                    from: config.get('EMAIL_FROM'),
+                    to: req.body.email,
+                    subject: 'Email Verification | Dishmize',
+                    text: 'Hello, Thanks for signing up on Dishmize ' + req.headers.origin + '/registration/statusChange_email/?con=' + queryString
+                };
+                sendMail_Verification(mailOptions, req, savedData);
+            }
+        });
+    });
 
 
 router.get('/statusChange_email', (req, res, next) => {
@@ -207,7 +119,6 @@ router.get('/statusChange_email', (req, res, next) => {
 });
 
 router.post('/googleLogin', (req, res, next) => {
-    console.log('google');
     var dt = convertDate(new Date());
     const data = {
         'usertype': 'user',
@@ -327,8 +238,6 @@ function sendMail_Verification(mailOptions, req, savedData) {
     });
     transporter.sendMail(mailOptions, function (error, info) {
         if (error) {
-            console.log('error Send Email');
-            console.log(error);
             req.flash('success', savedData, '/login');
             return;
         } else {

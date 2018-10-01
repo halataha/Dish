@@ -15,7 +15,7 @@ const connection = mysql.createConnection(options);
 function dishmizer (limit, token, cb) {
  // token = token ? parseInt(token, 8) : 0;
   var query = connection.query(
-    'select u.user_id,u.username,u.imageUrl,m.value,m.content_description,(select AVG(rating) from dz_rating where content_type_id = u.user_id AND content_type = "dishmizer") as rating from dz_user u left join dz_meta m On u.user_id = m.content_type_id and m.content_type = "dishmizer" AND u.active = 1 ORDER BY u.last_update DESC  LIMIT ? OFFSET ?', [limit, token],
+    'select u.user_id,u.imageUrl,m.value,m.content_description,(select AVG(rating) from dz_rating where content_type_id = u.user_id AND content_type = "dishmizer") as rating from dz_user u left join dz_meta m On u.user_id = m.content_type_id and m.content_type = "dishmizer" AND u.active = 1 ORDER BY u.last_update DESC  LIMIT ? OFFSET ?', [limit, token],
     (err, results) => {
       if (err) {
         cb(err);

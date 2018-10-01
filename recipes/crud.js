@@ -9,37 +9,7 @@ const fs = require('fs');
 const path = require('path');
 const flow = require('flow');
 const configPath = path.join(__dirname, '..', "config.json");
-var rand22=Math.floor((Math.random() * 9999999999) + 1);
 AWS.config.loadFromPath(configPath);
-//multer try
-var multer=require('multer');
-const storage = multer.diskStorage({
-	destination: function (req, file, cb) {
-		cb(null, 'public/images/recipephotos');
-	},
-	filename: function (req, file, cb) {
-		if (file.mimetype === 'image/png') {
-			cb(null,+rand22+'.png');
-		} else {
-			cb(null,+rand22+'.jpg');
-		}
-	}
-});
-const fileFilter = (req, file, cb) => {
-	if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
-		cb(null, true);
-	} else {
-		cb(new Error('File Type Is Not Supported !!'), false);
-	}
-};
-
-const upload = multer({
-	storage: storage,
-	limits: { fileSize: 1024 * 1024 },
-	fileFilter: fileFilter
-});
-
-
 
 
 function getModel() {
@@ -56,22 +26,14 @@ router.use((req, res, next) => {
 });
 
 router.get('/', (req, res, next) => {
-    //console.log('body');
-    //console.log(req.query);
-
     getModel().recipesUser(12, req.query.pageToken, (err, dataUser, cursor) => {
-                
         if (err) {
-            console.log('errrrr');
             next(err);
             return;
         }
 
         getModel().getParchesedRecipe(req.session.user_id, (err , recipeids) =>{
-         //console.log('recibes');
-         //console.log(recipeids);
-         recipeids=[];
-
+            
             res.render('pages/recipes', {
                 title: "Recipes",
                 data: dataUser,
@@ -84,15 +46,11 @@ router.get('/', (req, res, next) => {
 });
 
 router.get('/Add', (req, res, next) => {
-   // console.log('add Recipe');
-    //console.log(req.session.user_id);
     if (req.session.user_id == undefined) {
         req.flash('error', 'Access denied! Please Login First.', '/login');
     } else {
-        
         getModel().categoryList(null, null, (err, entities) => {
-            //console.log('mycat');
-            //console.log(err);
+
             res.render('pages/create-recipe', {
                 title: "Create-recipe",
                 action: 'Add',
@@ -105,106 +63,47 @@ router.get('/Add', (req, res, next) => {
 });
 
 
-//my add recipe
 
-router.post('/Add',upload.any(),function(req,res,next){
+router.post('/Add',
+    images.multer.single('recipeImage'),
+    images.sendUploadToGCS,
+    (req, res, next) => {
     
-    //  res.render('index',{title:'express'});
-    //console.log('hello');
+        const data = req.body;
+        var dt = convertDate(new Date());
+        var rData = {
+            'recipe_title': data.recipetitle,
+            'description': data.description,
+            'category_id': data.category,
+            'user_id': req.session.user_id,
+            'status': 1,
+            'active': 1,
+            'is_delete': 1,
+            'date': dt
+        }
+
+
     
-    //res.send('Welcome Post Success');
-   
-    //console.log(req);
-   
-   
-   //res.send('hello');
-   console.log(req.files);
-   var data=req.body;
-   console.log('data');
-   console.log(data);
-   var dt = convertDate(new Date());
-   console.log(dt);
-   //var rand=Math.floor((Math.random() * 9999999999) + 1)+''+ Math.floor((Math.random() * 9999999999) + 1)+''+Math.floor((Math.random() * 9999999999) + 1)+''+Math.floor((Math.random() * 9999999999) + 1);  
-
-   var rData = {
-      'recipe_title': data.recipetitle,
-     'description': data.description,
-     'category_id': data.category,
-     'ordinary_price':data.ordinary_price,
-     'exclusive_price':data.exclusive_price,
-     'buy_price':data.buy_price,
-     'user_id': req.session.user_id,
-     'status': 1,
-     'active': 1,
-     'is_delete': 1,
-     'date': dt,
-    // 'recipe_image':'' + rand22 + '.jpg'
-  }
-  if(req.files.length>0)
-  {
-      rData.recipe_image='' + rand22 + '.jpg';
-  }
-
-
- // rData.recipe_image = 'https://s3.us-east-2.amazonaws.com/dishmize/' + rand + '.jpg';
-
-   console.log('rdata');
-   console.log(rData);
-
-   add_recipes(rData,data,req,dt,res);
-   console.log('added success');
-  })
-  
-
-
-//router.post('/Add',
-////images.multer.single('recipeImage')     
-//images.multer.single('recipeImage'),
-  //  images.sendUploadToGCS,
-    //(req, res, next) => {
-       //console.log('upload image');
-       //console.log(req.body.imageHiddenRc);
-      //  const data = req.body;
-        //console.log('all data');
-        //console.log(data);
-       // var dt = convertDate(new Date());
-        //var rData = {
-          //  'recipe_title': data.recipetitle,
-            //'description': data.description,
-            //'category_id': data.category,
-            //'ordinary_price':data.ordinary_price,
-            //'exclusive_price':data.exclusive_price,
-            //'buy_price':data.buy_price,
-            //'user_id': req.session.user_id,
-            //'status': 1,
-            //'active': 1,
-            //'is_delete': 1,
-            //'date': dt
-       // }
-
-         
-    
-        //if (req.body && req.body.imageHiddenRc) {
-           
-           // console.log("hello Image"+req.body.imageHiddenRc);
-          //  var s3 = new AWS.S3();
-           // var rand = makeid();
-            //var s3Bucket = new AWS.S3({
-              //  params: {
-                //    Bucket: 'dishmize'
-                //}
-            //});
-            //var buf = new Buffer(req.body.imageHiddenRc.replace(/^data:image\/\w+;base64,/, ""), 'base64');
-            //var data1 = {
-             //   Key: rand + '.jpg',
-               // Body: buf
-            //};
-            //var urlParams = {
-              //  Bucket: 'dishmize',
-                //Key: rand + '.jpg'
-            //};
+        if (req.body && req.body.imageHiddenRc) {
             
-           // s3Bucket.putObject(data1, function (err, data1) {
+            var s3 = new AWS.S3();
+            var rand = makeid();
+            var s3Bucket = new AWS.S3({
+                params: {
+                    Bucket: 'dishmize'
+                }
+            });
+            var buf = new Buffer(req.body.imageHiddenRc.replace(/^data:image\/\w+;base64,/, ""), 'base64');
+            var data1 = {
+                Key: rand + '.jpg',
+                Body: buf
+            };
+            var urlParams = {
+                Bucket: 'dishmize',
+                Key: rand + '.jpg'
+            };
+            
+            s3Bucket.putObject(data1, function (err, data1) {
                 /*if (err) {
                     req.flash('error', 'Something Went Wrong. Try again.', '/register/registerUser');
                     return next();
@@ -212,14 +111,14 @@ router.post('/Add',upload.any(),function(req,res,next){
                     rData.recipe_image = 'https://s3.us-east-2.amazonaws.com/dishmize/' + rand + '.jpg';
                     next();
                 }*/
-           // });
-            //rData.recipe_image = 'https://s3.us-east-2.amazonaws.com/dishmize/' + rand + '.jpg';
-        //}
+            });
+            rData.recipe_image = 'https://s3.us-east-2.amazonaws.com/dishmize/' + rand + '.jpg';
+        }
         
     
         // Save the data to the database.
-        //add_recipes(rData,data,req,dt,res);
-//});
+        add_recipes(rData,data,req,dt,res);
+});
 
 
 router.get('/:recipe_id/editRecipe', (req, res, next) => {
@@ -263,9 +162,8 @@ router.post(
             'exclusive_price':data.exclusive_price,
             'buy_price':data.buy_price
         }
-         console.log('image uploadinggggg');
+
         if (req.body && req.body.imageHiddenRc) {
-            
             var s3 = new AWS.S3();
             var rand = makeid();
             var s3Bucket = new AWS.S3({
@@ -409,9 +307,6 @@ router.get(
     '/search',(req, res, next) => { 
        
     getModel().searchRecipes(req.query.recipes_search, (err, recipesData,cursor) => {
-       
-        console.log('recipesearchresult');
-        //console.log(recip);
 
         res.render('pages/search', {
             title: "Recipes",
@@ -534,25 +429,19 @@ router.get('/category/:category', (req, res, next) => {
     var user_id = req.session.user_id;
     
     getModel().getCategory(category, (err, dataUser) => {
-        
         getModel().byCategory(dataUser.category_id, 6, req.query.pageToken, (err, byCategory, cursor) => {
             
             if (err) {
                 next(err);
                 return;
             }
-                         
-             console.log('data');
-             console.log(byCategory);
-
+          
             res.render('pages/bycategory', {
                 title: "Recipes" + '|' + category,
                 category: category,
                 data: byCategory,
                 nextPageToken: cursor,
-                sess_val: user_id,
-                like_count:dataUser.like_count,
-                comment_count:dataUser.comment_count
+                sess_val: user_id
             });
         });
     });
@@ -583,7 +472,7 @@ function makeid() {
 }
 
 function add_recipes(rData,data,req,dt,res){
-    //console.log('add_recipes');
+    console.log('add_recipes');
     var mData1 = [{
                     'user_id': req.session.user_id,
                     'con_key': 'basic',
@@ -668,9 +557,9 @@ function add_recipes(rData,data,req,dt,res){
             mData1.push(mData);
         }
     }
-    //console.log('add_recipes1');
+    console.log('add_recipes1');
     var obj = {rData:rData,mData1:mData1};
-   // console.log(obj);
+    console.log(obj);
     getModel().create('dz_recipes', obj, (err, savedData) => {
         if (err) {
             req.flash('error', 'Error Occured !');

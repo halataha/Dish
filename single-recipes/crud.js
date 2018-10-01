@@ -27,24 +27,19 @@ router.use((req, res, next) => {
 });
 
 router.get('/:recipe_id', (req, res, next) => {
-    
     if (req.session.user_id == undefined) {
         req.flash('error', 'Login First.', '/login');
         return
     }
     
  getModel().checkBuyer(req.params.recipe_id,req.session.user_id, (err,checkBuyer) => {
-     
-    //if (err) {
-        //next(err);
-        //return;
-    //} 
-    //previous condition checkBuyer.length>0
-    if (checkBuyer != undefined ){
-       // console.log('check buyer');
+    if (err) {
+        next(err);
+        return;
+    } 
+
+    if (checkBuyer.length > 0  ){
         getModel().single_recipe(req.params.recipe_id, (err, singleData, catId) => {
-        
-        
             getModel().commentData(req.params.recipe_id, (err, cData, count) => {
                 
                 if (err) {
@@ -82,8 +77,6 @@ router.get('/:recipe_id', (req, res, next) => {
 
 router.post('/rating', (req, res, next) => {
 
-    //console.log('rating');
-   // console.log(req.session.user_id);
     if (req.session.user_id == undefined) {
         req.flash('error', 'Session Error ! Login First.','/login');
         return
@@ -92,8 +85,6 @@ router.post('/rating', (req, res, next) => {
     getModel().read(req.session.user_id,req.body.recipeId, 'dz_rating', 'user_id','content_type_id', (err, entity) => {
         
         if (err) {
-            //console.log('error in rating');
-            //console.log(err);
             var ret = {};
             req.flash('success', 'Something went wrong. Try again.','/single-recipes/'+req.body.recipeId);
             return;
@@ -104,7 +95,6 @@ router.post('/rating', (req, res, next) => {
             };
             getModel().update(entity.rate_id, req.session.user_id, req.body.recipeId, ratData, (err, savedData) => {
                 if (err) {
-                   
                     req.flash('success', 'Something went wrong. Try again.','/single-recipes/'+req.body.recipeId);
                     return;
                 }
@@ -128,8 +118,6 @@ router.post('/rating', (req, res, next) => {
             }
             getModel().create(ratData, 'dz_rating', (err, savedData) => {
                 if (err) {
-                    console.log('error in rating');
-                    console.log(err);
                     req.flash('success', 'Something went wrong. Try again.','/single-recipes/'+req.body.recipeId);
                     return;
                 }
@@ -244,9 +232,7 @@ router.get('/buy/:recipe_id',(req,res) => {
 });
 
 router.post('/pay/:recipe_id',(req, res) => {
-    console.log('buy funnn');
-    console.log(req.body);
-
+    
     let price = (req.body.price !== '' || req.body.price !== null ) ? Number.parseFloat(req.body.price).toFixed(2) : '';
     const create_payment_json = {
         "intent": "sale",

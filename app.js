@@ -1,7 +1,6 @@
 'use strict';
 
-
-const path = require('path'); 
+const path = require('path');
 const express = require('express');
 const flash = require('express-flash-notification');
 const session = require('express-session');
@@ -22,9 +21,6 @@ app.set('trust proxy', true);
 //app.use(express.static(path.join(__dirname, 'public')));
 app.use(cookieParser());
 app.use('/public', express.static('public'));
-//app.use( express.static( "recipephotos" ) );
-app.use( express.static( "blogphotos" ) );
-//app.use( express.static( "userphotos" ) );
 const sessionConfig = {
   resave: true,
   saveUninitialized: true,

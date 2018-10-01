@@ -47,29 +47,9 @@
                 <div class="row">
                     <div class="my_account col-sm-3">
                         <div class="white_bg">
-                            
-                            <% if ( data[0].imageUrl =='') { %>
-                                
-                                <figure>
-                                    <!-- <img src="<%= data[0].imageUrl %>" alt=""> -->
-    
-                                    <img src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""/>
-                                </figure>   
-
-                                <% } else{ %>  
-                                    <figure>
-                                        <!-- <img src="<%= data[0].imageUrl %>" alt=""> -->
-        
-                                        <img src="/public/images/userphotos/<%=data[0].imageUrl%>" alt=""/>
-                                    </figure> 
-                                <% } %>
-                           
-                               
-                                
-                                  
-
-                                                    
-                            
+                            <figure>
+                                <img src="<%= data[0].imageUrl %>" alt="">
+                            </figure>
                             <div class="">
                                 <h3><%= data[0].firstname %> <%= data[0].lastname %></h3> 
                             </div>
@@ -145,9 +125,10 @@
                                   <% } %>
                                   <% if ( data[0].user_id == sess_val && sess_val !== undefined ) { %>
                                   <li class="dark"><a href="/community/addPost" ><i class="icon icon-community2"></i> <span> Add Community Post </span></a></li>
-                                  <% } %>                      
+                                  <% } %>
+                                  <li class="light"><a href="#"><i class="icon  icon-themeenergy_medal-first-place"></i> <span>Added a first recipe</span></a></li>
                                   
-                                  
+                                  <li class="medium"><a href="#"><i class="icon icon-themeenergy_medal-8"></i> <span>Added 10-20 recipes</span></a></li>
                                   <li class="dark"><a href="/blog/add/blog"><i class="icon icon-themeenergy_pencil"></i><span>Write a blog post</span></a></li>
                                   <li class="light"><a href="/recipes"><i class="icon icon-themeenergy_chat-bubbles"></i><span>Write a comment</span></a></li>
                                   
@@ -171,8 +152,7 @@
                               <div class="col-md-4 col-sm-6 col-xs-12">
                                 <div class="entry white_bg">
                                     <figure>
-                                        <!--img src="<%= rData[i].recipe_image %>" alt=""-->
-                                       <img src="/public/images/recipephotos/<%= rData[i].recipe_image %>" alt="">
+                                        <img src="<%= rData[i].recipe_image %>" alt="">
                                         <figcaption><a href="/single-recipes/<%= rData[i].recipe_id %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
                                     </figure>
                                     <div class="shortDesc">
@@ -292,8 +272,7 @@
                                                   var blogImage ='/public/images/blogDefault.png';
                                               }
                                             %>
-                                            <!-- <img src="<%= blogImage %>" alt=""> -->
-                                             <img src="/public/images/blogphotos/<%=blogImage %>" alt=""/> 
+                                            <img src="<%= blogImage %>" alt="">
                                             <figcaption><a href="/single-blog/<%= pData[i].blog_id %>"><i class="fa fa-eye"></i> <span>View Blog</span></a></figcaption>
                                         </figure>
                                         <div class="shortDesc">

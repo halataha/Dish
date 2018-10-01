@@ -14,13 +14,12 @@ config.get('DATABASE') }
 const connection = mysql.createConnection(options);
 
 function recipesUser (limit, token, cb) {
-  
+
   token = token ? parseInt(token, 6) : 0;
   var sql = "SELECT dr.recipe_id,dr.user_id,dr.recipe_image,dr.recipe_title,dr.description,du.firstname,du.lastname,du.email,du.imageUrl,dl.like_id,dl.status as likeStatus,(select count(like_id) FROM dz_like WHERE content_type_id=dr.recipe_id AND status = 1) AS like_count,(select count(comment_id) FROM dz_comment WHERE content_type_id=dr.recipe_id) AS comment_count, (select AVG(rating) as rating from dz_rating where content_type_id = dr.recipe_id) as rating FROM dz_recipes dr LEFT JOIN dz_user du ON du.user_id = dr.user_id LEFT JOIN dz_like dl ON dl.content_type_id = dr.recipe_id ORDER BY dr.last_update DESC LIMIT ? OFFSET ? ";
   connection.query(
     sql,[limit, token],(err, results) => {
       if (err) {
-        console.log(err);
         cb(err);
         return;
       }
@@ -40,7 +39,6 @@ function getLike_status (recipeId,userId,cb) {
         cb(err);
         return;
       }
-      
       cb(null,results);
       //const count = results.length === limit ? token + results.length : false;
     });
@@ -48,11 +46,7 @@ function getLike_status (recipeId,userId,cb) {
 
 
 function create(table,data, cb) {
-   //console.log('add Recipe');
-  // console.log('table')
-  // console.log(table);
-  // console.log('data')
-  // console.log(data.rData);
+   
  var query = connection.query('INSERT INTO '+table+' SET ?', data.rData, (err, res) => {
     if (err) {
       cb(err);
@@ -106,23 +100,8 @@ function updateRecipe (id, data, cb) {
 
 
 function getCategory (category, cb) {
-  //removed querry SELECT * FROM `dz_category` WHERE `name` = ?
   connection.query(
-    `SELECT dc.category_id,dr.recipe_id,dr.user_id,dr.recipe_image,dr.recipe_title,
-    dr.description,du.firstname,du.lastname,du.email,
-    du.imageUrl,dl.like_id,dl.status as likeStatus,(select count(like_id) 
-                            FROM dz_like 
-                            WHERE content_type_id=dr.recipe_id AND status = 1) AS like_count
-    ,			(select count(comment_id) FROM dz_comment WHERE content_type_id=dr.recipe_id) AS comment_count,
-          (select AVG(rating) as rating from dz_rating where content_type_id = dr.recipe_id) as rating
-     FROM dz_recipes dr LEFT JOIN dz_user du ON du.user_id = dr.user_id 
-     LEFT JOIN dz_like dl ON dl.content_type_id = dr.recipe_id  left join dz_category  dc on dr.category_id=dc.category_id
-     where dc.name = ?    
-    ORDER BY dr.last_update DESC        
-    `
-    , category, (err, results) => {
-      //console.log('result');
-      //console.log(results[0]);
+    'SELECT * FROM `dz_category` WHERE `name` = ?', category, (err, results) => {
       if (!err && !results.length) {
         err = {
           code: 404,
@@ -187,23 +166,17 @@ var sql = "Select r.*,m.user_id,m.con_key,m.value,m.content_description from dz_
 
 
 function byCategory (categoryId, limit, token, cb) {
-  //console.log(limit)
- // console.log('by category');
- // console.log(categoryId);
   token = token ? parseInt(token, 10) : 0;
   var query = connection.query(
     
     'select * from `dz_recipes` r left join dz_user u On r.user_id = u.user_id WHERE `category_id` = '+categoryId+' ORDER BY r.last_update DESC LIMIT ? OFFSET ?',
     [limit, token],
     (err, results) => {
-      
       if (err) {
-        console.log(err);
         cb(err);
         return;
       }
       const hasMore = results.length === limit ? token + results.length : false;
-     // console.log(hasMore);
       cb(null, results, hasMore);
     });
     
@@ -226,15 +199,7 @@ function createMeta (data,cb) {
 }
 
 
-
-
-
-
-
-
 function categoryList (limit, token, cb) {
-  
-  
   token = token ? parseInt(token, 10) : 0;
   connection.query(
     'SELECT c.category_id,c.name FROM `dz_category` c', [limit, token],
@@ -259,8 +224,6 @@ function delete_RecipeAlldata (recipeId,userId,cb) {
 }
 
 function searchRecipes(search_str,cb){
-  console.log('hello searchrecipe');
-  console.log(search_str);
     var sql = "SELECT dr.recipe_id,dr.user_id,dr.recipe_image,dr.recipe_title,dr.description,du.firstname,du.lastname,du.email,du.imageUrl,dl.like_id,dl.status as likeStatus,(select count(like_id) FROM dz_like WHERE content_type_id=dr.recipe_id AND status = 1) AS like_count,(select count(comment_id) FROM dz_comment WHERE content_type_id=dr.recipe_id) AS comment_count, (select AVG(rating) as rating from dz_rating where content_type_id = dr.recipe_id) as rating FROM dz_recipes dr LEFT JOIN dz_user du ON du.user_id = dr.user_id LEFT JOIN dz_like dl ON dl.content_type_id = dr.recipe_id WHERE dr.recipe_title like '%" +search_str+ "%' GROUP BY dr.recipe_id ORDER BY dr.last_update DESC";
     
     var query = connection.query(
@@ -270,7 +233,7 @@ function searchRecipes(search_str,cb){
         cb(err);
         return;
       }
-      const hasMore = false;
+        const hasMore = false;
       cb(null, results, hasMore);
     }
   );
@@ -279,7 +242,6 @@ function searchRecipes(search_str,cb){
 }
 
 function getParchesedRecipe(user_id, cb){
-  
     if(user_id){
        connection.query('select recipe_id from `dz_transaction` where `user_id` = ?', user_id ,(err, results) => {
            if (err) {

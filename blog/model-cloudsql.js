@@ -34,16 +34,11 @@ function blogUser(limit, token, cb) {
 
 function blogBycategory(limit, token,category_id,cb) {
     // token = token ? parseInt(token, 5) : 0;
-   // console.log('Error Category');
-    console.log(category_id);
-    console.log('testtttttttttttt');
     var q = connection.query(
-        'SELECT *,DAY(b.date) AS day,MONTHNAME(b.date) AS month , YEAR(b.date) AS year FROM dz_blog b LEFT JOIN dz_user u ON b.user_id = u.user_id WHERE categoty_id= '+category_id+' ORDER BY b.last_update DESC  LIMIT ? OFFSET ?', [limit, token],
+        'SELECT *,DAY(b.date) AS day,MONTHNAME(b.date) AS month , YEAR(b.date) AS year FROM dz_blog b LEFT JOIN dz_user u ON b.user_id = u.user_id WHERE category_id = '+category_id+' ORDER BY b.last_update DESC  LIMIT ? OFFSET ?', [limit, token],
         (err, results) => {
             if (err) {
                 cb(err);
-                console.log('errrrrrrrrrrrrrrrrrrrrrrrrrrrrrr');
-                console.log(err);
                 return;
             }
             cb(null, results);
@@ -66,10 +61,8 @@ function getBlog(blog_id, cb) {
 }
 
 function countBlog(status,cb) {
-  // console.log('status');
-   //console.log(status); 
-  
-    let sql = (status == null) ? 'SELECT COUNT(*) AS total FROM dz_blog' : 'SELECT COUNT(*) AS total FROM dz_blog WHERE category_id = '+status+'';  
+    
+  let sql = (status == null) ? 'SELECT COUNT(*) AS total FROM dz_blog' : 'SELECT COUNT(*) AS total FROM dz_blog WHERE category_id = '+status+'';  
     connection.query(
         sql,
         (err, results) => {
@@ -77,8 +70,6 @@ function countBlog(status,cb) {
                 cb(err);
                 return;
             }
-            console.log('result');
-            console.log(results[0]);
             cb(null, results[0]);
         }
     );
@@ -86,7 +77,7 @@ function countBlog(status,cb) {
 
 
 function create(table, data, blog_id, cb) {
-    if(blog_id == 0){
+    if(blog_id == ''){
         var query = connection.query('INSERT INTO ' + table + ' SET ?', data, (err, res) => {
             if (err) {
                 cb(err);
@@ -123,7 +114,7 @@ function categoryList (limit, token, cb) {
 
 function categoryFilter(cb) {
     var query = connection.query(
-        'SELECT DISTINCT b.categoty_id,c.category_id,c.name FROM `dz_blog` b left join dz_category c ON b.categoty_id = c.category_id ORDER BY b.last_update DESC', 
+        'SELECT DISTINCT b.category_id,c.category_id,c.name FROM `dz_blog` b left join dz_category c ON b.category_id = c.category_id ORDER BY b.last_update DESC', 
         (err, results) => {
             if (err) {
                 cb(err);

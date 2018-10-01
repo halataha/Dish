@@ -14,9 +14,8 @@ config.get('DATABASE') }
 const connection = mysql.createConnection(options);
 
 connection.connect(function(err) {
-  //console.log('errorrrrrr');
-  //console.log(err); // 'ECONNREFUSED'
-   // true
+  console.log(err.code); // 'ECONNREFUSED'
+  console.log(err.fatal); // true
 }); 
 
 function fetchCommunity (cb) {
@@ -42,7 +41,6 @@ function countAll (cb) {
  }
 
 function create (data,table,cb) {
-  
  var query =  connection.query('INSERT INTO '+table+' SET ?', data, (err, res) => {
     if (err) {
       cb(err);
