@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top %>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+  
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/login.jpg" data-natural-width="1400" data-natural-height="500">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Log In</h1>
+                            <div class="bread-crums">
+        						<a href="/1">Home</a>
+        						<span class="bread-crums-span">&raquo;</span>
+        						<span class="current">Login</span>
+        					</div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <div class="gray_bg">
+            <div class="container margin_60">
+                <div class="row">
+              
+                    <div class="col-md-6 col-md-offset-3">
+                        <div class="form-login white_bg">
+                            <div class="main_title">
+                                <h2 class="nomargin_top">User Login</h2>
+                                <hr class="divider">
+                                <div class="col-sm-12">
+                                    <%- locals.flash %>
+                                </div>
+                            </div>
+                            <div id="login_alertMsg"></div>
+                            <form action="#" id="loginForm" method="post"> 
+                                <div class="form-group col-sm-12">
+                                <% if (cookie_val == undefined ) { %>
+                                    <input type="text" id="username1" name="username1" class="form-control required" placeholder="Username or Email">
+                                <% } else { %>
+                                <input type="text" id="username1" name="username1" class="form-control required" value="<%= cookie_val %>" placeholder="Username or Email">   
+                                <% } %>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <input type="password" id="password1" name="password1" class="form-control required" placeholder="Password">
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <input  type="checkbox" name="remember_me" id="remember_me" class="form-control" <% if(remember_me){ %><%= 'checked'; %><% }%> >
+                                    <label for="remember_me"> Remember Me </label>
+                               </div>
+                              </form> 
+                                    <div class="clearfix">
+                                <div class="row">
+                                <div class="col-sm-12">
+                                    <div class="col-sm-6 text-left">
+                                    <button class="btn btn-success" onclick="loginUser()">SIGN IN</button>
+                                    <i id="login_refresh" class="fa fa-refresh fa-2 fa-spin" aria-hidden="true" style="font-size:20px;display:none"></i>    
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <i class="fa fa-question-circle"></i> <a href="javascript:void(0);" onclick="pass_forgot();">Forgot Password?</a>
+                                    </div>
+                                    <div class="col-sm-6 text-right">
+                                        <i class="fa fa-question-circle"></i> <a href="javascript:void(0);" onclick="resendVerification();">Resend Verification Link?</a>
+                                    </div>
+                                </div>
+                                </div>
+                            <div class="login-social col-sm-12">
+                                <div class="separator"><span>Or</span></div>
+                                <em>Signin with your Social Networks</em>
+                                <ul>
+                                    <li class="fb-bg"><a href="javascript:void(0)" onclick="Facebooklogin()"><i class="fa fa-facebook"></i> Facebook Login</a></li>
+                                   <!--  <li class="twi-bg"><a href="#"><i class="fa fa-twitter"></i> Twitter Login</a></li> -->
+                                    <li class="g-bg"><a href="javascript:void(0)" onclick="Googlelogin()" ><i class="fa fa-google-plus"></i> Google+ Login</a></li>
+                                </ul>
+                            </div>
+                            <div class="user-signup">
+                                <i class="fa fa-user-plus"></i> Not a Member yet?  <a href="/registration">Sign Up Now</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div><!-- End container -->
+        </div><!-- End white_bg -->
+        <!-- newslatter -->
+        <section class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/scripts %>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    
+
+  <div class="modal fade" id="my-modal" role="dialog"></div>
+<!--  <div class="modal fade" id="password_forgot" role="dialog"></div>  -->
+
+</body>
+</html>
+
+<script>
+$(document).ready(function(){
+    setTimeout(function() {
+        $('.alert, .alert-success').fadeOut('slow');
+    }, 5000);
+});
+</script>
+
+

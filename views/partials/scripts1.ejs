@@ -1,0 +1,184 @@
+<!-- COMMON SCRIPTS -->
+<script src="/public/js/jquery-2.2.4.min.js"></script>
+<script src="/public/js/bootstrap.min.js"></script>
+<script src="/public/js/jquery-ui-1.10.3.custom.min.js"></script>
+<script src="/public/js/jquery.easing.1.3.min.js"></script>
+<script src="/public/js/jquery.nicescroll.min.js"></script>
+<script src="/public/js/jquery.scrollTo.js"></script>
+<script src="/public/js/ResizeSensor.min.js"></script>
+<script src="/public/js/theia-sticky-sidebar.min.js"></script>
+<script src="/public/js/parallax.min.js"></script>
+<script src="/public/js/jquery.themepunch.plugins.min.js"></script>
+<script src="/public/js/jquery.themepunch.revolution.min.js"></script>
+<script src="/public/js/ion.rangeSlider.min.js"></script>
+<!-- Star Rating -->
+<script src="/public/js/star-rating.js"></script>
+<!-- cropper.js -->
+<script src="/public/js/cropper.js"></script>
+<!-- Form Validation -->
+<script src="/public/js/jquery.validate.min.js"></script>
+<script src="/public/js/form.js"></script>
+<script src="/public/js/form-main.js"></script>
+<script src="https://js.pusher.com/4.1/pusher.min.js"></script>
+<script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+    <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+<script src="/public/js/mainfile.js"></script>
+<script src="https://apis.google.com/js/client.js"></script>
+
+
+<!-- <script src="/public/js/imagesloaded.pkgd.min.js"></script> -->
+<script src="/public/js/custom.js"></script>
+<script>
+    var timer = null;
+    var connection = null;
+    var audio;
+    connection = new RTCMultiConnection();
+        
+    connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+    connection.session = {
+        audio: true,
+        video: true
+    };
+    
+    connection.onstreamended = connection.onleave = connection.onclose = function(event) {
+        $('#videoChat').find('video').remove();
+        window.location.reload();
+    };
+    connection.onclose = function(e) {
+        $('#videoChat').find('video').remove();
+        window.location.reload();
+    };
+
+    $(document).ready(function() {
+        audio =  document.getElementById("myAudio");
+        
+        var wrapper = $("#textboxDiv");
+        var add_button = $(".add-more");
+
+        $(add_button).click(function(e) {
+            e.preventDefault();
+            $(wrapper).append('<div class="form-group" style="clear: both;margin-top:10px"><div class="col-sm-6"><input type="text" required="required" name="key[]" class="form-control required" placeholder="Enter Here"></div><div class="col-sm-6"><input type="text" required="required" name="value" class="form-control required" placeholder="Enter Here"></div><div class="col-sm-2 form-group"> <button class="btn btn-danger remove" type="button"><i class="fa fa-times"></i> Remove</button></div></div>');
+        });
+
+        $(wrapper).on("click", ".remove", function(e) {
+            e.preventDefault();
+            $(this).parent().parent('div').remove();
+        });
+        calling();
+        add_modal();
+    });
+    
+    $('input.rating').rating('refresh', {
+        showClear: false,
+        showCaption: false
+    });
+
+    // Copyright Current Year
+    $('#spanYear').html(new Date().getFullYear());
+
+    // Word limit
+    $(document).ready(function() {
+        var showChar = 150;
+        $('.col-chef p').each(function() {
+            var content = $(this).html();
+            if (content.length > showChar) {
+                var c = content.substr(0, showChar);
+                var h = content.substr(showChar - 1, content.length - showChar);
+                var html = c + '...';
+                $(this).html(html);
+            }
+        });
+        $("#onlineTeaching").on("hidden.bs.modal", function () {
+            connection.getAllParticipants().forEach(function(participantId) {
+                connection.disconnectWith( participantId );
+            });
+            
+            audio.pause();
+            calling();
+            connection.closeSocket();
+            connection.close();
+        });
+
+    });
+
+   
+    
+function calling(){
+    timer = setInterval(function(){
+        connection.checkPresence( <%= sess_val %> , function(isRoomExists, roomid) {
+            console.log(isRoomExists,' === ',roomid);
+            if(isRoomExists){
+                if(timer){
+                    clearInterval(timer);
+                }
+                       
+                $("#onlineTeaching").modal('show');
+                  
+                $('#videoChat').html('<div>Calling...</div><a href="javascript:void(0)" id="" onclick="onlineTeaching('+<%= sess_val %>+')" class="button-more" >Online Teaching</a>');
+                
+                audio.play();
+                           
+            }    
+        });
+        
+    },5000); 
+}    
+    
+function add_modal(){
+    var html = '<div id="onlineTeaching" class="modal fade in" role="dialog"> <div class="modal-dialog"> <div class="modal-content"> <div class="modal-header"> <button type="button" class="close" data-dismiss="modal">×</button> <h4 class="modal-title">Video Chat</h4> </div> <div class="modal-body" id="videoChat"> </div> <div class="modal-footer"> <button type="button" class="btn btn-default" data-dismiss="modal">Close</button> </div> </div> </div> </div>';
+    $('body').append(html);
+}
+    
+function onlineTeaching(roomid){
+    
+    $('#videoChat').html('<div id="caller" width="100%"></div><div id="receiver" width="100%"></div>');
+    
+    connection.checkPresence(roomid, function(isRoomExists, roomid) {
+        connection.onstream = function(event) {
+            $('#videoChat').html(event.mediaElement);
+            $('#videoChat').find('video').css({width:'100%'});
+        };
+        
+        if(isRoomExists) {
+            audio.pause();
+            connection.connectionDescription = connection.join(roomid);
+        }
+        else {
+            connection.connectionDescription = connection.open(roomid);
+        }
+        
+    });
+}
+
+</script>
+<%
+function timeSince(date) {
+    var seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
+    var interval = Math.floor(seconds / 31536000);
+    if (interval >= 1) {
+        return interval + " years";
+    }
+    interval = Math.floor(seconds / 2592000);
+    if (interval >= 1) {
+        return interval + " months";
+    }
+    interval = Math.floor(seconds / 86400);
+    if (interval >= 1) {
+        return interval + " days";
+    }
+    interval = Math.floor(seconds / 3600);
+    if (interval >= 1) {
+        return interval + " hours";
+    }
+    interval = Math.floor(seconds / 60);
+    if (interval >= 1) {
+        return interval + " minutes";
+    }
+    return Math.floor(seconds) + " seconds";
+}
+
+%>
+
+
+

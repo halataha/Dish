@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top %>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+  
+        
+        <!-- End SubHeader -->
+        <section class="parallax-window" data-parallax="scroll" data-image-src="/public/images/mainBanner.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Now You Can Register</h1>
+                            <h3>Your Food Innovation & Make Revenue </h3><h3> For FREE</h3>
+                            <form method="post" id="search_recipes" action="/recipes/search">
+                                <div id="custom-search-input">
+                                    <div class="input-group">
+                                        <input type="text" name="recipes_search" id="recipes_search" class="search-query" placeholder="Search..." required>
+                                        <span class="input-group-btn">
+                                            <input type="submit" class="btn_search" value="submit">
+                                        </span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <section class="featuredRecipe margin_60">
+            <div class="container">
+                <div class="main_title">
+                    <h2 class="nomargin_top">Recipe Categories</h2>
+                    <hr class="divider">
+                </div><!-- End main_title -->
+
+                <div class="row">
+                    <div class="above-sidebar full-width">
+                        <ul class="boxed">
+                            <li class="light"><a href="recipes/category/African"><i class="icon icon-themeenergy_kebab"></i> <span>African</span></a></li>
+                            <li class="medium"><a href="recipes/category/Animals"><i class="icon dog-icon"></i> <span>Animals</span></a></li>
+                            <li class="dark"><a href="recipes/category/Apetizers"><i class="icon icon-themeenergy_pasta"></i> <span>Apetizers</span></a></li>
+                            <li class="light"><a href="recipes/category/Asian"><i class="icon icon-themeenergy_sushi"></i> <span>Asian</span></a></li>
+                            <li class="medium"><a href="recipes/category/Babies"><i class="icon baby-icon"></i> <span>Babies</span></a></li>
+                            <li class="dark"><a href="recipes/category/Caribbean"><i class="icon icon-themeenergy_burger-coke"></i> <span>Caribbean</span></a></li>
+                            <li class="medium"><a href="recipes/category/Cocktails"><i class="icon icon-themeenergy_margarita2"></i> <span>Cocktails</span></a></li>
+                            <li class="dark"><a href="recipes/category/Deserts"><i class="icon icon-themeenergy_cupcake"></i> <span>Deserts</span></a></li>
+                            <li class="light"><a href="recipes/category/Eggs"><i class="icon icon-themeenergy_eggs"></i> <span>Eggs</span></a></li>
+                            <li class="dark"><a href="recipes/category/Equipment"><i class="icon icon-themeenergy_blender"></i> <span>Equipment</span></a></li>
+                            <li class="light"><a href="recipes/category/Events"><i class="icon icon-themeenergy_turkey"></i> <span>Events</span></a></li>
+                        
+                            <li class="medium"><a href="recipes/category/Fish"><i class="icon icon-themeenergy_fish2"></i> <span>Fish</span></a></li>
+
+                            <li class="dark"><a href="recipes/category/Fitness"><i class="icon icon-themeenergy_biceps"></i> <span>Fitness</span></a></li>
+
+                            <li class="light"><a href="recipes/category/Healthy"><i class="icon icon-themeenergy_apple2"></i> <span>Healthy</span></a></li>
+                            
+                            <li class="medium"><a href="recipes/category/Hot&Cold"><i class="icon icon-themeenergy_coffee-2"></i> <span>Hot &amp; Cold</span></a></li>
+                            <li class="light"><a href="recipes/category/Kids"><i class="icon icon-themeenergy_happy"></i> <span>Kids</span></a></li>
+                            <li class="medium"><a href="recipes/category/Meat"><i class="icon icon-themeenergy_meat"></i> <span>Meat</span></a></li>
+
+                            <li class="dark"><a href="recipes/category/Mexican"><i class="icon icon-themeenergy_peper"></i> <span>Mexican</span></a></li>
+                            <li class="medium marginLeft"><a href="recipes/category/Middle_East"><i class="icon icon-themeenergy_turkey"></i> <span>Middle East</span></a></li>
+                            <li class="light"><a href="recipes/category/Pizza"><i class="icon  icon-themeenergy_pizza-slice"></i> <span>Pizza</span></a></li>
+                            <li class="medium"><a href="recipes/category/Salads"><i class="icon icon-themeenergy_eggplant"></i> <span>Salads</span></a></li>
+                            <li class="dark"><a href="recipes/category/Sandwiches"><i class="icon icon-themeenergy_bread-3"></i> <span>Sandwiches</span></a></li>
+                            <li class="light"><a href="recipes/category/Snacks"><i class="icon icon-themeenergy_fried-potatoes"></i> <span>Snacks</span></a></li>
+                            <li class="dark"><a href="recipes/category/Soups"><i class="icon icon-themeenergy_soup2"></i> <span>Soups</span></a></li>
+                            <li class="light"><a href="recipes/category/Vegetarian"><i class="icon icon-themeenergy_plant-symbol"></i> <span>Vegetarian</span></a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section id="DishMizeInNumbers" class="margin_60">
+            <div class="container">
+                <div class="main_title">
+                    <h2 class="nomargin_top">DishMize In Numbers</h2>
+                    <hr class="divider">
+                </div><!-- End main_title -->
+                <div class="row">
+                            <!--item-->
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="bgClr text-center">
+                            <img src="/public/images/icon-1.png" class="img-responsive" alt="">
+                            <h3 class="title dynamic-number" ><%= totalD %></h3>
+                            <h3 class="subtitle">Members</h3>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    
+                    <!--item-->
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="bgClr text-center">
+                            <img src="/public/images/icon-2.png" class="img-responsive" alt="">
+                            <h3 class="title dynamic-number" ><%= totalR %></h3>
+                            <h3 class="subtitle">Recipes</h3>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    
+                    <!--item-->
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="bgClr text-center">
+                            <img src="/public/images/icon-3.png" class="img-responsive" alt="">
+                            <h3 class="title dynamic-number" ><%= totalP %></h3>
+                            <h3 class="subtitle">Photos</h3>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    
+                    <!--item-->
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="bgClr text-center">
+                            <img src="/public/images/icon-4.png" class="img-responsive" alt="">
+                            <h3 class="title dynamic-number" ><%= totalComm %></h3>
+                            <h3 class="subtitle">Forum Posts</h3>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    
+                    <!--item-->
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="bgClr text-center">
+                            <img src="/public/images/icon-5.png" class="img-responsive" alt="">
+                            <h3 class="title dynamic-number" ><%= totalC %></h3>
+                            <h3 class="subtitle">Comments</h3>
+                        </div>
+                    </div>
+                    <!--//item-->
+                    
+                    <!--item-->
+                    <div class="col-lg-2 col-md-4 col-sm-4">
+                        <div class="bgClr text-center">
+                            <img src="/public/images/icon-6.png" class="img-responsive" alt="">
+                            <h3 class="title dynamic-number" ><%= totalB %></h3>
+                            <h3 class="subtitle">Articles</h3>
+                        </div>
+                    </div>
+                    <!--//item-->
+                
+                    <div class="cta text-center clearfix">
+                        <a href="/registration" class="button big button-radius">Join Us</a>
+                    </div>
+                </div>
+            </div>
+            
+        </section><!-- End container -->
+
+        <section class="recipeOfTheDay gray_bg margin_60">
+            <div class="container">
+                <div class="main_title">
+                    <h2 class="nomargin_top">Hello, We Are Recipes Food</h2>
+                    <hr class="divider">
+                </div><!-- End main_title -->
+                <% if (recipeOftheDay.length > 0) { 
+                var url = '/single-recipes/buy/'+recipeOftheDay[0].recipe_id;
+                    if(recipeids.includes(data[0].recipe_id) || data[0].user_id == sess_val){
+                       url = '/single-recipes/'+recipeOftheDay[0].recipe_id;
+                    }
+                %>
+                
+                <div class="row">
+                    <div class="col-md-8">
+                        <div class="featured">
+                            <div class="s-title">
+                                <h2 class="ribbon">Recipe of the Day</h2>
+                            </div>
+                            <div class="entry white_bg">
+                                <figure>
+                                    <!--img src="<%= recipeOftheDay[0].recipe_image %>" alt=""-->
+                                    <figcaption><a href="<%= url %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
+                                </figure>
+                                <div class="shortDesc">
+                                    <h2><a href="/recipe/1"><%= recipeOftheDay[0].recipe_title %></a></h2>
+                                    <p><%= recipeOftheDay[0].description %> </p>
+                                    <div class="actions">
+                                        <div>
+                                            <a href="<%= url %>" class="button-more">See the full recipe</a>
+                                            <div class="seeMore"><a href="/recipes">See past recipes of the day</a></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!--//featured recipe-->
+                    
+                    <!--featured member-->
+                    <div class="col-md-4">
+                        <div class="featured responsiveSection">
+                            <div class="authorStar">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                            <div class="entry white_bg">
+                               
+                                 
+                                <% if (recipeOftheDay[0].imageUrl !='') { %>
+                                                 
+                                    <figure>
+                                            <!-- <img src="<%= recipeOftheDay[0].imageUrl %>" alt="">  -->
+                                            <img src="/public/images/userphotos/<%= recipeOftheDay[0].imageUrl %>">
+                                           <figcaption><a href="/dishmizer-profile/<%= recipeOftheDay[0].user_id %>"><i class="fa fa-eye"></i> <span>View member</span></a></figcaption>
+                                       </figure>
+
+                                    <% } else{ %>  
+                                        <div class="difficulty col-sm-12"><img class="img-circle" src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+                                    <% } %>
+
+                                
+                                <div class="authorInro">
+                                    <h2><a href="/dishmizer-profile/<%= recipeOftheDay[0].user_id %>"><%= recipeOftheDay[0].firstname %> <%= recipeOftheDay[0].lastname %></a></h2>
+                                    <div class="authorDesc"><i class="fa fa-quote-left" aria-hidden="true"></i><%= recipeOftheDay[0].content_description %></div>
+                                    <div class="actions">
+                                        <div>
+                                            <div class="seeMore"><a href="/dishmizer">See past featured members</a></div>
+                                            <a href="/dishmizer-profile/<%= recipeOftheDay[0].user_id %>" class="button-more">Check out her recipes</a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div><!-- End row -->
+                <% } else { %>
+                <div class="col-md-12 clearfix">
+                        <div class="text-center">
+                            <a class="button-more larg-Btn">No Recipe Available.</a>
+                        </div>
+                </div>
+                <% } %>
+            </div><!-- End container -->
+        </section><!-- End white_bg -->
+
+        <section class="featuredRecipe margin_60">
+            <div class="container">
+                
+
+                <% if (data.length > 0) { %>
+                <div class="row">
+                        <div class="main_title">
+                                <h2 class="nomargin_top">Featured Recipes</h2>
+                                <hr class="divider">
+                            </div>
+                    <% for(var i=0; i< data.length; i++) { %>
+                    <% var url = '/single-recipes/buy/'+data[i].recipe_id; %>
+                    <% if(recipeids.includes(data[i].recipe_id) || data[i].user_id == sess_val) {
+                        var url = '/single-recipes/'+data[i].recipe_id 
+                    }%>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="entry gray_bg">
+                            <figure style="width: 350px; height:200px;">
+                                <!--img src="<%= data[i].recipe_image %>" alt=""-->
+                                <img src="/public/images/recipephotos/<%= data[i].recipe_image %>" alt="Recipe Image" style="width: 350px;height:200px;">
+                                <figcaption><a href="<%= url %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
+                            </figure>
+                            <div class="shortDesc">
+                                <h4><a href="<%= url %>"><%= data[i].recipe_title %></a></h4>
+                                
+                                <div class="actions">
+                                    <div class="rows">
+
+                                    
+                                            <% if (data[i].imageUrl !='') { %>
+                                                 
+                                                <div class="difficulty col-sm-12"><img class="img-circle" src="/public/images/userphotos/<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+
+                                                <% } else{ %>  
+                                                    <div class="difficulty col-sm-12"><img class="img-circle" src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+                                                <% } %>
+
+
+
+                                        <!-- <div class="difficulty col-sm-12"><img class="img-circle" src="<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div> -->
+                                        <div class="clearfix"></div>
+                                        <% if( sess_val === undefined || data[i].likeStatus === 0 ) { %>
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= data[i].recipe_id %>" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-<%= data[i].recipe_id %>"><%= data[i].like_count %></span> </a></div>
+                                        
+                                        <% } else if ( data[i].likeStatus === null && sess_val !== undefined ) { %>
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= data[i].recipe_id %>" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-<%= data[i].recipe_id %>"><%= data[i].like_count %></span> </a></div>
+                                        
+                                        <% } else if( data[i].likeStatus === 1 && sess_val !== undefined) { %> 
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" class="like" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= data[i].recipe_id %>" data-post-action="Unlike" aria-hidden="true"></i> <span id="likes-count-<%= data[i].recipe_id %>"><%= data[i].like_count %></span> </a></div>
+                                        <% } %>
+                                        <% if( sess_val !== undefined) { %> 
+                                        <div class="commented col-xs-3"><a href="<%= url %>"><i class="fa fa-comment" aria-hidden="true"></i><%= data[i].comment_count %></a></div>
+                                        <% } else { %>
+                                        <div class="commented col-xs-3"><a href="/login"><i class="fa fa-comment" aria-hidden="true"></i><%= data[i].comment_count %></a></div>
+                                        <% } %>
+                                        <div class="col-sm-6 RacStar"> 
+                                            <lable class="star-rating">
+                                                <input id="input-2-xs" name="input-2" data-readonly="true" class="rating rating-loading" data-min="0"  data-max="5" data-step="0.5" data-size="xs" value="<%= data[i].rating %>">
+                                            </lable> 
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <% } %>
+
+                    <div class="col-md-12 clearfix">
+                        <% if (nextPagerToken) { %>
+                        <div class="text-center">
+                            <a class="button-more larg-Btn" href="/home?pagerToken=<%= nextPagerToken %>">More Recipe</a>
+                        </div>
+                        <% } %>
+                    </div>
+
+                </div><!-- End row -->
+                <% } else { %>
+                <div class="col-md-12 clearfix">
+                        <div class="text-center">
+                            <a class="button-more larg-Btn">No Recipe Available.</a>
+                        </div>
+                </div> 
+                <% } %>  
+            </div>
+        </section><!-- End container -->
+
+        <section class="gray_bg  margin_60">
+            <div class="container">
+                <div class="main_title">
+                    <h2 class="nomargin_top">Featured Articles</h2>
+                    <hr class="divider">
+                </div><!-- End main_title -->
+                <% if (dataBlog.length > 0) { %>
+                <div class="row">
+                    <% for(var i=0; i< dataBlog.length; i++) { %>
+                    <div class="col-md-4 col-sm-6 col-xs-12">
+                        <div class="entry white_bg">
+                            <figure>
+                                <% if (dataBlog[i].image_blog !== '') { %>
+                                <img src="/public/images/blogphotos/<%= dataBlog[i].image_blog %>" alt="">
+                                <% } else { %>
+                                <img src="/public/images/blogDefault.png" alt="">
+                                <% } %>
+                                <figcaption><a href="/single-blog/<%= dataBlog[i].blog_id %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
+                            </figure>
+                            <div class="shortDesc">
+                                <h4><a href="/single-blog/<%= dataBlog[i].blog_id %>"><%= dataBlog[i].title %></a></h4> 
+                                <lable class="star-rating">
+                                    <input id="input-2-xs" name="input-2" data-readonly="true" class="rating rating-loading" data-min="0"  data-max="5" data-step="0.5" data-size="xs" value="4.5">
+
+                                </lable>
+                                <div class="actions">
+                                    <div class="rows">
+                                        <div class="date col-xs-9"><i class="fa fa-calendar" aria-hidden="true"></i><span><%= dataBlog[i].date %></span></div>
+                                        <div class="commented col-xs-3"><i class="fa fa-comment" aria-hidden="true"></i><a href="/recipe/1#comments">23</a></div>
+                                    </div>
+                                    <div class="dishDisc">
+                                        <p><%= dataBlog[i].description %></p>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                 <% } %>
+
+                    <div class="col-md-12 clearfix">
+                        <% if (nextPagebToken) { %>
+                        <div class="text-center">
+                            <a class="button-more larg-Btn" href="/home?pagebToken=<%= nextPagebToken %>">More Articles</a>
+                        </div>
+                    <% } %>
+                    </div>
+                </div><!-- End row -->
+                <% } else { %>
+                <div class="col-md-12 clearfix">
+                        <div class="text-center">
+                            <a class="button-more larg-Btn">No Post Available.</a>
+                        </div>
+                    </div> 
+                <% } %>
+            </div><!-- End container -->
+        </section><!-- End white_bg -->
+
+        <!-- newslatter -->
+        <section class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+</body>
+</html>
+<script type="text/javascript">
+    $('#loginForm').validate();
+//    $('#search_recipes').validate();
+</script>

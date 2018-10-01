@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top %>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+  
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/chef.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Add Blog</h1>
+                            <div class="bread-crums">
+                                <a href="/blog">Blog</a>
+                                <span class="bread-crums-span">&raquo;</span>
+                                <span class="current"></span>
+                                <a href="#">Add Blog</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <Section class="gray_bg">
+            <div class="container margin_60">
+                <div class="row">
+                    <!--<div class="my_account col-sm-3">
+                        <div class="white_bg">
+                            <figure>
+                                <img src="" alt="">
+                            </figure>
+                            <div class="">
+                                <h3></h3> 
+                            </div>
+                        </div>
+                    </div>-->
+
+                    <div class="col-md-8 col-md-offset-2">
+                        <!-- <nav class="tabsBg">
+                            <ul>
+                              <li>Add Blog</li>
+                              
+                            </ul>
+                        </nav> -->
+                        <div class="form-login white_bg">
+                            <div class="main_title">
+                                <h2 class="nomargin_top">Add Blog</h2>
+                                <hr class="divider">
+                            </div>
+                            <%- locals.flash %>
+                          <div class="EditForm">
+                            <form action="/blog/<%= action %>" method="post" id="addBlog" enctype="multipart/form-data">
+                                <div class="form-group col-sm-12">
+                                    <div class="add-photo">
+                                        <input type="file" id="myimage" name="myimage" />
+                                        <img id="selectedimage" src="/public/images/recipeupload.jpg" style="width:3500px; height:200px;">
+                                        <div id="ValidImage" style="color:red"></div>
+                                        
+                                        <!--label class="icon-picture gray" for="blogImage">
+                                            <span>Browse</span>
+                                            <button type="button" class="Imgremove">X</button>
+                                            <img class="PreviewImg" id="avatar" src="" alt="avatar">
+                                            <input type="file" class="" name="blogImage" id="blogImage">
+                                            <input type="hidden" value="<% if(blogData != ''){ %><%= blogData[0].image_blog %><% } %>" name="savedBlogImage" id="savedBlogImage">
+                                            <input type="hidden" class="" name="imageHiddenRc" id="imageHiddenRc">
+                                            <input type="hidden" class="" name="blog_id" id="blog_id" value="<% if(blogData != ''){ %><%= blogData[0].blog_id %><% } %>">
+                                        </label-->
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <label for="blog_title">Title</label>
+                                    <input type="text"  class="form-control required" name="blog_title" id="blog_title" value="<% if(blogData != ''){ %><%= blogData[0].title %><% } %>" >
+                                </div>
+                                
+                                
+                                <div class="form-group col-sm-12">
+                                    <label for="category">Recipe Category</label>
+                                    <select name="blog_category" name="blog_category" class="form-control required">
+                                        <option>Select Recipe Category</option>
+                                        <% var selected = ''; %>
+                                        <% for(var i=0; i< categoryList.length; i++) { if(categoryList[i] != undefined) {%>
+                                        
+                                        <% if(blogData != '' && categoryList[i].category_id == blogData[0].category_id){ %> <% selected='selected="selected"'; %><%  } %>
+                                        
+                                        
+                                        <option value="<%= categoryList[i].category_id %>" <%= selected %>><%= categoryList[i].name %></option>
+                                        <% }} %>
+                                    </select>
+                                </div>
+                                                              
+
+                                
+                                <div class="form-group col-sm-12">
+                                    <label for="description_con">Description</label>
+                                    <textarea rows="5" name="blog_description" id="blog_description" class="form-control required"><% if(blogData != ''){ %><%= blogData[0].description %><% } %></textarea><br>
+                                </div>
+                                <div class="col-sm-6">
+                                    <button type="submit" value="Submit" class="btn btn-primary"/>Submit</button>
+                                </div>
+                            </form>
+                          </div>
+                          <!-- .tab_container -->
+                        </div>      
+                </div><!-- End row --> 
+                
+                
+            </div><!-- End container -->
+        </section><!-- End white_bg -->
+        <!-- newslatter -->
+        <section class="newslatter">
+            <div class="container">
+                <div class="col-md-9">
+                    <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                </div>
+                <div class="col-md-3">
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        
+        <!-- Footer -->
+<footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+<div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">Crop the Image</h4>
+          </div>
+          <div class="modal-body">
+            <div class="img-container">
+              <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary"  onClick="zoom(0.1)">
+                <span class="docs-tooltip">
+                  <span class="fa fa-search-plus"></span>
+                </span>
+              </button>
+              <button type="button" class="btn btn-primary" onClick="zoom(-0.1)">
+                <span class="docs-tooltip">
+                  <span class="fa fa-search-minus"></span>
+                </span>
+              </button>
+            </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="crop">Crop</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $('#addBlog').validate();
+
+   // var cropper;
+   // window.addEventListener('DOMContentLoaded', function () {
+     // var avatar = document.getElementById('avatar');
+      //var image = document.getElementById('image');
+      //var input = document.getElementById('blogImage');
+      //var $alert = $('.alert');
+      //var $modal = $('#modal');
+
+      // $('[data-toggle="tooltip"]').tooltip();
+
+      //input.addEventListener('change', function (e) {
+        //var files = e.target.files;
+        //var done = function (url) {
+          //input.value = '';
+          //image.src = url;
+          //$alert.hide();
+          //$modal.modal('show');
+        //};
+        //var reader;
+        //var file;
+        //var url;
+
+        //if (files && files.length > 0) {
+          //file = files[0];
+
+          //if (URL) {
+            //done(URL.createObjectURL(file));
+          //} else if (FileReader) {
+            //reader = new FileReader();
+            //reader.onload = function (e) {
+              //done(reader.result);
+            //};
+            //reader.readAsDataURL(file);
+          //}
+        //}
+      //});
+
+      //$modal.on('shown.bs.modal', function () {
+        //cropper = new Cropper(image, {
+          //dragMode: 'move',
+          //aspectRatio: 800 / 600,
+          //strict: false,
+          //autoCropArea: 0,
+          //restore: false,
+          //zoomable: true,
+          //guides: false,
+          //center: true,
+          //highlight: false,
+          //cropBoxMovable: false,
+          //cropBoxResizable: false,
+          //toggleDragModeOnDblclick: false,
+          //zoomOnWheel:false,
+        //});
+      //}).on('hidden.bs.modal', function () {
+        //cropper.destroy();
+        //cropper = null;
+      //});
+
+      //document.getElementById('crop').addEventListener('click', function () {
+       // var initialAvatarURL;
+        //var canvas;
+
+        //$modal.modal('hide');
+
+        //if (cropper) {
+          //canvas = cropper.getCroppedCanvas({
+            //width: 800,
+            //height: 600,
+          //});
+          //$('.add-photo').addClass('AddImg');
+          //initialAvatarURL = avatar.src;
+          //avatar.src = canvas.toDataURL();
+          //imageHiddenRc.value = canvas.toDataURL()
+        //}
+      //});
+   // });
+
+    //function zoom(z){
+      //  cropper.zoom(z)
+      //}
+    //$('.Imgremove').click(function(){
+      // $('.PreviewImg').attr('src', '');
+        //$('.AddImg').removeClass('AddImg');
+    //});
+
+//check image file 
+$("#myimage").change(function () {
+              
+              readIMG(this);
+           })
+
+
+
+function readIMG(input) {
+               if (input.files && input.files[0]) {
+
+                   var file = input.files[0];
+                   var fileType = file["type"];
+                   var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+                   if ($.inArray(fileType, ValidImageTypes) < 0) {
+                       // invalid file type code goes here.
+                       // alert('Choose Image Only Please');
+                       $('#selectedimage').attr('src', "/public/images/recipeupload.jpg");
+                       var inpp = $('#myimage');
+                       $(inpp).val('');
+                       $('#ValidImage').html('Choose Image Only Please');
+                       return false;
+                   }
+                   else {
+                       $('#ValidImage').html('');
+                   }
+
+                   var reader = new FileReader();
+
+                   reader.onload = function (e) {
+                       $('#selectedimage').attr('src', e.target.result);
+                   }
+
+                   reader.readAsDataURL(input.files[0]);
+               }
+           }
+
+
+</script> 

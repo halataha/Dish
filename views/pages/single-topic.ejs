@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include ../partials/head %> 
+    <%
+        function timeSince(date) {
+            var seconds = Math.floor((new Date().getTime() - new Date(date).getTime()) / 1000);
+            var interval = Math.floor(seconds / 31536000);
+            if (interval >= 1) {
+                return interval + " years ago";
+            }
+            interval = Math.floor(seconds / 2592000);
+            if (interval >= 1) {
+                return interval + " months ago";
+            }
+            interval = Math.floor(seconds / 86400);
+            if (interval >= 1) {
+                return interval + " days ago";
+            }
+            interval = Math.floor(seconds / 3600);
+            if (interval >= 1) {
+                return interval + " hours ago";
+            }
+            interval = Math.floor(seconds / 60);
+            if (interval >= 1) {
+                return interval + " minutes ago";
+            }
+            return Math.floor(seconds) + " seconds ago";
+        }
+    %>
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top.ejs %>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/community.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Single Topic Community</h1>
+                            <div class="bread-crums">
+                                <a href="/home">Home</a>
+                                <span class="bread-crums-span">&raquo;</span>
+                                <a href="/community">Community</a>
+                                <span class="bread-crums-span">&raquo;</span>
+                                <span class="current">Single Topic Community</span>
+                            </div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <div class="gray_bg">
+            <div class="container margin_60">
+                <div class="row">
+                    <div class="col-md-12">
+                        <% if (countPost !== 0) { %>
+                        <h3><%= data[0].description %></h3>
+                        <ul class="topics">
+                            <% for (var i=0; i < data.length ; i++) { %>
+                            <li>
+                                <div class="row">
+                                    <div class="col-md-2">
+                                        <div class="topic-author">
+                                            <a href="#" class="author-avatar">
+                                                <img alt="" src="<%= data[i].imageUrl %>">
+                                            </a>
+                                            <div class="author-role"><%= data[i].firstname %> <%= data[i].lastname %></div>
+                                            
+                                            <p class="topic-post-date"><%= timeSince(data[i].date) %></p>
+                                        </div><!-- End topic-author -->
+                                    </div>
+                                    <div class="col-md-10">
+                                        <div class="topic-content">
+                                            
+                                            <p><%= data[i].content_description %></p>
+                                        
+                                        <p class="topic-post-date"><%= timeSince(data[i].date) %></p>
+                                    </div><!-- End topic-author -->
+                                </div>
+                                <div class="col-md-10">
+                                    <div class="topic-content">
+                                        
+                                        <p><%= data[i].content_description %></p>
+                                    
+                                    </div><!-- End topic-content -->
+                                </div>
+                                 
+                            </li>
+                            <% }} else { %>
+                            <li>
+                                <div class="text-center"><b>No Posts Available.</b></div>
+                            </li>    
+                            <% } %>
+                        </ul>
+                    </div>
+                </div><!-- End row -->
+                
+
+                <div class="row">
+                    <div class="col-md-12 text-center">
+                        <nav class="navigation pagination">
+                            <div class="nav-links">
+                                <% if (pages > 0) { %>
+                                <ul class="pagination text-center">
+                                <% if (current == 1) { %>
+                                <li class="disabled"><a>First</a></li>
+                                <% } else { %>
+                                <li><a href="/single-topic/<%= id %>/1">First</a></li>
+                                <% } %>
+                                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                                <% if (i !== 1) { %>
+                                <li class="disabled"><a>...</a></li>
+                                <% } %>
+                                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                                <% if (i == current) { %>
+                                <li class="active"><a><%= i %></a></li>
+                                <% } else { %>
+                                <li><a href="/single-topic/<%= id %>/<%= i %>"><%= i %></a></li>
+                                <% } %>
+                                <% if (i == Number(current) + 4 && i < pages) { %>
+                                <li class="disabled"><a>...</a></li>
+                                <% } %>
+                                <% } %>
+                                <% if (current == pages) { %>
+                                <li class="disabled"><a>Last</a></li>
+                                <% } else { %>
+                                <li><a href="/single-topic/<%= id %>/<%= pages %>">Last</a></li>
+                                <% } %>
+                                </ul>
+                                <% } %>
+
+                            </div>
+                        </nav>
+                    </div>
+                </div><!-- End row -->
+                
+            
+
+            </div><!-- End container -->
+        </div><!-- End white_bg -->
+        <!-- newslatter -->
+        <div class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </div><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <!-- End Preload -->
+
+    <!-- wrap Page -->
+    <div id="wrap">
+
+        <!-- Header Top -->
+        <% include ../partials/header-top.ejs %>
+            <!-- End Header Top -->
+            <!-- Header -->
+            <header class="style2">
+                <% include ../partials/header %>
+            </header>
+            <!-- End Header -->
+            <!-- SubHeader -->
+
+            <section class="parallax-window" id="short" data-parallax="scroll" data-image-src="/public/images/recipe.jpg">
+                <div id="sub_header">
+                    <div class="container" id="sub_content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1>
+                                    <%= data[0].recipe_title %>
+                                </h1>
+                                <div class="bread-crums">
+                                    <a href="/">Home</a>
+                                    <span class="bread-crums-span">&raquo;</span>
+                                    <a href="/recipes">Recipe</a>
+                                    <span class="bread-crums-span">&raquo;</span>
+                                    <span class="current"><%= data[0].recipe_title %></span>
+                                </div>
+                                <!-- End bread-crums -->
+                            </div>
+                        </div>
+                        <!-- End row -->
+                    </div>
+                    <!-- End container -->
+                </div>
+            </section>
+            <%- locals.flash %>
+            <section id="blog" class="margin_60 gray_bg buy-recipe">
+                <div class="container">
+                    <div class="row">
+                        <div class="content col-md-12">
+                            <!--blog entry-->
+                            <div class="recipe">
+                                <div class="row">
+                                    <!--two-third-->
+                                    <article class="col-md-8">
+                                        <div class="intro">
+                                            <div class="float-left col-sm-6">
+                                                <h1>
+                                                    <%= data[0].recipe_title %>
+                                                </h1>
+                                                <label class="star-rating">
+                                                    <input id="input-2-xs" name="input-2" data-readonly="true" class="rating rating-loading" data-min="0" data-max="5" data-step="0.5" data-size="xs" value="<%= rating %>">
+                                                </label>
+                                            </div>    
+                                            <div class="float-left col-sm-6">
+                                            <form action="/single-recipes/pay/<%= data[0].recipe_id %>" method="post">
+                                                <label>Ordinary Price :<b> <%= data[0].ordinary_price %> $</b></label>
+                                                <input type="hidden" value="<%= data[0].ordinary_price %>" name="price">
+                                                <input type="hidden" value="<%= data[0].recipe_title %>" name="recipe_title">
+                                                <input type="hidden" value="ordinaryBuy" name="buyType">
+                                                <input type="submit" value="Ordinary Buy" class="btn btn-primary">
+                                            </form>
+                                            <form action="/single-recipes/pay/<%= data[0].recipe_id %>" method="post">
+                                                <label>Exclusive Price :<b> <%= data[0].exclusive_price %> $</b></label>
+                                                <input type="hidden" value="<%= data[0].exclusive_price %>" name="price">
+                                                <input type="hidden" value="<%= data[0].recipe_title %>" name="recipe_title">
+                                                <input type="hidden" value="exclusiveBuy" name="buyType">
+                                                <input type="submit" value="Exclusive Buy" class="btn btn-primary">
+                                            </form>
+                                            <form action="/single-recipes/pay/<%= data[0].recipe_id %>" method="post">
+                                                <label>Buy Price :<b> <%= data[0].buy_price %> $</b></label>
+                                                <input type="hidden" value="<%= data[0].buy_price %>" name="price">
+                                                <input type="hidden" value="<%= data[0].recipe_title %>" name="recipe_title">
+                                                <input type="hidden" value="normalBuy" name="buyType">
+                                                <input type="submit" value="Buy" class="btn btn-primary">
+                                            
+                                            </form>
+                                            </div>
+                                        </div>
+
+                                        <div class="image"><img src="<%= data[0].recipe_image %>" alt=""></div>
+                                        <div class="intro">
+                                            <p>
+                                                <%= data[0].description %>
+                                            </p>
+                                        </div>
+                                        <div class="instructions">
+                                            <ol>
+                                                <% for(var i=0; i < data.length; i++) { %>
+                                                <% if(data[i].con_key == 'step' ) { %>
+                                                <li>
+                                                    <%= data[i].value %>
+                                                </li>
+                                                <% } } %>
+                                            </ol>
+                                        </div>
+                                    </article>
+                                    <!--//two-third-->
+
+                                    <!--one-third-->
+                                    <article class="col-md-4">
+                                        <dl class="basic">
+                                            <% for(var i=0; i< data.length; i++) { %>
+                                            <% if(data[i].con_key == 'basic' ) { %>
+
+                                            <dt><%= data[i].value %></dt>
+                                            <dd>
+                                                <%= data[i].content_description %>
+                                            </dd>
+                                            <% } } %>
+
+                                        </dl>
+
+                                        <dl class="user">
+
+                                            <!-- <% for(var i=0; i< data.length; i++) { %>
+                                            <% if( data[i].con_key == 'user' ) { %> 
+                                       
+                                           <dt><%= data[i].value %></dt>
+                                           <dd><%= data[i].content_description %></dd>
+                                            <% } } %> -->
+                                            <dt>Posted By</dt>
+                                            <dd>
+                                                <%= data[0].firstname %>
+                                                    <%= data[0].lastname %>
+                                            </dd>
+                                            <dt>Category</dt>
+                                            <dd>
+                                                <%= catId %>
+                                            </dd>
+                                        </dl>
+
+                                        <dl class="ingredients">
+
+                                            <% for(var i=0; i< data.length; i++) { %>
+                                            <% if(data[i].con_key == 'ingredients' ) { %>
+
+                                            <dt><%= data[i].content_description %></dt>
+                                            <dd>
+                                                <%= data[i].value %>
+                                            </dd>
+                                            <% } } %>
+
+                                        </dl>
+                                    </article>
+                                    <!--//one-third-->
+                                    
+                                </div>
+                            </div>
+                            <!--//blog entry-->
+                                        
+                        </div>
+                        </div>
+
+
+                        
+                    </div>
+                
+            </section>
+            <!-- End container -->
+
+            <!-- newslatter -->
+            <section class="newslatter">
+                <div class="container">
+                    <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                    <div class="subcribe">
+                        <input type="text" class="form-control" placeholder="Your Email">
+                        <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                    </div>
+                </div>
+            </section>
+            <!-- End newslatter -->
+            <!-- Footer -->
+            <footer>
+                <% include ../partials/footer %>
+            </footer>
+            <!-- End Footer -->
+    </div>
+    <!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Give Star Rating</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="rating_alert"></div>
+                    <form method="post" action="/single-recipes/rating" id="rating" role="form">
+                        <label class="star-rating">
+                            <input id="star-sm" name="rating" class="rating rating-loading" data-min="0" data-max="5" data-step="0.5" data-size="sm" value="0">
+                            <input type="hidden" name="recipeId" id="recipeId" value="<%= data[0].recipe_id %>">
+                            <input type="hidden" name="userId" id="userId" value="<%= data[0].user_id %>">
+                        </label>
+                        <input type="submit" class="btn btn-success" value="Done">
+                    </form>
+                    
+                    <!--<button type="button" class="btn btn-success" onclick="give_Rating()" data-dismiss="modal">Done</button>-->
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+        <div class="modal fade" id="addMyModal" role="dialog"></div>
+
+</body>
+
+</html>
+

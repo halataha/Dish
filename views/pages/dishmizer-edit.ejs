@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top %>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+  
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/chef.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1><%= data[0].firstname %> <%= data[0].lastanme %></h1>
+                            <div class="bread-crums">
+                                <a href="index.php">Home</a>
+                                <span class="bread-crums-span">&raquo;</span>
+                                <span class="current"><%= data[0].firstname %> <%= data[0].lastname %></span>
+                            </div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <Section class="gray_bg">
+            <div class="container margin_60">
+                <div class="row">
+                    <div class="my_account col-sm-3">
+                        <div class="white_bg">
+                            <figure>
+                                <img src="<%= data[0].imageUrl %>" alt="">
+                            </figure>
+                            <div class="">
+                                <h3><%= data[0].firstname %> <%= data[0].lastname %></h3> 
+                            </div>
+                        </div>
+                    </div>
+                    
+                    
+
+                    <div class="col-sm-9">
+                        <nav class="tabsBg">
+                            <ul>
+                              <li>Edit Your Profile</li>
+                            </ul>
+                        </nav>
+                        <div class="tab_container">
+                          <div id="tab1" class="tab-content EditForm">
+                            <form action="/dishmizer-profile/edit" method="post" enctype="multipart/form-data" id="editProfile">
+                              
+                                <div class="col-sm-6">
+                                    <!-- <div class="form-group">
+                                        <div class="add-photo">
+                                            <label class="icon-picture gray">
+                                                <span>Browse</span>
+                                                <input type="file"  class="form-control" name="profileImage" id="profileImage" value="<%= data[0].imageUrl %>">
+                                            </label>
+                                        </div>
+                                    </div> -->
+
+                                    <div class="form-group">
+                                        <div class="add-photo AddImg">
+                                            <label class="icon-picture gray" for="profileImage">
+                                                <span>Browse</span>
+                                                <button type="button" class="Imgremove">X</button>
+                                                <img class="PreviewImg" id="avatar" src="<%= data[0].imageUrl %>" alt="avatar">
+                                                <input type="file" class="" name="profileImage" id="profileImage" required>
+                                                <input type="hidden" class="" name="imageHdnedit" id="imageHdnedit">
+                                            </label>
+                                            
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="fName">First Name</label>
+                                    <input type="text"  class="form-control required" name="fName" id="fName" value="<%= data[0].firstname %>">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="LName">Last Name</label>
+                                    <input type="text"  class="form-control required" name="LName" id="LName" value="<%= data[0].lastname %>">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="usrnm">Username</label>
+                                    <input type="text" required="required" class="form-control required" name="usrnm" id="usrnm" value="<%= data[0].username %>">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="email">Email id</label>
+                                    <input type="text" required="required" class="form-control required" name="email" id="email" value="<%= data[0].email %>"
+                                    disabled>
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="Favorite_cusine">Favorite cusine</label>
+                                    <input type="text" required="required" class="form-control required" name="Favorite_cusine" id="Favorite_cusine" value="<%= data[3].value %>" placeholder="Ex. Thai, Mexican">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="Favorite_appliances">Favorite appliances</label>
+                                    <input type="text" required="required" class="form-control required" name="Favorite_appliances" id="Favorite_appliances" value="<%= data[2].value %>" placeholder="Ex. Blender, sharp knife">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="Favorite_spices">Favorite spices</label>
+                                    <input type="text" required="required" class="form-control required" name="Favorite_spices" id="Favorite_spices" value="<%= data[1].value %>" placeholder="Ex. Chilli, Oregano, Basil">
+                                </div>
+                                <div class="form-group col-sm-6">
+                                    <label for="profile_comment">Title About me</label>
+                                    <input type="text" required="required" class="form-control required" name="profile_comment" id="profile_comment" value="<%= data[0].value %>" placeholder="Ex. Best Dishmizer in the World">
+                                </div>
+                                
+                                <div class="form-group col-sm-12">
+                                    <label for="description_con">Description About me</label>
+                                    <textarea rows="3" clos="3" name="description_con" maxlength="180" id="description_con" class="form-control required"><%= data[0].content_description %></textarea><br>
+                                </div>
+                                <div class="col-sm-6">
+                                    <input type="submit" value="Submit" class="btn button-more"/>
+                                </div>
+                            </form>
+                          </div>
+                        <!-- .tab_container -->
+                        </div>      
+                </div><!-- End row --> 
+                
+                
+            </div><!-- End container -->
+        </section><!-- End white_bg -->
+        <!-- newslatter -->
+        <section class="newslatter">
+            <div class="container">
+                <div class="col-md-9">
+                    <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                </div>
+                <div class="col-md-3">
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        
+        <!-- Footer -->
+<footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">Crop the Image</h4>
+          </div>
+          <div class="modal-body">
+            <div class="img-container">
+              <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary"  onClick="zoom(0.1)">
+                <span class="docs-tooltip">
+                  <span class="fa fa-search-plus"></span>
+                </span>
+              </button>
+              <button type="button" class="btn btn-primary" onClick="zoom(-0.1)">
+                <span class="docs-tooltip">
+                  <span class="fa fa-search-minus"></span>
+                </span>
+              </button>
+            </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="crop">Crop</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+    $('#editProfile').validate();
+
+
+      var cropper;
+    window.addEventListener('DOMContentLoaded', function () {
+      var avatar = document.getElementById('avatar');
+      var image = document.getElementById('image');
+      var input = document.getElementById('profileImage');
+      var $alert = $('.alert');
+      var $modal = $('#modal');
+
+      // $('[data-toggle="tooltip"]').tooltip();
+
+      input.addEventListener('change', function (e) {
+        var files = e.target.files;
+        var done = function (url) {
+          input.value = '';
+          image.src = url;
+          $alert.hide();
+          $modal.modal('show');
+        };
+        var reader;
+        var file;
+        var url;
+
+        if (files && files.length > 0) {
+          file = files[0];
+
+          if (URL) {
+            done(URL.createObjectURL(file));
+          } else if (FileReader) {
+            reader = new FileReader();
+            reader.onload = function (e) {
+              done(reader.result);
+            };
+            reader.readAsDataURL(file);
+          }
+        }
+      });
+
+      $modal.on('shown.bs.modal', function () {
+        cropper = new Cropper(image, {
+          dragMode: 'move',
+          aspectRatio: 4 / 5,
+          strict: false,
+          autoCropArea: 0,
+          restore: false,
+          zoomable: true,
+          guides: false,
+          center: true,
+          highlight: false,
+          cropBoxMovable: false,
+          cropBoxResizable: false,
+          toggleDragModeOnDblclick: false,
+          zoomOnWheel:false,
+        });
+      }).on('hidden.bs.modal', function () {
+        cropper.destroy();
+        cropper = null;
+      });
+
+      document.getElementById('crop').addEventListener('click', function () {
+        var initialAvatarURL;
+        var canvas;
+
+        $modal.modal('hide');
+
+        if (cropper) {
+          canvas = cropper.getCroppedCanvas({
+            width: 360,
+            height: 460,
+          });
+          $('.add-photo').addClass('AddImg');
+          initialAvatarURL = avatar.src;
+          avatar.src = canvas.toDataURL();
+          imageHdnedit.value = canvas.toDataURL()
+        }
+      });
+    });
+
+    function zoom(z){
+        cropper.zoom(z)
+      }
+    $('.Imgremove').click(function(){
+       $('.PreviewImg').attr('src', '');
+        $('.AddImg').removeClass('AddImg');
+    });
+</script>  

@@ -1,0 +1,72 @@
+<div class="container">
+            <div class="logo">
+                <a href="/">
+                    <img src="/public/images/logo.png" alt="" class="hidden-sm hidden-xs">
+                    <img src="/public/images/logo1.png" alt="" class="hidden-lg hidden-md">
+                </a>
+            </div>
+            
+            <!-- responsive nav -->
+            <nav class="menu-panel" id="res-menu">
+                <a class="np-toggle-switch np-toggle-switch-nxp open_close" href="javascript:void(0);"><span>Menu mobile</span></a>
+                <div class="main-menu" id="main-menu">
+                    <div id="header_menu">
+                        <!-- <img src="/public/images/logo-menu.png" alt=""> -->
+                    </div>
+                    <a href="#" class="open_close" id="close_in"><i class="icon_close"></i></a>
+                    <ul>
+                        <li><a href="/" class="show-submenu"><i class="icon_house_alt"></i>  Home </a></li>
+                        <li><a href="/recipes"><i class="icon-themeenergy_serving-plate3"></i> Recipes </a></li>
+                        <li><a href="/dishmizer"><i class="ic icon-chefs"></i> Dishmizer </a></li>
+                        <li><a href="/about-us"><i class="icon-themeenergy_hand-touch-1"></i> About Us </a></li>
+                        <li><a href="/community"><i class="ic icon-community2"></i> Community </a></li>
+                        <li><a href="/blog"><i class="ic icon-books"></i>  Blog </a></li>
+                        <li><a href="/earn-money" class="show-submenu"><i class="ic icon-question"></i> Earn Money </a></li>
+                        <li><a href="/contact-us"><i class="icon-themeenergy_phone-contacts"></i> Contact Us </a></li>
+                        <% if (sess_val == undefined ) { %>
+                            <li><a href="/registration" title=""><i class="fa fa-user-plus"></i> Register </a></li>
+                            <li><a href="/login" title=""><i class="fa fa-sign-in"></i> Login </a></li>
+                            <% } else { %> 
+                            <li><a href="/dishmizer-profile/<%= sess_val %>" title=""><i class="fa fa-user"></i> Profile </a></li>
+                            <li><a href="/login/logout" title=""><i class="fa fa-sign-in"></i> Logout </a></li>
+                            <% } %>
+                    </ul>
+                </div>
+            </nav>
+            <!-- responsive nav -->
+
+                    
+            <div class="row">
+                <nav class="col-md-6">
+                    <div class="main-menu pull-left">
+                        <ul>
+                            <li class="submenu">
+                                <a href="/" class="show-submenu"><i class="icon_house_alt"></i> Home </a>
+                                
+                            </li>
+                            <li><a href="/recipes"><i class="icon-themeenergy_serving-plate3"></i> Recipes </a></li>
+                            <li><a href="/dishmizer"><i class="ic icon-chefs"></i> Dishmizer </a></li>
+                            <li><a href="/about-us"><i class="icon-themeenergy_hand-touch-1"></i> About Us </a></li>
+                            <li><a href="/community" class="show-submenu"><i class="ic icon-community2"></i> Community </a></li>
+                        </ul>
+                    </div><!-- End main-menu -->
+                </nav>
+                <nav class="col-md-6">
+                    <div class="main-menu">
+                        <ul>
+                            <li><a href="/blog" class="show-submenu"><i class="ic icon-books"></i>  Blog </a></li>
+                            <li><a href="/earn-money" class="show-submenu"><i class="ic icon-question"></i>Earn Money </a></li>
+                            <li><a href="/contact-us"><i class="icon-themeenergy_phone-contacts"></i> Contact Us </a></li>
+                            <% if (sess_val == undefined ) { %>
+                            <li><a href="/registration" title=""><i class="fa fa-user-plus"></i> Register </a></li>
+                            <li><a href="/login" title=""><i class="fa fa-sign-in"></i> Login </a></li>
+                            <% } else { %> 
+                            <li><a href="/dishmizer-profile/<%= sess_val %>" title=""><i class="fa fa-user"></i> Profile </a></li>
+                            <li><a href="/login/logout" title=""><i class="fa fa-sign-out"></i> Logout </a></li>
+                            <% } %> 
+                        </ul>
+                    </div><!-- End main-menu -->
+                </nav>
+                <audio id="myAudio" loop><source src="/public/audio/skype.mp3" type="audio/mpeg"></audio>
+            </div><!-- End row -->
+        </div>

@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <% include ../partials/head %>
+</head>
+ 
+    
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    <!-- End Preload -->
+
+    <!-- wrap Page -->
+    <div id="wrap">
+
+        <!-- Header Top -->
+        <% include ../partials/header-top.ejs %>
+            <!-- End Header Top -->
+            <!-- Header -->
+            <header class="style2">
+                <% include ../partials/header %>
+            </header>
+            <!-- End Header -->
+            <!-- SubHeader -->
+
+            <section class="parallax-window" id="short" data-parallax="scroll" data-image-src="/public/images/recipe.jpg">
+                <div id="sub_header">
+                    <div class="container" id="sub_content">
+                        <div class="row">
+                            <div class="col-md-12">
+                                <h1>
+                                    <%= data[0].recipe_title %>
+                                </h1>
+                                <div class="bread-crums">
+                                    <a href="/">Home</a>
+                                    <span class="bread-crums-span">&raquo;</span>
+                                    <a href="/recipes">Recipe</a>
+                                    <span class="bread-crums-span">&raquo;</span>
+                                    <span class="current"><%= data[0].recipe_title %></span>
+                                </div>
+                                <!-- End bread-crums -->
+                            </div>
+                        </div>
+                        <!-- End row -->
+                    </div>
+                    <!-- End container -->
+                </div>
+            </section>
+<%- locals.flash %>
+            <section id="blog" class="margin_60 gray_bg">
+                <div class="container">
+                    <div class="row">
+                        <div class="content col-md-9">
+                            <!--blog entry-->
+                            <div class="recipe">
+                                <div class="row">
+                                    <!--two-third-->
+                                    <article class="col-md-8">
+                                        <div class="intro">
+                                            <h1>
+                                                <%= data[0].recipe_title %>
+                                            </h1>
+                                            <lable class="star-rating">
+                                                <input id="input-2-xs" name="input-2" data-readonly="true" class="rating rating-loading" data-min="0" data-max="5" data-step="0.5" data-size="xs" value="<%= rating %>">
+                                            </lable> 
+                                        </div>
+
+                                        <div class="image"><img src="<%= data[0].recipe_image %>" alt=""></div>
+                                        <div class="intro">
+                                            <p>
+                                                <%= data[0].description %>
+                                            </p>
+                                        </div>
+                                        
+                                        <div class="instructions">
+
+                                            <ol>
+                                                <% for(var i=0; i < data.length; i++) { %>
+                                                    <% if(data[i].con_key == 'step' ) { %>
+
+                                                        <li>
+                                                            <%= data[i].value %>
+                                                        </li>
+                                                        <% } } %>
+
+                                            </ol>
+                                        </div>
+                                    </article>
+                                    <!--//two-third-->
+
+                                    <!--one-third-->
+                                    <article class="col-md-4">
+                                        <% if(data[0].user_id != sess_val){ %> 
+                                        <dl class="text-center mar10">
+                                            <a href="" id="online" onclick="onlineTeaching(<%= data[0].user_id %>)" class="button-more" data-toggle="modal" data-target="#onlineTeaching"> Online Teaching </a>
+                                        </dl>
+                                        <% } %>
+                                        <dl class="basic">
+
+                                            <% for(var i=0; i< data.length; i++) { %>
+                                                <% if(data[i].con_key == 'basic' ) { %>
+
+                                                    <dt><%= data[i].value %></dt>
+                                                    <dd>
+                                                        <%= data[i].content_description %>
+                                                    </dd>
+                                                    <% } } %>
+
+                                        </dl>
+
+                                        <dl class="user">
+
+                                            <!-- <% for(var i=0; i< data.length; i++) { %>
+                                     <% if( data[i].con_key == 'user' ) { %> 
+                                       
+                                       <dt><%= data[i].value %></dt>
+                                       <dd><%= data[i].content_description %></dd>
+                                   <% } } %> -->
+                                            <dt>Posted By</dt>
+                                            <dd>
+                                                <%= data[0].firstname %>
+                                                    <%= data[0].lastname %>
+                                            </dd>
+                                            <dt>Category</dt>
+                                            <dd>
+                                                <%= catId %>
+                                            </dd>
+                                        </dl>
+
+                                        <dl class="prices">
+                                            <dt>Ordinary Price</dt>
+                                            <dd><%= data[0].ordinary_price %></dd>
+                                                                                   
+                                        </dl>
+                                        <dl>
+                                            <dt>Exclusive Price</dt>
+                                            <dd><%= data[0].exclusive_price %></dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Buy Price</dt>
+                                            <dd><%= data[0].buy_price %></dd>
+                                        </dl>
+
+                                        <dl class="ingredients">
+
+                                            <% for(var i=0; i< data.length; i++) { %>
+                                                <% if(data[i].con_key == 'ingredients' ) { %>
+
+                                                    <dt><%= data[i].content_description %></dt>
+                                                    <dd>
+                                                        <%= data[i].value %>
+                                                    </dd>
+                                                    <% } } %>
+
+                                        </dl>
+                                    </article>
+                                    <!--//one-third-->
+                                </div>
+                            </div>
+                            <!--//blog entry-->
+
+                            <!--Comments-->
+
+                            <% if (countData > 0) { %>
+
+                                <div class="comments clearfix" id="comments">
+                                    <h3><span id="comCount"><%= countData %></span> Comments</h3>
+                                    <ul class="comment-list">
+
+
+                                        <% for (var i=0; i< commentData.length; i++) { %>
+                                            <% if ( commentData[i].parent_id ==  0 ) { %>
+                                                <li class="comment depth-1" id="parent<%= commentData[i].comment_id %>">
+                                                    <div class="avatar"><img src="<%= commentData[i].imageUrl %>" alt=""></div>
+                                                    <div class="comment-box">
+                                                        <div class="comment-author meta">
+                                                            <strong><%= commentData[i].firstname %> <%= commentData[i].lastname %></strong>
+                                                            
+                                                            <% 
+                                                                function Dateconvert(str) {
+                                                                    var date = new Date(str),
+                                                                        mnth = ("0" + (date.getMonth()+1)).slice(-2),
+                                                                        day  = ("0" + date.getDate()).slice(-2);
+                                                                    console.log(date.getHours(),date.getMinutes());
+                                                                    return [ day,mnth,date.getFullYear() ].join("|");
+                                                                }
+                                                            %>
+                                                            
+                                                            <%= Dateconvert(commentData[i].last_update); %> <a href='javascript:void(0);' onclick="parentReply('<%= commentData[i].comment_id %>','<%= session_values.image %>','<%= commentData[i].content_type_id %>','<%= session_values.firstname %> <%= session_values.lastname %>','<%= session_values.email %>')" class='comment-reply-link'>Reply</a>
+                                                        </div>
+                                                        <div class="meta-rate">
+                                                            <i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star"></i>
+                                                        </div>
+                                                        <div class="comment-text">
+                                                            <p>
+                                                                <%= commentData[i].comment %>
+                                                            </p>
+                                                        </div>
+                                                    </div>
+                                                </li>
+                                                <% } %>
+                                                    <% for(var j=0; j< commentData.length; j++) { %>
+
+                                                        <% if ( commentData[j].parent_id == commentData[i].comment_id && commentData[j].parent_id !== 0 ) { %>
+                                                            <li class="comment depth-2" id="child<%= commentData[j].parent_id %>_<%= commentData[j].comment_id %>">
+                                                                <div class="avatar"><img src="<%= commentData[j].imageUrl %>" alt=""></div>
+                                                                <div class="comment-box">
+                                                                    <div class="comment-author meta">
+                                                                        <strong><%= commentData[j].firstname %> <%= commentData[j].lastname %></strong>
+                                                                        <%= Dateconvert(commentData[j].last_update) %>
+                                                                    </div>
+                                                                    <div class="meta-rate">
+                                                                        <i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star"></i>
+                                                                    </div>
+                                                                    <div class="comment-text">
+                                                                        <p>
+                                                                            <%= commentData[j].comment %>
+                                                                        </p>
+                                                                    </div>
+                                                                </div>
+                                                            </li>
+
+                                                            <% } } } %>
+                                    </ul>
+                                </div>
+                                <% } else { %>
+                                    <div class="comments clearfix" id="comments">
+                                        <h3><span id="comCount">0</span> Comments</h3>
+                                        <ul class="comment-list">
+                                            <li id="hideCom" data-count="0"> No Comment Available </li>
+                                        </ul>
+                                    </div>
+                                    <% } %>
+
+                                        <!-- Comment Form -->
+                                        <div class="comment-respond" id="respond">
+                                            <h3>Leave a reply</h3>
+                                            <p><strong>Note:</strong> Comments on the web site reflect the views of their authors, and not necessarily the views of the socialchef internet portal. Requested to refrain from insults, swearing and vulgar expression. We reserve the right to delete any comment without notice explanations.</p>
+                                            <p>Your email address will not be published. Required fields are signed with <span class="req">*</span></p>
+
+                                            <form action="#" id="commentForm" method="post" name="form_name" class="form_class">
+                                                <div class="row">
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Your Name :</label><span class="req">*</span>
+                                                            <input type="text" id="nameCom" value="<%= session_values.firstname %> <%=session_values.lastname %>" name="nameCom" class="form-control required" disabled>
+                                                            <input type="hidden" name="rcp_id" id="rcp_id" value="<%= data[0].recipe_id %>">
+                                                            <input type="hidden" name="authrimg" id="authrimg" value="<%= session_values.image %>">
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-6">
+                                                        <div class="form-group">
+                                                            <label>Email address :</label><span class="req">*</span>
+                                                            <input type="text" name="emailCom" value="<%=session_values.email %>"  class="form-control required" id="emailCom" disabled>
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-12">
+                                                        <div class="form-group">
+                                                            <label>Comment :</label><span class="req">*</span>
+                                                            <textarea class="form-control required" name="commentCom" rows="10" id="commentCom"></textarea>
+                                                        </div>
+                                                    </div>
+                                            </form>
+                                            <div class="col-sm-12">
+                                                <input type="button" name="submitCom" class="button-more" onclick="leaveReply()" id="submitCom" value="Submit Comment">
+                                                <div id="alertMsg"></div>
+                                            </div>
+
+                                            </div>
+
+                                        </div>
+                        </div>
+
+
+                        <!-- Sidebar -->
+
+                        <aside class="sidebar col-md-3">
+
+                            <div class="widget">
+                                <div class="featured responsiveSection">
+                                    <div class="authorStar">
+                                        <i class="fa fa-star" aria-hidden="true"></i>
+                                    </div>
+                                    <div class="entry white_bg">
+                                        <figure>
+                                            <img src="<%= data[0].imageUrl %>" alt="">
+                                            <figcaption><a href=""><i class="fa fa-eye"></i> <span>View member</span></a></figcaption>
+                                        </figure>
+                                        <div class="authorInro">
+
+                                            <h2>
+                                                <a href="/dishmizer-profile/<%= data[0].user_id %>">
+                                                    <%= data[0].firstname %>
+                                                        <%= data[0].lastname %>
+                                                </a>
+                                            </h2>
+                                            <div class="authorDesc"><i class="fa fa-quote-left" aria-hidden="true"></i> 
+                                                <% for(var i=0; i< data.length; i++) { %>
+                                                    <% if(data[i].con_key == 'profile_comment' ) { %>
+                                                        <%= data[i].content_description %>
+                                                <% } } %>
+                                            </div>
+                                            <div class="actions">
+                                                <div>
+                                                    <a href="/recipes" class="button-more">Check out her recipes</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="widget share">
+                                <ul class="boxed">
+                                    <!--li class="light"><a href="#" title="Facebook"><i class="fa fa-facebook" aria-hidden="true"></i> <span>Share on Facebook</span></a></li>
+                                    <li class="medium"><a href="#" title="Twitter"><i class="fa fa-twitter" aria-hidden="true"></i> <span>Share on Twitter</span></a></li>
+                                    <li class="dark"><a href="#" title="Favourites"><i class="fa fa-heart" aria-hidden="true"></i> <span>Add to Favourites</span></a></li-->
+                                    <li class="dark"><a href="#" title="Favourites" data-toggle="modal" data-target="#myModal"><i class="fa fa-star" aria-hidden="true"></i> <span>Give Rating</span></a></li>
+                                </ul>
+                            </div>
+                        </aside>
+                    </div>
+                </div>
+            </section>
+            <!-- End container -->
+            </section>
+            <!-- End white_bg -->
+
+
+
+            <!-- newslatter -->
+            <section class="newslatter">
+                <div class="container">
+                    <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                    <div class="subcribe">
+                        <input type="text" class="form-control" placeholder="Your Email">
+                        <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                    </div>
+                </div>
+            </section>
+            <!-- End newslatter -->
+            <!-- Footer -->
+            <footer>
+                <% include ../partials/footer %>
+            </footer>
+            <!-- End Footer -->
+    </div>
+    <!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+
+    <!--<div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Give Star Rating</h4>
+          </div>
+            <div class="modal-body">
+              <form method="post" action="#" role="form">
+                <lable class="star-rating">
+                  <input id="star-sm" name="input-2" class="rating rating-loading" data-min="0"  data-max="5" data-step="0.5"   data-size="sm" value="0">
+                </lable> 
+
+            </form>
+
+            </div>
+
+        </div>
+
+      </div>
+    </div>-->
+
+    <div id="myModal" class="modal fade" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Give Star Rating</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="rating_alert"></div>
+                    <form method="post" action="/single-recipes/rating" id="rating" role="form">
+                        <lable class="star-rating">
+                            <input id="star-sm" name="rating" class="rating rating-loading" data-min="0" data-max="5" data-step="0.5" data-size="sm" value="0">
+                            <input type="hidden" name="recipeId" id="recipeId" value="<%= data[0].recipe_id %>">
+                            <input type="hidden" name="userId" id="userId" value="<%= data[0].user_id %>">
+                        </lable>
+                        <input type="submit" class="btn btn-success" value="Done">
+                    </form>
+                    
+                    <!--<button type="button" class="btn btn-success" onclick="give_Rating()" data-dismiss="modal">Done</button>-->
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+        <div class="modal fade" id="addMyModal" role="dialog"></div>
+
+</body>
+
+</html>
+<script type="text/javascript">
+/*var user_login = <%# session_values.user_id %> 
+    var user_onpage = <%# data[0].user_id %>
+        
+function hide_show(user_login,user_onpage) {
+    
+        if (user_onpage != user_login)
+        {
+            $('#online').css('display','block');
+            console.log(<%# session_values.user_id %>); 
+            
+        } else {
+            $('#online').css('display','none');
+            console.log('hide');
+            
+        }
+}
+    setInterval(function(){ 
+           hide_show(user_login,user_onpage);    
+    }, 30000);*/
+
+</script>

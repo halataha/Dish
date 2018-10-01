@@ -1,0 +1,65 @@
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top %>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="images/login.jpg" >
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1><%= title %></h1>
+                            <h3>Qui debitis meliore ex, tollit debitis conclusionemque te eos.</h3>
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <div class="white_bg">
+            <div class="container margin_60">
+                <div class="main_title">
+                    <div class="page-not-found-background">
+                        <img alt="404" src="images/404.png" width="217" height="222">
+                    </div>
+                    <h2 class="nomargin_top">Error. Looks Like Something Went Wrong!</h2>
+                </div>
+                
+            </div><!-- End container -->
+        </div><!-- End white_bg -->
+        <!-- newslatter -->
+        <div class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your mail">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </div><!-- End newslatter -->
+        <!-- Footer -->
+         <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+</body>

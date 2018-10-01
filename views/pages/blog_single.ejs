@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en"> 
+<head>
+    <!-- Basic Page Needs -->
+     <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+
+    <!-- Preload -->
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top.ejs%>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header>
+        <!-- SubHeader -->
+
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/blog.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1><%= data[0].title %></h1>
+                            <div class="bread-crums">
+                                <a href="/">Home</a>
+                                <span class="bread-crums-span">&raquo;</span>
+                                <span class="current"><%= data[0].title%></span>
+                            </div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+
+        </section>
+
+        <section id="blog" class="margin_60 gray_bg">
+            <div class="container">
+                <div class="row">
+                    <div class="content col-md-9">
+                    <!--blog entry-->
+                        <article class="post single">
+                            <div class="entry-meta">
+                                <div class="date">
+                                    <span class="day"><%= data[0].day %></span> 
+                                    <span class="my"><%= data[0].month %> <%= data[0].year %></span>
+                                </div>
+                                <div class="avatar">
+                                    <a href="/my_profile"><img src="<%= data[0].imageUrl %>" alt=""><span><%= data[0].firstname %> <%= data[0].lastname %></span></a>
+                                </div>
+                            </div>
+                            <div class="postContainer">
+                                <% if( data[0].image_blog) { 
+                                        var blog_image = data[0].image_blog;
+                                    } else {
+                                        var blog_image = '/public/images/blogDefault.png';
+                                    }
+                                %>
+                                
+                                <div class="entry-featured"><a href="/blog_single"><img src="<%= blog_image %>" alt=""></a></div>
+
+                                <div class="entry-content">
+                                    <h2><a href="/blog_single"><%= data[0].title %></a></h2>
+                                    <p><%= data[0].description %></p>
+                                </div>
+                                
+                            </div>
+                        </article>
+                        <!--//blog entry-->
+                    
+                        <!--Comments-->
+                        
+                        <% if (countData > 0) { %>
+                        <div class="comments clearfix" id="comments">
+                           <h3><%= countData %> Comments</h3>
+                           <ul class="comment-list">
+                               
+                               <% for (var i=0; i< commentData.length; i++) { %>
+                               <li class="comment depth-1">
+                                   <div class="avatar"><img src="<%= commentData[i].imageUrl %>" alt=""></div>
+                                   <div class="comment-box">
+                                    <div class="comment-author meta">
+                                        <strong><%= commentData[i].firstname %> <%= commentData[i].lastname %></strong>
+                                        
+                                        <% 
+                                            function Dateconvert(str) {
+                                                var date = new Date(str),
+                                                    mnth = ("0" + (date.getMonth()+1)).slice(-2),
+                                                    day  = ("0" + date.getDate()).slice(-2);
+                                                console.log(date.getHours(),date.getMinutes());
+                                                return [ day,mnth,date.getFullYear() ].join("|");
+                                            }
+                                        %>
+                                        
+                                        <%= Dateconvert(commentData[i].last_update); %> <a href='javascript:void(0);' onclick="parentBlogReply('<%= commentData[i].comment_id %>','<%= session_values.image %>','<%= commentData[i].content_type_id %>','<%= session_values.firstname %> <%= session_values.lastname %>','<%= session_values.email %>')" class='comment-reply-link'>Reply</a>
+                                    </div>
+                                    <div class="meta-rate">
+                                        <i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star rated"></i><i class="fa fa-star"></i>
+                                    </div>
+                                       <div class="comment-text">
+                                           <p><%= commentData[i].comment %></p>
+                                       </div>
+                                   </div> 
+                               </li>
+                         
+                               
+                               <% for(var j=0; j< commentData.length; j++) { %>
+                               
+                               <% if ((commentData[i].comment_id) == (commentData[j].parent_id)) { %>
+                               <li class="comment depth-2">
+                                   <div class="avatar"><img src="<%= commentData[j].imageUrl %> " alt=""></div>
+                                   <div class="comment-box">
+                                       <div class="comment-author meta"> 
+                                           <strong><%= commentData[j].firstname %> <%= commentData[j].lastname %></strong> 
+                                           <%= Dateconvert(commentData[j].last_update) %>
+                                       </div>
+                                       <div class="comment-text">
+                                           <p><%= commentData[j].comment %></p>
+                                       </div>
+                                   </div> 
+                               </li> 
+       
+                         <% } } } %>
+                           </ul>
+                       </div>
+                       <% } else { %>
+                        <div class="comments clearfix" id="comments">
+                          <h3>Comments</h3>
+                          <ul class="comment-list"><li class="no-comment">NO Comment Available</li></ul>
+                        </div>
+                       <% } %>
+
+                    <!-- Comment Form -->
+                    <div class="comment-respond" id="respond">
+                        <h3>Leave a reply</h3>
+                        <p><strong>Note:</strong> Comments on the web site reflect the views of their authors, and not necessarily the views of the socialchef internet portal. Requested to refrain from insults, swearing and vulgar expression. We reserve the right to delete any comment without notice explanations.</p>
+                        <p>Your email address will not be published. Required fields are signed with <span class="req">*</span></p>
+
+                        <form action="" id="blogCommend">
+                        <form action="#" id="blogCommentForm" method="post" name="form_name" class="form_class">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Your Name :</label><span class="req">*</span>
+                                        <input type="text" id="blogReply" value="<%= session_values.firstname %> <%=session_values.lastname %>" name="blogReply" class="form-control required" disabled>
+                                        <input type="hidden" name="authrblogimg" id="authrblogimg" value="<%= session_values.image %>">
+                                    </div>
+                                </div>
+                                
+                                <div class="col-sm-6">
+                                    <div class="form-group">
+                                        <label>Email address :</label><span class="req">*</span>
+                                        <input type="text" name="blogReplyEmail" value="<%=session_values.email %>"  class="form-control required" id="blogReplyEmail" disabled>
+                                    </div>                         
+                                </div>
+                                <div class="col-sm-12">
+                                    <div class="form-group">
+                                        <label>Comment :</label><span class="req">*</span>
+
+                                        <textarea class="form-control required" name="blogComment" rows="10" id="blogComment"></textarea>
+                                    </div>
+                                </div>
+                            
+                                <div class="col-sm-12">
+                                    <input type="button" name="submitBlogReply" class="button-more" onclick="leaveBlogReply()" id="submitBlogReply" value="Submit Comment">
+                                    <div id="alertMsg"></div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    </div>  
+
+
+                    <!-- Sidebar -->
+                   
+                    <aside class="sidebar col-md-3">
+                    <div class="widget">
+                        <ul class="categories">
+                            <li><a href="#">All recipes</a></li>
+                            <li class="active"><a href="#">Tips and Tricks</a></li>
+                            <li><a href="#">Events</a></li>
+                            <li><a href="#">Inspiration</a></li>
+                            <li><a href="#">Category name</a></li>
+                            <li><a href="#">Lorem ipsum</a></li>
+                            <li><a href="#">Dolor</a></li>
+                            <li><a href="#">Sit amet</a></li>
+                        </ul>
+                    </div>
+                </aside>
+
+
+                </div>
+            </div>
+        </section><!-- End container -->
+
+
+        </section><!-- End white_bg -->
+
+        <!-- newslatter -->
+        <section class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+
+<script type="text/javascript">
+    jQuery.validator.addMethod("lettersonly", function(value, element){
+        return this.optional(element) || /^[a-z]+$/i.test(value);
+    },'Only alphabets allowed.');
+    $('#blogCommend').validate();
+</script>
+
+    <div class="modal fade" id="addMyBlogModal" role="dialog"></div>
+</body>
+</html>

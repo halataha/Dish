@@ -1,0 +1,20 @@
+
+{
+ "DATA_BACKEND": "cloudsql",
+ "MYSQL_USER": "openmind_user",
+ "MYSQL_PASSWORD": "P@$$w0rd",
+ "DATABASE":"openmind_dishmize",
+ "HOST":"68.66.200.221",
+ "accessKeyId": "AKIAIJ2UHPCAZTBE5H3A",
+ "secretAccessKey": "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",
+ "region": "us-east-1",
+ "EMAIL_SENDING_USER": "mohamed.ferjany@openmindint.com",
+ "EMAIL_SENDING_PASS": "M@123456789",
+ "EMAIL_FROM": "mohamed.ferjany@openmindint.com",
+ "IMAGEURL":"https://dishmize.s3.amazonaws.com/",
+ "INSTANCE_CONNECTION_NAME": "dishmizers:us-central1:dishmize",
+ "OAUTH2_CLIENT_ID":"559618949024-lcnldsk5ub4l2fjkfui8cb9h45umbd2t.apps.googleusercontent.com",
+ "OAUTH2_CLIENT_SECRET":"qadasdsa dsadsa dasascda",
+ "OAUTH2_CALLBACK":"http://localhost:8080/auth/google/callback"
+}
+

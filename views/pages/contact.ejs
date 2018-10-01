@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top.ejs%>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/contact-us.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1><%= title %></h1>
+                            <div class="bread-crums">
+        						<a href="/home">Home</a>
+        						<span class="bread-crums-span">&raquo;</span>
+        						<span class="current"><%= title %></span>
+        					</div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <div class="gray_bg">
+            <div class="container margin_60">
+                <div class="main_title">
+                    <h2 class="nomargin_top">Send Us a Message</h2>
+                    <hr class="divider">
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="text-shrink">
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center" id="EmailalertMsg"></div>
+                <div class="row margin_top_40">
+                    
+                    <div class="col-sm-6 col-sm-push-6 mb-40">
+                        <iframe class="map" height="380" src="https://maps.google.com/maps?q=United States&amp;hl=en&amp;sll=36.241384,-113.7547193&amp;z=3&amp;output=embed"></iframe>
+                    </div>
+
+                    <div class="col-sm-6 col-sm-pull-6">
+                        <div class="form-contacts">
+                            <div class="col-sm-12">
+                                <h2>Get In Touch</h2>
+                            </div>
+                            <form method="post" id="contactEmail">
+                                <div class="form-group col-sm-12">
+                                    <input type="text" id="nameEmailer" name="nameEmailer"  class="form-control lettersonly required" required pattern="/^[a-zA-Z ]*$/"  placeholder="Name" maxlength="50">
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <input type="email" id="emailEmailer" name="emailEmailer" class="form-control required" required="" placeholder="E-mail">
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <input type="text" id="subject" name="subject" class="form-control required" required="" placeholder="Subject">
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <textarea class="form-control" id="message" name="message" rows="8" required="" placeholder="Message"></textarea>
+                                </div>
+                                <div class="col-sm-5">
+                                    <input type="button" name="contactSubmit" class="btn btn-success" onclick="Email_contact()" id="contactSubmit" value="Send Now">
+                                    <!-- <input type="button"  class="btn btn-success" onclick="Email_contact()" id="contactSubmit" value="Send now"> -->
+                                    <span><i id="refresh" class="fa fa-refresh fa-spin" style="font-size:20px; display:none"></i></span> 
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+    
+    
+            </div><!-- End container -->
+        </div><!-- End white_bg -->
+        <!-- newslatter -->
+        <div class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </div><!-- End newslatter -->
+        <!-- Footer -->
+      <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+    
+
+</body>
+</html>
+<script>
+    jQuery.validator.addMethod("lettersonly", function(value, element){
+        return this.optional(element) ||  /^[a-zA-Z ]*$/i.test(value);
+    },'Only alphabets allowed.');
+    $('#contactEmail').validate();
+</script>

@@ -1,0 +1,487 @@
+
+<!--form  method="post" enctype="multipart/form-data">
+    <input type="file" name="myimage"/>
+    <input type="submit" value="submit" name="submit"/>
+</form-->
+
+
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div>
+    
+    
+    <div id="wrap">
+        
+       
+        <% include ../partials/header-top.ejs%>
+        
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header>
+       
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/add-recipe.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1><%= title %></h1>
+                            <div class="bread-crums">
+                                <a href="index.php">Home</a>
+                                <span class="bread-crums-span">&raquo;</span>
+                                <span class="current"><%= title %></span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <div class="white_bg create-recipe">
+            <div class="container margin_60">
+                <div class="main_title">
+                    <h2 class="nomargin_top"><%= title %></h2>
+                    <hr class="divider">
+                </div>
+                <%- locals.flash %>
+                <form action="/recipes/<%= action %>" method="post" id="recipeCreate" enctype="multipart/form-data">
+                    <% if ( RecipeData === 0) { %>
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group col-sm-12">
+                                <label for="recipetitle">Recipe title</label>
+                                <input type="text" id="recipetitle" name="recipetitle" class="form-control required" placeholder="Ex. Stuffed Mexican Rise">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="description">Description</label>
+                                <textarea id="description" name="description" class="form-control required" rows="8"></textarea>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="ordinary_price">Ordinary Prices</label>
+                                <input type="text" id="ordinary_price" name="ordinary_price" class="form-control required">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="exclusive_price">Exclusive Price</label>
+                                <input type="text" id="exclusive_price" name="exclusive_price" class="form-control required">
+                            </div>
+                           
+                            <!--div class="form-group col-sm-12">
+                                <label for="myyyyimage">Recipe Image</label>
+                                <input type="file" name="myimage"/>
+                            </div-->
+
+
+                            <div class="form-group col-sm-12">
+                                <label for="buy_price">Buy and Learn Online</label>
+                                <input type="text" id="buy_price" name="buy_price" class="form-control required">
+                            </div>
+                            <div class="col-sm-12">
+                                   <label for="Ingredients">Ingredients</label>
+                                <div class="row" id="textboxDiv">
+                                    <div class="form-group after-add-more">
+                                        <div class="col-sm-6">
+                                            <input type="text" required="required" name="key[]" class="form-control required" placeholder="Ex. Butter">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" required="required" name="value[]" class="form-control required" placeholder="Ex. 200mg">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-2 form-group row">
+                                        <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add</button>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <aside class="col-md-4 sidebar sticky-sidebar">
+                            <div class="theiaStickySidebar row">
+                                <div class="form-group col-sm-12">
+                                    <div class="add-photo">
+                                        <label for="myyyyimage">Recipe Image</label>
+                                        <input type="file" id="myimage" name="myimage" />
+                                        <img id="selectedimage" src="/public/images/recipeupload.jpg" style="width:3500px; height:200px;">
+                                        <div id="ValidImage" style="color:red"></div>
+                                        <!--label class="icon-picture gray" for="recipeImage">
+                                            <span>Browse</span>
+                                            <button type="button" class="Imgremove">X</button>
+                                            <img class="PreviewImg" id="avatar" src="" alt="avatar">
+                                            <input type="file" class="" name="recipeImage" id="recipeImage">
+                                            <input type="hidden" class="" name="imageHiddenRc" id="imageHiddenRc">
+                                        </label-->
+                                    </div>
+                                </div>
+
+                                <div class="form-group col-sm-12">
+                                    <label for="preptime">Prep time</label>
+                                    <input type="text" id="preptime" name="preptime" class="form-control required" placeholder="Ex. 30 Mins">
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <label for="cooktime">Cook time</label>
+                                    <input type="text" id="cooktime" name="cooktime" class="form-control required" placeholder="Ex. 30 Mins">
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <label for="numberofservings">Number of servings</label>
+                                    <input type="text" id="numberofservings" name="numberofservings" class="form-control required" placeholder="Ex. 5">
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <label for="category">Recipe Category</label>
+                                    <select name="category" name="category" class="form-control required">
+                                        <option>Select Recipe Category</option>
+                                        <% for(var i=0; i< categoryList.length; i++) { if(categoryList[i] != undefined) {%>
+                                        <option value="<%= categoryList[i].category_id %>"><%= categoryList[i].name %></option>
+                                        <% }} %>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <label for="difficulty">Difficulty</label>
+                                    <select name="difficulty" id="difficulty" class="form-control required">
+                                        <option>Select Difficulty</option>
+                                        <option value="Easy">Easy</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Hard">Hard</option>
+                                    </select>
+                                </div>
+                                <div class="form-group col-sm-12">
+                                    <div class="recipe-button">
+                                        <button type="submit" class="btn button-more" >Publish</button>
+                                         <button type="button" class="btn button-more btn-cancel">Cancel</button>
+                                    </div>
+                                </div>
+                            </div>    
+                        </aside>
+                    </div>
+                <% } else { %>
+                <div class="row">
+                        <div class="col-md-8">
+                            <div class="form-group col-sm-12">
+                                <label for="recipetitle"> Recipe title </label>
+                                <input type="text" id="recipetitle" name="recipetitle" value="<%= RecipeData[0].recipe_title %>" class="form-control required" placeholder="Ex. Stuffed Mexican Rise">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="description"> Description </label>
+                                <textarea id="description" name="description" class="form-control required" rows="8"><%= RecipeData[0].description %></textarea>
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="ordinary_price">Ordinary Prices</label>
+                                <input type="text" id="ordinary_price" name="ordinary_price" class="form-control required" value="<%= RecipeData[0].ordinary_price %>">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="exclusive_price">Exclusive Price</label>
+                                <input type="text" id="exclusive_price" name="exclusive_price" class="form-control required" value="<%= RecipeData[0].exclusive_price %>">
+                            </div>
+                            <div class="form-group col-sm-12">
+                                <label for="buy_price">Buy and Learn Online</label>
+                                <input type="text" id="buy_price" name="buy_price" class="form-control required" value="<%= RecipeData[0].buy_price %>">
+                            </div>
+                            
+                            <div class="col-sm-12">
+                                <label for="description"> Ingredients </label>
+                                <div class="row" id="textboxDiv">
+                                        <% for(var i=0; i < RecipeData.length; i++) { %>
+                                              <% if( RecipeData[i].con_key === 'ingredients' ) { %>
+                                    <div class="form-group clearfix">
+                                        <div class="col-sm-6">
+                                            <input type="text" required="required" name="key[]" value="<%= RecipeData[i].value %>" class="form-control required" placeholder="Ex. Butter">
+                                        </div>
+                                        <div class="col-sm-6">
+                                            <input type="text" required="required" name="value[]" value="<%= RecipeData[i].content_description %>" class="form-control required" placeholder="Ex. 200mg">
+                                        </div>
+                                        <div class="col-sm-2">
+                                            <button class="btn btn-danger remove" type="button"><i class="fa fa-times"></i> Remove </button>
+                                        </div>
+                                    </div>
+                                    <% }} %>
+                                     
+                                </div>
+                            <div class="col-sm-2 row form-group">
+                                <button class="btn btn-success add-more" type="button"><i class="glyphicon glyphicon-plus"></i> Add </button>
+                            </div>
+                        </div>
+                        </div>
+                        <aside class="col-md-4 sidebar sticky-sidebar">
+                            <div class="theiaStickySidebar row">
+
+                                <div class="form-group col-sm-12">
+                                    <div class="add-photo AddImg">
+                                        <label class="icon-picture gray" for="recipeImage">
+                                            <span>Browse</span>
+                                            <button type="button" class="Imgremove">X</button>
+                                            <img class="PreviewImg" id="avatar" src="<%= RecipeData[0].recipe_image %>" alt="avatar">
+                                            <input type="file" class="" name="recipeImage" id="recipeImage">
+                                            <input type="hidden" class="" name="imageHiddenRc" id="imageHiddenRc">
+                                            <input type="hidden" class="" value="<%= RecipeData[0].recipe_image %>" name="exist_image" id="exist_image">
+                                        </label>
+                                        
+                                    </div>
+                                    <div class="progress">
+                                      <div class="progress-bar progress-bar-striped active" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width:40%">0%</div>
+                                    </div>
+                                </div>
+                               
+                                <% for(var i=0; i < RecipeData.length; i++) { %>
+                                <% if( RecipeData[i].value === 'Preparation time' && RecipeData[i].con_key === 'basic' ) { %>
+                                <div class="form-group form-group col-sm-12">
+                                    <label for="preptime">Prep time</label>
+                                    <input type="text" id="preptime" name="preptime" value="<%= RecipeData[i].content_description %>" class="form-control required" placeholder="Ex. 30 Mins">
+                                </div>
+                                <% } %>
+                                <% if( RecipeData[i].value === 'Cooking time' && RecipeData[i].con_key === 'basic' ) { %>
+                                <div class="form-group col-sm-12">
+                                    <label for="cooktime">Cook time</label>
+                                    <input type="text" id="cooktime" name="cooktime" value="<%= RecipeData[i].content_description %>" class="form-control required" placeholder="Ex. 30 Mins">
+                                </div>
+                                <% } %>
+                                <% if( RecipeData[i].value === 'Serves' && RecipeData[i].con_key === 'basic' ) { %>
+                                <div class="form-group col-sm-12">
+                                    <label for="numberofservings">Number of servings</label>
+                                    <input type="text" id="numberofservings" name="numberofservings" value="<%= RecipeData[i].content_description %>" class="form-control required" placeholder="Ex. 5">
+                                </div>
+                                <% } %>
+                                <% if ( RecipeData[i].value === 'Category' && RecipeData[i].con_key === 'userCat' ) { %>
+                                <div class="form-group col-sm-12">
+                                    <label for="category">Recipe Category</label>
+                                    <select name="category" class="form-control required">
+                                        <% for(var j=0; j< categoryList.length; j++) { %>
+                                        <% if ( categoryList[j].category_id == RecipeData[i].content_description ) { %>
+                                        <option><%= categoryList[j].name %></option>
+                                        <% }  %>
+                                        <option value="<%= categoryList[j].category_id %>"><%= categoryList[j].name %></option>
+                                        <% } %>
+                                    </select>
+                                </div>
+                                <% } %>
+                                <% if ( RecipeData[i].value === 'Difficulty' && RecipeData[i].con_key === 'basic' ) { %>
+                                <div class="form-group col-sm-12">
+                                    <label for="difficulty">Difficulty</label>
+                                    <select name="difficulty" id="difficulty" class="form-control required">
+                                        <option><%= RecipeData[i].content_description %></option>
+                                        <option value="Easy">Easy</option>
+                                        <option value="Medium">Medium</option>
+                                        <option value="Hard">Hard</option>
+                                    </select>
+                                </div>
+                                <% }} %>
+                                
+                                <div class="form-group col-sm-12">
+                                    <div class="recipe-button">
+                                        <button type="submit" class="btn button-more"> Publish </button>
+                                        <button type="button" class="btn button-more btn-cancel"> Cancel </button>
+                                    </div>
+                                </div>
+                            </div>    
+                        </aside>
+                    </div>
+                <% } %>
+                </form>
+            </div>
+        </div>
+       
+        <section class="newslatter">
+            <div class="container">
+                <div class="col-md-9">
+                    <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                </div>
+                <div class="col-md-3">
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+                </div>
+            </div>
+        </section>
+       
+        <footer>
+            <% include ../partials/footer %>
+        </footer>
+    </div>
+   
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+   
+    <% include ../partials/scripts %>
+
+    <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">×</button>
+            <h4 class="modal-title">Crop the Image</h4>
+          </div>
+          <div class="modal-body">
+            <div class="img-container">
+              <img id="image" src="https://avatars0.githubusercontent.com/u/3456749">
+            </div>
+          </div>
+          <div class="modal-footer">
+            <div class="btn-group">
+              <button type="button" class="btn btn-primary"  onClick="zoom(0.1)">
+                <span class="docs-tooltip">
+                  <span class="fa fa-search-plus"></span>
+                </span>
+              </button>
+              <button type="button" class="btn btn-primary" onClick="zoom(-0.1)">
+                <span class="docs-tooltip">
+                  <span class="fa fa-search-minus"></span>
+                </span>
+              </button>
+            </div>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn btn-primary" id="crop">Crop</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</body>
+</html>
+<script type="text/javascript">
+
+
+$("#myimage").change(function () {
+              
+               readIMG(this);
+            })
+
+
+
+function readIMG(input) {
+                if (input.files && input.files[0]) {
+
+                    var file = input.files[0];
+                    var fileType = file["type"];
+                    var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+                    if ($.inArray(fileType, ValidImageTypes) < 0) {
+                        // invalid file type code goes here.
+                        // alert('Choose Image Only Please');
+                        $('#selectedimage').attr('src', "/public/images/recipeupload.jpg");
+                        var inpp = $('#myimage');
+                        $(inpp).val('');
+                        $('#ValidImage').html('Choose Image Only Please');
+                        return false;
+                    }
+                    else {
+                        $('#ValidImage').html('');
+                    }
+
+                    var reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        $('#selectedimage').attr('src', e.target.result);
+                    }
+
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
+
+
+ 
+
+
+
+//validate image file
+
+ //$("#myimage").change(function () {
+               //alert('hhfhfhfh');
+                //readIMG(this);
+           // })
+
+
+
+
+
+
+
+
+    //$('#recipeCreate').validate();
+
+    //var cropper;
+    //window.addEventListener('DOMContentLoaded', function () {
+      //var avatar = document.getElementById('avatar');
+      //var image = document.getElementById('image');
+     // var input = document.getElementById('recipeImage');
+      //var $alert = $('.alert');
+      //var $modal = $('#modal');   
+
+      //input.addEventListener('change', function (e) {
+       // var files = e.target.files;
+        //var done = function (url) {
+         // input.value = '';
+         // image.src = url;
+        //  $alert.hide();
+         // $modal.modal('show');
+       // };
+       // var reader;
+        //var file;
+        //var url;
+
+       // if (files && files.length > 0) {
+         // file = files[0];
+
+         // if (URL) {
+           // done(URL.createObjectURL(file));
+         // } else if (FileReader) {
+           // reader = new FileReader();
+           // reader.onload = function (e) {
+            //  done(reader.result);
+           // };
+           // reader.readAsDataURL(file);
+          //}
+        //}
+      //});
+
+     // $modal.on('shown.bs.modal', function () {
+        //cropper = new Cropper(image, {
+         // dragMode: 'move',
+         // aspectRatio: 800 / 600,
+        //  strict: false,
+         // autoCropArea: 0,
+         // restore: false,
+        //  zoomable: true,
+        //  guides: false,
+         // center: true,
+         // highlight: false,
+          //cropBoxMovable: false,
+         // cropBoxResizable: false,
+        //  toggleDragModeOnDblclick: false,
+         // zoomOnWheel:false,
+       // });
+      //}).on('hidden.bs.modal', function () {
+       // cropper.destroy();
+       // cropper = null;
+      //});
+
+      //document.getElementById('crop').addEventListener('click', function () {
+      //  var initialAvatarURL;
+       // var canvas;
+
+      //  $modal.modal('hide');
+
+        //if (cropper) {
+         // canvas = cropper.getCroppedCanvas({
+         //   width: 800,
+           // height: 600,
+        //  });
+         // $('.add-photo').addClass('AddImg');
+         // initialAvatarURL = avatar.src;
+         // avatar.src = canvas.toDataURL();
+          //imageHiddenRc.value = canvas.toDataURL()
+      //  }
+     // });
+    //});
+
+    //function zoom(z){
+      //  cropper.zoom(z)
+      //}
+    //$('.Imgremove').click(function(){
+      // $('.PreviewImg').attr('src', '');
+        //$('.AddImg').removeClass('AddImg');
+    //});
+
+</script>

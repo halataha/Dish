@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>
+
+</head>
+<% //section  = data.section %>
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top.ejs%>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/about.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1><%= title %></h1>
+                            <div class="bread-crums">
+        						<a href="/1">Home</a>
+        						<span class="bread-crums-span">&raquo;</span>
+        						<span class="current"><%= title %></span>
+        					</div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <section class="white_bg aboutUs margin_60">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6">
+                        <img src="/public/images/RecipeoftheDay.jpg" alt="">
+                    </div>
+
+                    <div class="col-md-6">
+                        <br>
+                        <br>
+                        
+                        <p>Our website is a corporation that works on food innovation which aims to populate the idea of thinking in your diet and how to make a different value and taste and maximize your profit from your skill in doing new meals and prepare new food for the world, and help you get more ideas.</p>
+                        <p>We are creating a value of sharing the best practices in kitchen and adding new taste, discovering new horizons in the world of food in exchange you get paid from your talent and your different way of cooking.</p>
+                        <p>We don’t interfere in your cooking method or even in the price, just you cook and make the best explanation for yourself using photos, videos and writing then we expose your meal and protect your rights and help you get paid as per the price that you want.</p>
+                    </div>
+
+                </div>
+
+
+    
+            </div><!-- End container -->
+        </section><!-- End white_bg -->
+        <!-- newslatter -->
+        <div class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </div><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+</body>
+</html>

@@ -1,0 +1,26 @@
+       
+            <form action="#" id="commentForm" method="post" name="form_name" class="form_class" >
+                                            <label>Your Name :</label><span class="req">*</span>
+                                            <input type="text" id="nameCom" name="nameCom" class="form-control required">
+                                    
+                                            <label>Email address :</label><span class="req">*</span>
+                                            <input type="text" name="email" class="form-control required" id="email" >
+                              
+                                            <label>Comment :</label><span class="req">*</span>
+                                            <textarea class="form-control required" name="comment" rows="10" id="comment"></textarea>
+                                
+                                        <input type="button" name="submitCom" id="submitCom" value="Submit Comment" onclick="submit_by_id('1')"/>
+                            </form>
+
+<script>
+
+var submit_by_id = function(){
+var name = document.getElementById("nameCom").value;
+var email = document.getElementById("email").value;
+ alert(name,email);	
+}
+
+
+
+
+</script>

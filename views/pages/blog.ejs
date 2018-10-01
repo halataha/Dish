@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top.ejs%>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+        <!-- SubHeader -->
+
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/blog.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1><%= title %></h1>
+                            <div class="bread-crums">
+                                <a href="/1">Home</a>
+                                <span class="bread-crums-span">&raquo;</span>
+                                <span class="current"><%= title %></span>
+                            </div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+
+        </section>
+
+        <section id="blog" class="margin_60 gray_bg">
+            <div class="container"> 
+                <% if(data.length > 0) { %>
+                <div class="row">
+                    <div class="content col-md-9">
+                  <% for(var i=0; i< data.length; i++) { %>
+                        <article class="post">
+                            <div class="entry-meta">
+                                <div class="date">
+                                    
+                                    <span class="day"><%= data[i].day %></span>
+
+                                    <span class="my"><%= data[i].month %>,<%= data[i].year %></span>
+                                </div>
+                                <div class="avatar">
+                                    
+                                        <% if (data[i].imageUrl !='') { %>
+                                                 
+                                            <a href="/my_profile/1"><img src="/public/images/userphotos/<%= data[i].imageUrl %>" alt=""><span><%= data[i].firstname %> <%= data[i].lastname %></span></a>
+        
+                                            <% } else{ %>  
+                                                <a href="/my_profile/1"><img src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><span><%= data[i].firstname %> <%= data[i].lastname %></span></a>
+                                               
+                                            <% } %>
+                                    
+                                    <!-- <a href="/my_profile/1"><img src="<%= data[i].imageUrl %>" alt=""><span><%= data[i].firstname %> <%= data[i].lastname %></span></a> -->
+                                </div>
+                            </div>
+                            <div class="postContainer">
+                                <div class="entry-featured"><a href="/single-blog/<%= data[i].blog_id %>">
+                                    <% if( data[i].image_blog == '' || data[i].image_blog == null ) { %>
+                                    <img src="/public/images/blogDefault.png" alt="">
+                                    <% } else { %>
+                                    <img src="/public/images/blogphotos/<%= data[i].image_blog %>" alt="">
+                                    <% } %>
+                                </a></div>
+                                <div class="entry-content blog-char-limit">
+                                    <h2><a href="/single-blog/<%= data[i].blog_id %>"><%= data[i].title %></a></h2>
+                                    <p><%= data[i].description.slice(0, 300) %><% if(data[i].description.length > 300){ %>...<% } %> </p>
+                                </div>
+                                <div class="actions">
+                                    <div>
+                                        <div class="category"><i class="fa fa-tags" aria-hidden="true"></i><a href="#">Tips and tricks</a></div>
+                                        <div class="comments"><i class="fa fa-comment" aria-hidden="true"></i><a href="/single-blog/<%= data[i].blog_id %>#comments">56</a></div>
+                                        <div class="moreBtn"><a href="/single-blog/<%= data[i].blog_id %>">Read more</a></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </article>
+                <% } %>    
+             
+                        <div class="text-center clearfix">
+                            <nav class="navigation pagination">
+                            <div class="nav-links">
+                                <% if (pages > 0) { %>
+                                <ul class="pagination text-center">
+                                <% if (current == 1) { %>
+                                <li class="disabled"><a>First</a></li>
+                                <% } else { %>
+                                <li><a href="/blog/1">First</a></li>
+                                <% } %>
+                                <% var i = (Number(current) > 5 ? Number(current) - 4 : 1) %>
+                                <% if (i !== 1) { %>
+                                <li class="disabled"><a>...</a></li>
+                                <% } %>
+                                <% for (; i <= (Number(current) + 4) && i <= pages; i++) { %>
+                                <% if (i == current) { %>
+                                <li class="active"><a><%= i %></a></li>
+                                <% } else { %>
+                                <li><a href="/blog/<%= i %>"><%= i %></a></li>
+                                <% } %>
+                                <% if (i == Number(current) + 4 && i < pages) { %>
+                                <li class="disabled"><a>...</a></li>
+                                <% } %>
+                                <% } %>
+                                <% if (current == pages) { %>
+                                <li class="disabled"><a>Last</a></li>
+                                <% } else { %>
+                                <li><a href="/blog/<%= pages %>">Last</a></li>
+                                <% } %>
+                                </ul>
+                                <% } %>
+
+                            </div>
+                        </nav>
+                        </div>
+                    </div>  
+       
+                    <aside class="sidebar col-md-3">
+                    <div class="widget">
+                        <ul class="categories">
+                          <% for(var i=0; i< categoryFilter.length; i++) { %>
+                            <li><a href="blog/category/<%= categoryFilter[i].category_id %>"><%= categoryFilter[i].name %></a></li>  
+                          <% } %>
+                        </ul>
+                    </div>
+                </aside>
+                </div>
+                <% } else { %>
+                <div class="col-md-12 clearfix">
+                        <div class="text-center">
+                            <a class="button-more larg-Btn">No Blog Available</a>
+                        </div>
+                </div>
+                <% } %> 
+            </div>
+        </section><!-- End container -->
+
+
+        <!-- newslatter -->
+        <section class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+</body>
+</html>
+
+<script type="text/javascript">
+    
+</script>
+
+

@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top %>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+  
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/login.jpg" data-natural-width="1400" data-natural-height="500">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Email Verification</h1>
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <!-- End SubHeader -->
+        <div class="gray_bg">
+            <div class="container margin_60">
+                <div class="row">
+              
+                    <div class="col-md-6 col-md-offset-3">
+                            
+    
+                        <div class="form-login white_bg">
+                            <div class="main_title">
+                                <h2 class="nomargin_top">Email Verification</h2>
+                                <hr class="divider">
+                            </div>
+                            <div class="alert alert-success text-center"><strong><%= savedData %></strong></div>
+                            <div class="actions email-Verification text-center">
+                                <a class="button-more" href="/login">Go To Login</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+    
+            </div><!-- End container -->
+        </div><!-- End white_bg -->
+        <!-- newslatter -->
+        <section class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+  
+
+
+
+

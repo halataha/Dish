@@ -1,0 +1,58 @@
+::selection, 
+.chef-detail .chef-info .chef-text .title small, 
+.page-not-found-background, 
+.forumstatistics, 
+.widget .widget-title:before, 
+.widget .widget-title i, 
+.login-app a, 
+.navigation.pagination .nav-links a:hover,
+.navigation.pagination .nav-links span, 
+.go-up, 
+.progressbar-percent,
+a.button-more:hover,
+a.button-download,
+.button-browse-more, 
+#footer-top .subcribe a,
+a.button-radius:hover, 
+.box-icon > div, 
+.slideshow .tparrows:hover, 
+.slide-a a, 
+.blog-img:before, 
+.blog-continue a, 
+.review-box h2.review-box-header, 
+.review-percentage .review-item span, 
+.recipes-review .review-final-score, 
+.review-box .review-final-score, .button-more:hover, .btn-primary:hover, .button-browse-more:hover, .button-download:hover, .btn.btn-success:hover, button.btn.btn-default:hover, .button-more:focus, .btn-primary:focus, .button-browse-more:focus, .button-download:focus, .btn.btn-success:focus, button.btn.btn-default:focus
+{
+    background-color: #0a5b92;
+    color: #fff;
+}
+.newslatter {
+	background-color: #abcee8;
+}
+header {
+    background: rgba(113, 168, 102, 0.9);
+}
+
+ul.tags li a:hover, 
+.tagcloud a:hover, 
+.login-app a:hover, 
+.login-app a:focus
+{
+    background-color: #0a5b92;
+    border-color: #0a5b92;
+}
+
+.info-icons .semipart i,
+.col-recipe .excerpt h3 a, 
+.col-video .hover-icon a:hover, 
+ul.blog-posts li .inner .post-detail span i, 
+.widget-list ul li a:hover, 
+.user-signup a,
+.main-menu ul ul li:hover>a,
+a.comment-reply,
+.main-menu ul ul li a:hover,
+.main-menu ul ul a:hover
+{
+    color: #0a5b92;
+}

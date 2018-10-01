@@ -1,0 +1,511 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top %>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+  
+        <!-- SubHeader -->
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/chef.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1>Dishmizers</h1>
+                            <div class="bread-crums">
+                    <a href="/home">Home</a>
+                    <span class="bread-crums-span">&raquo;</span>
+                    <span class="current"><%= data[0].firstname %> <%= data[0].lastname %></span>
+                  </div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+        <%- locals.flash %>
+        <!-- End SubHeader -->
+        <Section class="gray_bg">
+            <div class="container margin_60">
+                <div class="row">
+                    <div class="my_account col-sm-3">
+                        <div class="white_bg">
+                            <figure>
+                                <img src="<%= data[0].imageUrl %>" alt="">
+                            </figure>
+                            <div class="">
+                                <h3><%= data[0].firstname %> <%= data[0].lastname %></h3> 
+                            </div>
+                        </div>
+<!--                         <div class="text-center mar10">
+                            <a href="" class="button-more">Add Recipe</a>
+                            <a href="" class="button-more">Edit Profile</a>
+                        </div> -->
+                        <div class="text-center mar10">
+                            <a href="" id="onlineTeaching" onclick="onlineTeaching(<%= data[0].user_id %>)"  class="button-more" data-toggle="modal" data-target="#myModal"> Online Teaching </a>
+                        </div>
+                    </div>
+                    
+                    <div id="myModal" class="modal fade in" role="dialog">
+                      <div class="modal-dialog">
+
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal">×</button>
+                            <h4 class="modal-title">Video Chat</h4>
+                          </div>
+                          <div class="modal-body" id="videoChat">
+                           
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                          </div>
+                        </div>
+
+                      </div>
+                    </div>
+                    
+                    <div id="rating_modal" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">Give Star Rating</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="rating_alert"></div>
+                                    <form method="post" action="#" id="rating" role="form">
+                                        <lable class="star-rating">
+                                            <input id="star-sm" name="input-2" class="rating rating-loading" data-min="0" data-max="5" data-step="0.5" data-size="sm" value="0">
+                                            <input type="hidden" id="userId" value="<%= data[0].user_id %>">
+                                        </lable>
+                                    </form>
+                                    <button type="button" class="btn btn-success" onclick="give_Rating()" data-dismiss="modal">Done</button>
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <div class="col-sm-9">
+                        <nav class="tabs">
+                            <ul>
+                              <li class="active" rel="tab1">About Me</li>
+                              <li rel="tab2">My Recipes</li>
+                              <li rel="tab3">My Favorites</li>
+                              <li rel="tab4">My Posts</li>
+                            </ul>
+                        </nav>
+                        <div class="tab_container">
+                          <h3 class="d_active tab_drawer_heading" rel="tab1">About Me</h3>
+                          <div id="tab1" class="tab-content">
+                            <div class="row">
+                              <dl class="basic col-md-7">
+                                <dt>Name</dt>
+                                <dd><%= data[0].firstname %> <%= data[0].lastname %></dd>
+                                <dt>Favorite cusine</dt>
+                               <dd><%= data[3].value %></dd>
+                                <dt>Favorite appliances</dt>
+                                <dd><%= data[2].value %></dd>
+                                <dt>Favorite spices</dt>
+                                <dd><%= data[1].value %></dd>
+                                <dt>Recipes submitted</dt>
+                                <% if (rData !== '') { %>
+                                <dd><%= rData.length %></dd>
+                                <% } %>
+                                <dt>Posts submitted</dt>
+                                <% if (pData !== '') { %>
+                                <dd><%= pData.length %></dd>
+                                <% } %>
+                              </dl>
+                              
+                               <div class="col-md-5">
+                                <ul class="boxed gold">
+                                  <!-- <li class="light"><a href="#"><i class="icon icon-themeenergy_crown"></i> <span>Had a best recipe</span></a></li> -->
+                                  <% if ( data[0].user_id == sess_val && sess_val !== undefined ) { %>
+                                  <li class="light"><a href="/recipes/Add"><i class="icon icon-themeenergy_serving-plate"></i> <span>Add Recipe?</span></a></li>
+                                  <% } %>
+                                  <% if ( data[0].user_id == sess_val && sess_val !== undefined ) { %>
+                                  <li class="medium"><a href="/dishmizer-profile/edit"><i class="icon icon-themeenergy_pencil"></i> <span>Edit your Profile ?</span></a></li>
+                                  <% } %>
+                                  <% if ( data[0].user_id == sess_val && sess_val !== undefined ) { %>
+                                  <li class="dark"><a href="/community/addPost" ><i class="icon icon-community2"></i> <span> Add Community Post </span></a></li>
+                                  <% } %>
+                                  <li class="light"><a href="#"><i class="icon  icon-themeenergy_medal-first-place"></i> <span>Added a first recipe</span></a></li>
+                                  
+                                  <li class="medium"><a href="#"><i class="icon icon-themeenergy_medal-8"></i> <span>Added 10-20 recipes</span></a></li>
+                                  <li class="dark"><a href="/blog/blog-add"><i class="icon icon-themeenergy_pencil"></i> <span>Write a blog post</span></a></li>
+                                  <li class="light"><a href="/recipes"><i class="icon icon-themeenergy_chat-bubbles"></i> <span>Write a comment</span></a></li>
+                                  
+                                  <li class="medium"><a href="/recipes"><i class="icon icon-themeenergy_cup2"></i> <span>Won a contest</span></a></li>
+                                  <li class="dark"><a href="/recipes"><i class="icon icon-themeenergy_share3"></i> <span>Shared a recipe</span></a></li>
+                                    <% if ( data[0].user_id != sess_val) { %>
+                                    <li class="dark"><a href="#" title="Favourites" data-toggle="modal" data-target="#rating_modal"><i class="fa fa-star" aria-hidden="true"></i> <span>Give Rating</span></a></li> 
+                                    <% } %>
+                                 
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
+                          <!-- #tab1 -->
+                          <h3 class="tab_drawer_heading" rel="tab2">My Recipes</h3>
+                          <div id="tab2" class="tab-content">
+                            <div class="entries row">
+                              <!--item-->
+                              <% if (rData.length !== 0) { %>
+                              <% for (var i=0;i < rData.length;i++ ) { %>
+                              <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="entry white_bg">
+                                    <figure>
+                                        <img src="<%= rData[i].recipe_image %>" alt="">
+                                        <figcaption><a href="/single-recipes/<%= rData[i].recipe_id %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
+                                    </figure>
+                                    <div class="shortDesc">
+                                        <h4><a href="single-recipes/<%= rData[i].recipe_id %>"><%= rData[i].recipe_title %></a></h4>
+                                        <lable class="star-rating">
+                                                <input id="input-2-xs" name="input-2" data-readonly="true" class="rating rating-loading" data-min="0"  data-max="5" data-step="0.5" data-size="xs" value="<%= rData[i].rating %>">
+                                            </lable> 
+                                        <div class="actions">
+                                          <div class="rows">
+                                        
+                                        <% if( sess_val === undefined || rData[i].likeStatus === 0 ) { %>
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= rData[i].recipe_id %>" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-<%= rData[i].recipe_id %>"><%= rData[i].like_count %></span> </a></div>
+                                        
+                                        <% } else if ( rData[i].likeStatus === null && sess_val !== undefined ) { %>
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= rData[i].recipe_id %>" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-<%= rData[i].recipe_id %>"><%= rData[i].like_count %></span> </a></div>
+                                        
+                                        <% } else if( rData[i].likeStatus === 1 && sess_val !== undefined) { %> 
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" class="like" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= rData[i].recipe_id %>" data-post-action="Unlike" aria-hidden="true"></i> <span id="likes-count-<%= rData[i].recipe_id %>"><%= rData[i].like_count %></span> </a></div>
+                                        <% } %>
+                                        
+                                        <% if( sess_val !== undefined) { %> 
+                                        <div class="commented col-xs-3"><a href="/single-recipes/<%= rData[i].recipe_id %>"><i class="fa fa-comment" aria-hidden="true"></i><%= rData[i].comment_count %></a></div>
+                                        <% } else { %>
+                                        <div class="commented col-xs-3"><a href="/login"><i class="fa fa-comment" aria-hidden="true"></i><%= rData[i].comment_count %></a></div>
+                                        <% } %>
+                                                
+                                        <% if( rData[i].user_id === sess_val) { %>
+                                        <div class="commented col-xs-6"><i class="fa fa-edit" aria-hidden="true"></i><a href="/recipes/<%= rData[i].recipe_id %>/editRecipe">Edit</a></div>
+                                        <div class="commented col-xs-6"><i class="fa fa-trash" aria-hidden="true"></i><a href="/recipes/<%= rData[i].recipe_id %>/deleteRecipe" onclick="return confirm('Are you sure you want to delete this item?');">Delete</a></div>
+                                        <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }} else { %>
+                            <div class="entry white_bg text-center"><strong class="noData">No Recipes Available</strong></div>
+                            <% } %>
+                              <!--item-->
+                            </div>
+                              <% if (rData[0].count > 3) { %>
+                              <div class="text-center mar10">
+                              <button id="Show_More_recipes" onclick="Show_More_recipes(<%= rData[0].count %>,1)" class="button-more">Show More</button>
+                              </div>
+                              <% } %>
+                          </div>
+                          <!-- #tab2 -->
+                          <h3 class="tab_drawer_heading" rel="tab3">My Favorites</h3>
+                          <div id="tab3" class="tab-content">
+                            <div class="entries row">
+                                <!--item-->
+                              <% if (rData.length !== 0) { %>
+                              <% for (var i=0;i < rData.length;i++ ) { %>
+                              <div class="col-md-4 col-sm-6 col-xs-12">
+                                <div class="entry white_bg">
+                                    <figure>
+                                        <img src="<%= rData[i].recipe_image %>" alt="">
+                                        <figcaption><a href="/single-recipes/<%= rData[i].recipe_id %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
+                                    </figure>
+                                    <div class="shortDesc">
+                                        <h4><a href="single-recipes/<%= rData[i].recipe_id %>"><%= rData[i].recipe_title %></a></h4>
+                                        <lable class="star-rating">
+                                                <input id="input-2-xs" name="input-2" data-readonly="true" class="rating rating-loading" data-min="0"  data-max="5" data-step="0.5" data-size="xs" value="<%= rData[i].rating %>">
+                                            </lable> 
+                                        <div class="actions">
+                                            <div class="rows">
+                                        <% if( sess_val === undefined || rData[i].likeStatus === 0 ) { %>
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= rData[i].recipe_id %>" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-<%= rData[i].recipe_id %>"><%= rData[i].like_count %></span> </a></div>
+                                        
+                                        <% } else if ( rData[i].likeStatus === null && sess_val !== undefined ) { %>
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= rData[i].recipe_id %>" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-<%= rData[i].recipe_id %>"><%= rData[i].like_count %></span> </a></div>
+                                        
+                                        <% } else if( rData[i].likeStatus === 1 && sess_val !== undefined) { %> 
+                                        <div class="likes col-xs-3"><a href="javascript:void(0);" class="like" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= rData[i].recipe_id %>" data-post-action="Unlike" aria-hidden="true"></i> <span id="likes-count-<%= rData[i].recipe_id %>"><%= rData[i].like_count %></span> </a></div>
+                                        <% } %>
+                                        
+                                        <% if( sess_val !== undefined) { %> 
+                                        <div class="commented col-xs-3"><a href="/single-recipes/<%= rData[i].recipe_id %>"><i class="fa fa-comment" aria-hidden="true"></i><%= rData[i].comment_count %></a></div>
+                                        <% } else { %>
+                                        <div class="commented col-xs-3"><a href="/login"><i class="fa fa-comment" aria-hidden="true"></i><%= rData[i].comment_count %></a></div>
+                                        <% } %>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <% }}else { %>
+                            <div class="entry white_bg text-center"><strong class="noData">No Favorites Available</strong></div>
+                            <% } %>
+
+                              <!--item-->
+                            </div>
+                          </div>
+                          <!-- #tab3 -->
+                          <h3 class="tab_drawer_heading" rel="tab4">My Posts</h3>
+                          <div id="tab4" class="tab-content">
+                            <div class="entries row">
+                                <!--item-->
+                                <% if (pData.length !== 0 ) { %>
+                                <% for (var i=0;i < pData.length;i++ ) { %>
+                                <div class="col-md-4 col-sm-6 col-xs-12">
+                                    <div class="entry white_bg">
+                                        <figure>
+                                            <img src="<%= pData[i].image_blog %>" alt="">
+                                            <figcaption><a href="/single-blog/<%= pData[i].blog_id %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
+                                        </figure>
+                                        <div class="shortDesc">
+                                            <h4><a href="blog_single/<%= pData[i].blog_id %>"><%= pData[i].title %></a></h4> 
+                                            <!--<ul class="list-inline star-rating">
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                                <li><i class="fa fa-star" aria-hidden="true"></i></li>
+                                            </ul>-->
+                                            <div class="actions">
+                                                <div class="rows">
+                                                    <div class="date col-xs-9"><i class="fa fa-calendar" aria-hidden="true"></i><a href="#"><span><%= pData[i].day %> <%= pData[i].month %> <%= pData[i].year %></span></a></div>
+                                                    <div class="commented col-xs-3"><i class="fa fa-comment" aria-hidden="true"></i><a href="recipe.php#comments">27</a></div>
+                                                    <div class="commented col-xs-3"><i class="fa fa-edit" aria-hidden="true"></i><a href="/blog/edit/<%= pData[i].blog_id %>">Edit</a></div>
+                                                    <div class="commented col-xs-3"><i class="fa fa-edit" aria-hidden="true"></i><a href="/blog/blog-delete/<%= pData[i].blog_id %>"  onclick="return confirm('Are you sure you want to delete this blog?');">Delete</a></div>
+                                                </div>
+                                                <div class="dishDisc">
+                                                    <p><%= pData[i].description %></p>
+                                                </div>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                              <% }}else { %>
+                            <div class="entry white_bg text-center"><strong class="noData">No Posts Available</strong></div>
+                            <% } %>
+                                <!--item-->
+                              </div>
+                              <!--//entries-->
+                            </div>
+                            <!-- #tab4 --> 
+                          </div>
+                        <!-- .tab_container -->
+                        </div>      
+                </div><!-- End row --> 
+                
+                
+            </div><!-- End container -->
+        </section><!-- End white_bg -->
+        <!-- newslatter -->
+        <section class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+    <script src="https://rtcmulticonnection.herokuapp.com/dist/RTCMultiConnection.min.js"></script>
+    <script src="https://rtcmulticonnection.herokuapp.com/socket.io/socket.io.js"></script>
+</body>
+</html>
+<script type="text/javascript">
+	    
+    var connection = new RTCMultiConnection();
+    console.log(connection);
+    // this line is VERY_important
+    connection.socketURL = 'https://rtcmulticonnection.herokuapp.com:443/';
+
+    // all below lines are optional; however recommended.
+
+    connection.session = {
+        audio: true,
+        video: true
+    };
+
+    connection.sdpConstraints.mandatory = {
+        OfferToReceiveAudio: true,
+        OfferToReceiveVideo: true
+    };
+
+    
+    function onlineTeaching(roomid){
+	connection.checkPresence(roomid, function(isRoomExists, roomid) {
+        connection.onstream = function(event) {
+            $('#videoChat').html(event.mediaElement);
+            $('#videoChat').find('video').css({width:'100%'});
+        };
+	console.log(isRoomExists,' === ',roomid);
+        if(isRoomExists) {
+            connection.join(roomid);
+        }
+        else {
+            connection.open(roomid);
+        }
+    });
+}
+    
+
+    function give_Rating() {
+        if (!$("#rating").valid()) {
+            console.log('error');
+            return false;
+        } else {
+
+            var data = {
+                rating: $('#star-sm').val(),
+                userId : $('#userId').val()
+            };
+            console.log(data);
+
+
+            $.ajax({
+                type: 'POST',
+                data: JSON.stringify(data),
+                contentType: 'application/json',
+                url: '/dishmizer-profile/rating',
+
+                success: function(res) {
+                    
+                    if (res == 'error') {
+                        $('#alertMsg').html('<div class="alert alert-danger"><strong>Error Occured. Try Again</strong></div>');
+                        $('#alertMsg').delay(5000).fadeOut('slow');
+                        window.location.href = base_url + '/dishmizer-profile/' + data.userId;
+                    } else {
+                        
+                        $('#alertMsg').html('<div class="alert alert-success"><strong>your Rating Added successfully.</strong></div>');
+                        $('#alertMsg').delay(5000).fadeOut('slow');
+                        setTimeout(function() {
+                            window.location.reload();
+                        }, 5000);
+                    }
+                }
+            });
+        }
+    }
+    function Show_More_recipes(count,page){
+        var start = page*3;
+        var end = start + 3;
+        var show_more = (count > end) ? true : false;
+        console.log(show_more);
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify({start:start,end:end,userId : $('#userId').val()}),
+            contentType: 'application/json',
+            url: '/dishmizer-profile/show_more_recipes',
+
+            success: function(res){
+                var obj = JSON.parse(res);
+                var rData = obj.recipeData; 
+                var sess_val = obj.sess_val;
+                var html = '<div class="entries row">';
+                              
+                if (rData.length !== 0) {
+                    for (var i=0;i < rData.length;i++ ) {
+                        html +='<div class="col-md-4 col-sm-6 col-xs-12">';
+                        html +='<div class="entry white_bg">';
+                        html +='<figure>';
+                        html +='<img src="'+rData[i].recipe_image+'" alt="">';
+                        html +='<figcaption><a href="/single-recipes/'+ rData[i].recipe_id +'"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>';
+                        html +='</figure>';
+                        html +='<div class="shortDesc">';
+                        html +='<h4><a href="single-recipes/'+ rData[i].recipe_id +'">'+ rData[i].recipe_title +'</a></h4>';
+                        html +='<lable class="star-rating">';
+                        
+                        html +='<input id="input-2-xs" name="input-2" data-readonly="true" class="rating-input" data-min="0"  data-max="5" data-step="0.5" data-size="xs" value="'+ rData[i].rating +'">';
+                        
+                        html +='</lable>'; 
+                        html +='<div class="actions">';
+                        html +='<div class="rows">';
+                                        
+                        if( sess_val === undefined || rData[i].likeStatus === 0 ) { 
+                            html +='<div class="likes col-xs-3">';
+                            html +='<a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="'+ rData[i].recipe_id +'" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-'+ rData[i].recipe_id +'">'+ rData[i].like_count +'</span> </a>';
+                            html +='</div>';
+                                        
+                        } else if ( rData[i].likeStatus === null && sess_val !== undefined ) { 
+                            html +='<div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="'+ rData[i].recipe_id +'" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-'+ rData[i].recipe_id +'">'+ rData[i].like_count +'</span> </a></div>';
+                                        
+                        } else if( rData[i].likeStatus === 1 && sess_val !== undefined) {  
+                            html +='<div class="likes col-xs-3"><a href="javascript:void(0);" class="like" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="'+ rData[i].recipe_id +'" data-post-action="Unlike" aria-hidden="true"></i> <span id="likes-count-'+ rData[i].recipe_id +'">'+ rData[i].like_count +'</span> </a></div>';
+                        }
+                                        
+                        if( sess_val !== undefined) { 
+                            html +='<div class="commented col-xs-3"><a href="/single-recipes/'+ rData[i].recipe_id +'"><i class="fa fa-comment" aria-hidden="true"></i>'+ rData[i].comment_count +'</a></div>';
+                        } else { 
+                            html +='<div class="commented col-xs-3"><a href="/login"><i class="fa fa-comment" aria-hidden="true"></i>'+ rData[i].comment_count +'</a></div>';
+                        }
+                                                
+                        if( rData[i].user_id === sess_val) { 
+                            html +='<div class="commented col-xs-6">';
+                            html +='<i class="fa fa-edit" aria-hidden="true"></i>';
+                            html +='<a href="/recipes/'+ rData[i].recipe_id +'/editRecipe">Edit</a></div>';
+                            html +='<div class="commented col-xs-6"><i class="fa fa-trash" aria-hidden="true"></i>';
+                            html +='<a href="/recipes/'+ rData[i].recipe_id +'/deleteRecipe" onclick="return confirm("Are you sure you want to delete this item?");">Delete</a></div>';
+                        }
+                                        html +='</div>\
+                                        </div>\
+                                    </div>\
+                                </div>\
+                            </div>';
+                    }
+                } 
+                else { 
+                    html +='<div class="entry white_bg text-center"><strong class="noData">No Recipes Available</strong></div>';
+                }
+                              
+                html +='</div>';
+                console.log('count == ',rData[0].count);
+                if (show_more) {
+                    html +='<div class="text-center mar10">\
+                    <button id="Show_More_recipes" onclick="Show_More_recipes('+end+','+(end+3)+')" class="button-more">\
+                    Show More\
+                    </button>\
+                    </div>';
+                }
+            $('#tab2').html(html);                            
+
+            }
+        });
+    }
+</script>

@@ -1,0 +1,220 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+      <% include ../partials/head %>    
+</head>
+
+<body class="sticky">
+    <div id="loader-wrapper">
+        <div id="loader"></div>
+        <div class="loader-section section-left"></div>
+        <div class="loader-section section-right"></div>
+    </div><!-- End Preload -->
+    
+    <!-- wrap Page -->
+    <div id="wrap">
+        
+        <!-- Header Top -->
+        <% include ../partials/header-top.ejs%>
+        <!-- End Header Top -->
+        <!-- Header -->
+        <header class="style2">
+             <% include ../partials/header %>     
+        </header><!-- End Header -->
+        <!-- SubHeader -->
+
+        
+        
+        <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/chef.jpg">
+            <div id="sub_header">
+                <div class="container" id="sub_content">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h1><%= title %></h1>
+                            <div class="bread-crums">
+        						<a href="/">Home</a>
+        						<span class="bread-crums-span">&raquo;</span>
+        						<span class="current"><%= title %></span>
+        					</div><!-- End bread-crums -->
+                        </div>
+                    </div><!-- End row -->
+                </div><!-- End container -->
+            </div>
+        </section>
+
+
+
+        <% if(data.length > 0){ %>
+            
+            <div class="row">
+                    <% for(var i=0; i <data.length;i++) { %>
+                           
+                        <div class="col-md-4">                 
+        
+                            <div class="entry gray_bg">
+                                    <figure>
+                                        <img src="/public/images/recipephotos/<%=data[i].recipe_image%>" alt="">
+                                        <figcaption><a href="/single-recipes/buy/<%=data[i].recipe_id%>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption> 
+                                   </figure>
+                                  
+
+                                  
+                                   
+                                  
+
+
+
+                                   
+                                   
+
+
+                                    <div class="shortDesc">
+                                            <h4><a href="/single-recipes/buy/<%=data[i].recipe_id%>"><%= data[i].recipe_title %></a></h4>
+                                        
+                                        <div class="actions">
+                                            <div class="rows">
+                                                    <% if (data[i].imageUrl !='') { %>
+                                                 
+                                                        <div class="difficulty col-xs-12"><img class="img-circle" src="/public/images/userphotos/<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+                    
+                                                        <% } else{ %>  
+                                                            <div class="difficulty col-sm-12"><img class="img-circle" src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+                                                        <% } %>
+                    
+                                                <div class="clearfix"></div>
+                                                
+                                               
+                                                
+                                                <div class="col-sm-6 RacStar"> 
+                                                    <!-- <lable class="star-rating">
+                                                        <div class="rating-container rating-xs rating-animate rating-disabled"><div class="rating-stars"><span class="empty-stars"><span class="star"><i class="fa fa-star-o"></i></span><span class="star"><i class="fa fa-star-o"></i></span><span class="star"><i class="fa fa-star-o"></i></span><span class="star"><i class="fa fa-star-o"></i></span><span class="star"><i class="fa fa-star-o"></i></span></span><span class="filled-stars" style="width: 0%;"><span class="star"><i class="fa fa-star"></i></span><span class="star"><i class="fa fa-star"></i></span><span class="star"><i class="fa fa-star"></i></span><span class="star"><i class="fa fa-star"></i></span><span class="star"><i class="fa fa-star"></i></span></span><input id="input-2-xs" name="input-2" data-readonly="true" class="rating-input" data-min="0" data-max="5" data-step="0.5" data-size="xs" value="" readonly="readonly"></div></div>
+                                                    </lable>  -->
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+
+
+                                <!-- <article class="post">
+                                        <div class="entry-meta">
+                                            <div class="date">
+                                                
+                                                <span class="day"><%= data[i].day %></span>
+            
+                                                <span class="my"><%= data[i].month %>,<%= data[i].year %></span>
+                                            </div>
+                                            <div class="avatar">
+                                                <a href="/my_profile/1"><img src="<%= data[i].imageUrl %>" alt=""><span><%= data[i].firstname %> <%= data[i].lastname %></span></a>
+                                            </div>
+                                        </div>
+                                        <div class="postContainer">
+                                            <!-- <div class="entry-featured"><a href="/single-blog/<%= data[i].blog_id %>">
+                                                <% if( data[i].image_blog == '' || data[i].image_blog == null ) { %>
+                                                <img src="/public/images/blogDefault.png" alt="">
+                                                <% } else { %>
+                                                <img src="<%= data[i].image_blog %>" alt="">
+                                                <% } %>
+                                            </a></div> -->
+                                            <!--div class="entry-content blog-char-limit">
+                                                <h2><a href="/single-blog/<%= data[i].blog_id %>"><%= data[i].title %></a></h2>
+                                                <p><%= data[i].description.slice(0, 300) %><% if(data[i].description.length > 300){ %>...<% } %> </p>
+                                            </div>
+                                            <div class="actions">
+                                                <div>
+                                                    <div class="category"><i class="fa fa-tags" aria-hidden="true"></i><a href="#">Tips and tricks</a></div>
+                                                    <div class="comments"><i class="fa fa-comment" aria-hidden="true"></i><a href="/single-blog/<%= data[i].blog_id %>#comments">56</a></div>
+                                                    <div class="moreBtn"><a href="/single-blog/<%= data[i].blog_id %>">Read more</a></div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </article> -->
+
+
+
+
+
+                                    
+
+                                    <!-- <article class="post">
+                                            <div class="entry-meta">
+                                                <div class="date">
+                                                    
+                                                    <span class="day">20</span>
+                
+                                                    <span class="my">September,2018</span>
+                                                </div>
+                                                <div class="avatar">
+                                                    <a href="/my_profile/1"><img src="" alt=""><span>hala taha</span></a>
+                                                </div>
+                                            </div>
+                                            <div class="postContainer">
+                                                <div class="entry-featured"><a href="/single-blog/4">
+                                                    
+                                                    <img src="" alt="">
+                                                    
+                                                </a></div>
+                                                <div class="entry-content blog-char-limit">
+                                                    <h2><a href="/single-blog/4">blog22</a></h2>
+                                                    <p>myblog22 </p>
+                                                </div>
+                                                <div class="actions">
+                                                    <div>
+                                                        <div class="category"><i class="fa fa-tags" aria-hidden="true"></i><a href="#">Tips and tricks</a></div>
+                                                        <div class="comments"><i class="fa fa-comment" aria-hidden="true"></i><a href="/single-blog/4#comments">56</a></div>
+                                                        <div class="moreBtn"><a href="/single-blog/4">Read more</a></div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </article> -->
+
+        
+                           
+                            </div>  
+                         
+                         
+                            <% } %>
+                        </div>
+
+
+
+        <% } else{ %>  
+            <div class="col-md-12 clearfix">
+                    <div class="text-center">
+                        <a class="button-more larg-Btn">No Blog Available</a>
+                    </div>
+            </div>
+        <% } %>
+
+        
+        <section class="newslatter">
+            <div class="container">
+                <p>Stay Always Updated With us. Sign in with our newsletter</p>
+                <div class="subcribe">
+                    <input type="text" class="form-control" placeholder="Your Email">
+                    <a class="fa fa-paper-plane" href="javascript:void(0);"></a>
+                </div>
+            </div>
+        </section><!-- End newslatter -->
+        <!-- Footer -->
+        <footer>
+            <% include ../partials/footer %>
+        </footer><!-- End Footer -->
+    </div><!-- End wrap Page -->
+    <!-- go-up -->
+    <div class="go-up"><i class="fa fa-chevron-up"></i></div>
+    <!-- End go-up -->
+    
+    <!-- COMMON SCRIPTS -->
+    <% include ../partials/scripts %>
+
+</body>
+</html>
+
+<script type="text/javascript">
+    
+</script>
+
+
