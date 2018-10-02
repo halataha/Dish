@@ -248,8 +248,8 @@ router.get('/:recipe_id/editRecipe', (req, res, next) => {
 
 router.post(
     '/:recipe_id/editRecipe',
-    images.multer.single('recipeImage'),
-    images.sendUploadToGCS,
+    // images.multer.single('recipeImage'),
+    // images.sendUploadToGCS,
 
     (req, res, next) => {
         const data = req.body;

@@ -41,8 +41,8 @@ router.get('/edit', (req, res, next) => {
 });
 
 router.post('/edit',
-  images.multer.single('profileImage'),
-  images.sendUploadToGCS,
+//   images.multer.single('profileImage'),
+//   images.sendUploadToGCS,
    (req, res, next) => {
 	
    const data = req.body;

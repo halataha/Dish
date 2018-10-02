@@ -101,7 +101,7 @@ const session = require('express-session');
 const bodyParser = require("body-parser");
 const cookieParser = require('cookie-parser');
 const passport = require('passport');
-const multer = require('multer');
+//const multer = require('multer');
 const Pusher = require('pusher');
 const config = require('./config');
 const nodemailer = require('nodemailer');
@@ -882,13 +882,13 @@ function sendUploadToGCS (req, res, next) {
   }); 
 }
 
-const Multer = require('multer');
-const multer = Multer({
-  storage: Multer.MemoryStorage,
-  limits: {
-    fileSize: 5 * 1024 * 1024 // no larger than 5mb
-  }
-});
+//const Multer = require('multer');
+// const multer = Multer({
+//   storage: Multer.MemoryStorage,
+//   limits: {
+//     fileSize: 5 * 1024 * 1024 // no larger than 5mb
+//   }
+// });
 
 module.exports = {
   getPublicUrl,
