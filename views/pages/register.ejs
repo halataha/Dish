@@ -79,19 +79,25 @@
                                     </div> -->
                                     <div class="form-group">
                                         <div class="add-photo">
-                                            <label class="icon-picture gray" for="userPhoto">
+                                            <label for="myyyyimage">Choose Image</label>
+                                            <input type="file" id="myimage" name="myimage" />
+                                            <img id="selectedimage" src="/public/images/unonmous.jpg" style="width:3500px; height:200px;">
+                                            <div id="ValidImage" style="color:red"></div>   
+                                            
+
+                                            <!--label class="icon-picture gray" for="userPhoto">
                                                 <span>Browse</span>
                                                 <button type="button" class="Imgremove">X</button>
                                                 <img class="PreviewImg" id="avatar" src="" alt="avatar">
                                                 <input type="file" class="" name="userPhoto" id="userPhoto" required>
                                                 <input type="hidden" class="" name="imageHidden" id="imageHidden">
-                                            </label>
-                                            
+                                            </label-->
+                                           
                                         </div>
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-6">
-                                    <input type="text" id="firstname" class="form-control lettersonly required" placeholder="First Name" name="firstname" required pattern="[a-z]" maxlength="15">
+                                    <input type="text" id="firstname" class="form-control lettersonly required" placeholder="First Name" name="firstname" required  maxlength="15">
                                 </div>
                                 <div class="form-group col-sm-6">
                                     <input type="text" id="lastname" name="lastname" class="form-control lettersonly required" placeholder="Last Name" required>
@@ -196,106 +202,142 @@
 </body>
 </html>
 <script type="text/javascript">
-    jQuery.validator.addMethod("lettersonly", function(value, element){
-        return this.optional(element) || /^[a-z]+$/i.test(value);
-    },'Only alphabets allowed.');
-    $('#register').validate();
+    //jQuery.validator.addMethod("lettersonly", function(value, element){
+      //  return this.optional(element) || /^[a-z]+$/i.test(value);
+    //},'Only alphabets allowed.');
+//     $('#register').validate();
 
 
-    var cropper;
-    window.addEventListener('DOMContentLoaded', function () {
-      var avatar = document.getElementById('avatar');
-      var image = document.getElementById('image');
-      var input = document.getElementById('userPhoto');
-      var $alert = $('.alert');
-      var $modal = $('#modal');
+//     var cropper;
+//     window.addEventListener('DOMContentLoaded', function () {
+//       var avatar = document.getElementById('avatar');
+//       var image = document.getElementById('image');
+//       var input = document.getElementById('userPhoto');
+//       var $alert = $('.alert');
+//       var $modal = $('#modal');
 
-      input.addEventListener('change', function (e) {
-        var files = e.target.files;
-        console.log(files);
-        var done = function (url) {
+//       input.addEventListener('change', function (e) {
+//         var files = e.target.files;
+//         console.log(files);
+//         var done = function (url) {
           
-          //input.value = url;
-          input.value = '';
-          image.src = url;
-          $alert.hide();
-          $modal.modal('show');
-        };
+//           //input.value = url;
+//           input.value = '';
+//           image.src = url;
+//           $alert.hide();
+//           $modal.modal('show');
+//         };
 
-        var reader;
-        var file;
-        var url;
+//         var reader;
+//         var file;
+//         var url;
 
-        if (files && files.length > 0) {
-          file = files[0];
+//         if (files && files.length > 0) {
+//           file = files[0];
 
-          if (URL) {
-            done(URL.createObjectURL(file));
-          } else if (FileReader) {
-            reader = new FileReader();
-            reader.onload = function (e) {
-              done(reader.result);
-            };
-            reader.readAsDataURL(file);
-          }
-        }
+//           if (URL) {
+//             done(URL.createObjectURL(file));
+//           } else if (FileReader) {
+//             reader = new FileReader();
+//             reader.onload = function (e) {
+//               done(reader.result);
+//             };
+//             reader.readAsDataURL(file);
+//           }
+//         }
 
-      });
+//       });
 
-      $modal.on('shown.bs.modal', function () {
-        cropper = new Cropper(image, {
-          dragMode: 'move',
-          aspectRatio: 4 / 5,
-          strict: false,
-          autoCropArea: 0,
-          restore: false,
-          zoomable: true,
-          guides: false,
-          center: true,
-          highlight: false,
-          cropBoxMovable: false,
-          cropBoxResizable: false,
-          toggleDragModeOnDblclick: false,
-          zoomOnWheel:false,
-        });
-      }).on('hidden.bs.modal', function () {
-        cropper.destroy();
-        cropper = null;
-      });
+//       $modal.on('shown.bs.modal', function () {
+//         cropper = new Cropper(image, {
+//           dragMode: 'move',
+//           aspectRatio: 4 / 5,
+//           strict: false,
+//           autoCropArea: 0,
+//           restore: false,
+//           zoomable: true,
+//           guides: false,
+//           center: true,
+//           highlight: false,
+//           cropBoxMovable: false,
+//           cropBoxResizable: false,
+//           toggleDragModeOnDblclick: false,
+//           zoomOnWheel:false,
+//         });
+//       }).on('hidden.bs.modal', function () {
+//         cropper.destroy();
+//         cropper = null;
+//       });
 
-      document.getElementById('crop').addEventListener('click', function () {
-        var canvas;
+//       document.getElementById('crop').addEventListener('click', function () {
+//         var canvas;
 
-        $modal.modal('hide');
+//         $modal.modal('hide');
 
-        if (cropper) {
+//         if (cropper) {
 
-            canvas = cropper.getCroppedCanvas({
-            width: 360,
-            height: 460,
-          });
+//             canvas = cropper.getCroppedCanvas({
+//             width: 360,
+//             height: 460,
+//           });
 
-          $('.add-photo').addClass('AddImg');
-          avatar.src = canvas.toDataURL();
-          imageHidden.value = canvas.toDataURL()
-        } 
-      });
-    });
+//           $('.add-photo').addClass('AddImg');
+//           avatar.src = canvas.toDataURL();
+//           imageHidden.value = canvas.toDataURL()
+//         } 
+//       });
+//     });
 
-    function zoom(z){
-        cropper.zoom(z)
-      }
-      $('.Imgremove').click(function(){
-      $('.PreviewImg').attr('src', '');
-      $('.AddImg').removeClass('AddImg');
-      $('.progress').hide();
-    });
+//     function zoom(z){
+//         cropper.zoom(z)
+//       }
+//       $('.Imgremove').click(function(){
+//       $('.PreviewImg').attr('src', '');
+//       $('.AddImg').removeClass('AddImg');
+//       $('.progress').hide();
+//     });
     
-$(document).ready(function(){
-    setTimeout(function() {
-        $('.alert, .alert-success').fadeOut('slow');
-    }, 5000);
-});
+// $(document).ready(function(){
+//     setTimeout(function() {
+//         $('.alert, .alert-success').fadeOut('slow');
+//     }, 5000);
+// });
+
+$("#myimage").change(function () {
+              
+              readIMG(this);
+           })
+
+
+
+function readIMG(input) {
+               if (input.files && input.files[0]) {
+
+                   var file = input.files[0];
+                   var fileType = file["type"];
+                   var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+                   if ($.inArray(fileType, ValidImageTypes) < 0) {
+                       // invalid file type code goes here.
+                       // alert('Choose Image Only Please');
+                       $('#selectedimage').attr('src', "/public/images/recipeupload.jpg");
+                       var inpp = $('#myimage');
+                       $(inpp).val('');
+                       $('#ValidImage').html('Choose Image Only Please');
+                       return false;
+                   }
+                   else {
+                       $('#ValidImage').html('');
+                   }
+
+                   var reader = new FileReader();
+
+                   reader.onload = function (e) {
+                       $('#selectedimage').attr('src', e.target.result);
+                   }
+
+                   reader.readAsDataURL(input.files[0]);
+               }
+           }
 
 </script>
 

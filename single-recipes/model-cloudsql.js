@@ -19,9 +19,13 @@ const connection = mysql.createConnection(options);
 
 function single_recipe(id, cb) {
 
+    //console.log('single_recipe');
+    //last querry  select r.recipe_id,u.user_id,r.recipe_image,r.recipe_title,r.description,r.ordinary_price,r.exclusive_price,r.buy_price,r.category_id,u.firstname,u.lastname,u.imageUrl,m.meta_id,m.con_key,m.value,m.content_type,m.content_description,m.content_type_id from dz_recipes r left join dz_user u On r.user_id = u.user_id left join dz_meta m On m.content_type_id = r.recipe_id where (m.content_type = 'recipe' OR m.content_type = 'dishmizer' ) AND r.recipe_id = '" + id + "'"
     var sql = "select r.recipe_id,u.user_id,r.recipe_image,r.recipe_title,r.description,r.ordinary_price,r.exclusive_price,r.buy_price,r.category_id,u.firstname,u.lastname,u.imageUrl,m.meta_id,m.con_key,m.value,m.content_type,m.content_description,m.content_type_id from dz_recipes r left join dz_user u On r.user_id = u.user_id left join dz_meta m On m.content_type_id = r.recipe_id where (m.content_type = 'recipe' OR m.content_type = 'dishmizer' ) AND r.recipe_id = '" + id + "'";
     connection.query(sql, (err, results) => {
-
+       console.log('comment');
+        console.log(err);
+       //console.log(err);
         var sqlforcat = "select name from dz_category where category_id = '" + results[0].category_id + "'";
         var query = connection.query(sqlforcat, (err, res) => {
             if (err) {
@@ -70,6 +74,8 @@ function checkBuyer(recId,user_id,cb) {
         }
         cb(err, results);
     });
+
+    
 }
 
 

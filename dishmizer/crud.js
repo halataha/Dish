@@ -24,6 +24,7 @@ getModel().countDishmizer((err, countDishmizer) => {
 				next(err);
 				return;
 				}
+				console.log(dishmizer);
 		     	res.render('pages/dishmizer', { 
 				title:"Dishmizer", 
 				data: dishmizer ,

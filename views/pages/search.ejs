@@ -88,20 +88,32 @@
             </div>
 
                 <% if(data.length > 0) { %>
-                <div class="row">
+                 <div class="row">
                     <% for(var i=0; i< data.length; i++) { %>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="entry gray_bg">
                             <figure>
-                                <img src="<%= data[i].recipe_image %>" alt="">
+                                <img src="/public/images/recipephotos/<%=data[i].recipe_image %>" alt=""-->
+
+                                
                                 <figcaption><a href="/single-recipes/<%= data[i].recipe_id %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
                             </figure>
-                            <div class="shortDesc">
+                             <div class="shortDesc">
                                 <h4><a href="/single-recipes/<%= data[i].recipe_id %>"><%= data[i].recipe_title %></a></h4>
                                 
                                 <div class="actions">
                                     <div class="rows">
-                                        <div class="difficulty col-xs-12"><img class="img-circle" src="<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+
+                                            <% if (data[i].imageUrl !='') { %>
+                                                 
+                                                <div class="difficulty col-xs-12"><img class="img-circle" src="/public/images/userphotos/<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+            
+                                                <% } else{ %>  
+                                                    <div class="difficulty col-sm-12"><img class="img-circle" src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+                                                <% } %>
+            
+
+                                        <!-- <div class="difficulty col-xs-12"><img class="img-circle" src="<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div> -->
                                         
                                         <div class="clearfix"></div>
                                         <% if( sess_val === undefined || data[i].likeStatus === 0 ) { %>
@@ -125,7 +137,7 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                            </div> 
                         </div>
                     </div>
                  <% } %>
@@ -138,7 +150,7 @@
                     <% } %>
                     </div>
 
-                </div><!-- End row -->
+                </div> 
                 <% } else { %>
                 <div class="col-md-12 clearfix">
                         <div class="text-center">

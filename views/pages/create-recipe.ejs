@@ -1,4 +1,12 @@
+
+<!--form  method="post" enctype="multipart/form-data">
+    <input type="file" name="myimage"/>
+    <input type="submit" value="submit" name="submit"/>
+</form-->
+
+
 <!DOCTYPE html>
+
 <html lang="en">
 <head>
       <% include ../partials/head %>    
@@ -9,19 +17,18 @@
         <div id="loader"></div>
         <div class="loader-section section-left"></div>
         <div class="loader-section section-right"></div>
-    </div><!-- End Preload -->
+    </div>
     
-    <!-- wrap Page -->
+    
     <div id="wrap">
         
-        <!-- Header Top -->
+       
         <% include ../partials/header-top.ejs%>
-        <!-- End Header Top -->
-        <!-- Header -->
+        
         <header class="style2">
              <% include ../partials/header %>     
-        </header><!-- End Header -->
-        <!-- SubHeader -->
+        </header>
+       
         <section class="parallax-window" id="short"  data-parallax="scroll" data-image-src="/public/images/add-recipe.jpg">
             <div id="sub_header">
                 <div class="container" id="sub_content">
@@ -32,13 +39,13 @@
                                 <a href="index.php">Home</a>
                                 <span class="bread-crums-span">&raquo;</span>
                                 <span class="current"><%= title %></span>
-                            </div><!-- End bread-crums -->
+                            </div>
                         </div>
-                    </div><!-- End row -->
-                </div><!-- End container -->
+                    </div>
+                </div>
             </div>
         </section>
-        <!-- End SubHeader -->
+        
         <div class="white_bg create-recipe">
             <div class="container margin_60">
                 <div class="main_title">
@@ -66,6 +73,13 @@
                                 <label for="exclusive_price">Exclusive Price</label>
                                 <input type="text" id="exclusive_price" name="exclusive_price" class="form-control required">
                             </div>
+                           
+                            <!--div class="form-group col-sm-12">
+                                <label for="myyyyimage">Recipe Image</label>
+                                <input type="file" name="myimage"/>
+                            </div-->
+
+
                             <div class="form-group col-sm-12">
                                 <label for="buy_price">Buy and Learn Online</label>
                                 <input type="text" id="buy_price" name="buy_price" class="form-control required">
@@ -92,13 +106,17 @@
                             <div class="theiaStickySidebar row">
                                 <div class="form-group col-sm-12">
                                     <div class="add-photo">
-                                        <label class="icon-picture gray" for="recipeImage">
+                                        <label for="myyyyimage">Recipe Image</label>
+                                        <input type="file" id="myimage" name="myimage" />
+                                        <img id="selectedimage" src="/public/images/recipeupload.jpg" style="width:3500px; height:200px;">
+                                        <div id="ValidImage" style="color:red"></div>
+                                        <!--label class="icon-picture gray" for="recipeImage">
                                             <span>Browse</span>
                                             <button type="button" class="Imgremove">X</button>
                                             <img class="PreviewImg" id="avatar" src="" alt="avatar">
                                             <input type="file" class="" name="recipeImage" id="recipeImage">
                                             <input type="hidden" class="" name="imageHiddenRc" id="imageHiddenRc">
-                                        </label>
+                                        </label-->
                                     </div>
                                 </div>
 
@@ -135,8 +153,7 @@
                                 <div class="form-group col-sm-12">
                                     <div class="recipe-button">
                                         <button type="submit" class="btn button-more" >Publish</button>
-                                        <!-- <button type="submit" class="btn button-more btn-save">Save</button> -->
-                                        <button type="button" class="btn button-more btn-cancel">Cancel</button>
+                                         <button type="button" class="btn button-more btn-cancel">Cancel</button>
                                     </div>
                                 </div>
                             </div>    
@@ -265,9 +282,9 @@
                     </div>
                 <% } %>
                 </form>
-            </div><!-- End container -->
-        </div><!-- End white_bg -->
-        <!-- newslatter -->
+            </div>
+        </div>
+       
         <section class="newslatter">
             <div class="container">
                 <div class="col-md-9">
@@ -280,17 +297,15 @@
                 </div>
                 </div>
             </div>
-        </section><!-- End newslatter -->
-        <!-- Footer -->
+        </section>
+       
         <footer>
             <% include ../partials/footer %>
-        </footer><!-- End Footer -->
-    </div><!-- End wrap Page -->
-    <!-- go-up -->
+        </footer>
+    </div>
+   
     <div class="go-up"><i class="fa fa-chevron-up"></i></div>
-    <!-- End go-up -->
-    
-    <!-- COMMON SCRIPTS -->
+   
     <% include ../partials/scripts %>
 
     <div class="modal fade" id="modal" tabindex="-1" role="dialog" aria-labelledby="modalLabel" aria-hidden="true">
@@ -327,90 +342,146 @@
 </body>
 </html>
 <script type="text/javascript">
-    $('#recipeCreate').validate();
 
-    var cropper;
-    window.addEventListener('DOMContentLoaded', function () {
-      var avatar = document.getElementById('avatar');
-      var image = document.getElementById('image');
-      var input = document.getElementById('recipeImage');
-      var $alert = $('.alert');
-      var $modal = $('#modal');
 
-      // $('[data-toggle="tooltip"]').tooltip();
+$("#myimage").change(function () {
+              
+               readIMG(this);
+            })
 
-      input.addEventListener('change', function (e) {
-        var files = e.target.files;
-        var done = function (url) {
-          input.value = '';
-          image.src = url;
-          $alert.hide();
-          $modal.modal('show');
-        };
-        var reader;
-        var file;
-        var url;
 
-        if (files && files.length > 0) {
-          file = files[0];
 
-          if (URL) {
-            done(URL.createObjectURL(file));
-          } else if (FileReader) {
-            reader = new FileReader();
-            reader.onload = function (e) {
-              done(reader.result);
-            };
-            reader.readAsDataURL(file);
-          }
-        }
-      });
+function readIMG(input) {
+                if (input.files && input.files[0]) {
 
-      $modal.on('shown.bs.modal', function () {
-        cropper = new Cropper(image, {
-          dragMode: 'move',
-          aspectRatio: 800 / 600,
-          strict: false,
-          autoCropArea: 0,
-          restore: false,
-          zoomable: true,
-          guides: false,
-          center: true,
-          highlight: false,
-          cropBoxMovable: false,
-          cropBoxResizable: false,
-          toggleDragModeOnDblclick: false,
-          zoomOnWheel:false,
-        });
-      }).on('hidden.bs.modal', function () {
-        cropper.destroy();
-        cropper = null;
-      });
+                    var file = input.files[0];
+                    var fileType = file["type"];
+                    var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+                    if ($.inArray(fileType, ValidImageTypes) < 0) {
+                        // invalid file type code goes here.
+                        // alert('Choose Image Only Please');
+                        $('#selectedimage').attr('src', "/public/images/recipeupload.jpg");
+                        var inpp = $('#myimage');
+                        $(inpp).val('');
+                        $('#ValidImage').html('Choose Image Only Please');
+                        return false;
+                    }
+                    else {
+                        $('#ValidImage').html('');
+                    }
 
-      document.getElementById('crop').addEventListener('click', function () {
-        var initialAvatarURL;
-        var canvas;
+                    var reader = new FileReader();
 
-        $modal.modal('hide');
+                    reader.onload = function (e) {
+                        $('#selectedimage').attr('src', e.target.result);
+                    }
 
-        if (cropper) {
-          canvas = cropper.getCroppedCanvas({
-            width: 800,
-            height: 600,
-          });
-          $('.add-photo').addClass('AddImg');
-          initialAvatarURL = avatar.src;
-          avatar.src = canvas.toDataURL();
-          imageHiddenRc.value = canvas.toDataURL()
-        }
-      });
-    });
+                    reader.readAsDataURL(input.files[0]);
+                }
+            }
 
-    function zoom(z){
-        cropper.zoom(z)
-      }
-    $('.Imgremove').click(function(){
-       $('.PreviewImg').attr('src', '');
-        $('.AddImg').removeClass('AddImg');
-    });
+
+ 
+
+
+
+//validate image file
+
+ //$("#myimage").change(function () {
+               //alert('hhfhfhfh');
+                //readIMG(this);
+           // })
+
+
+
+
+
+
+
+
+    //$('#recipeCreate').validate();
+
+    //var cropper;
+    //window.addEventListener('DOMContentLoaded', function () {
+      //var avatar = document.getElementById('avatar');
+      //var image = document.getElementById('image');
+     // var input = document.getElementById('recipeImage');
+      //var $alert = $('.alert');
+      //var $modal = $('#modal');   
+
+      //input.addEventListener('change', function (e) {
+       // var files = e.target.files;
+        //var done = function (url) {
+         // input.value = '';
+         // image.src = url;
+        //  $alert.hide();
+         // $modal.modal('show');
+       // };
+       // var reader;
+        //var file;
+        //var url;
+
+       // if (files && files.length > 0) {
+         // file = files[0];
+
+         // if (URL) {
+           // done(URL.createObjectURL(file));
+         // } else if (FileReader) {
+           // reader = new FileReader();
+           // reader.onload = function (e) {
+            //  done(reader.result);
+           // };
+           // reader.readAsDataURL(file);
+          //}
+        //}
+      //});
+
+     // $modal.on('shown.bs.modal', function () {
+        //cropper = new Cropper(image, {
+         // dragMode: 'move',
+         // aspectRatio: 800 / 600,
+        //  strict: false,
+         // autoCropArea: 0,
+         // restore: false,
+        //  zoomable: true,
+        //  guides: false,
+         // center: true,
+         // highlight: false,
+          //cropBoxMovable: false,
+         // cropBoxResizable: false,
+        //  toggleDragModeOnDblclick: false,
+         // zoomOnWheel:false,
+       // });
+      //}).on('hidden.bs.modal', function () {
+       // cropper.destroy();
+       // cropper = null;
+      //});
+
+      //document.getElementById('crop').addEventListener('click', function () {
+      //  var initialAvatarURL;
+       // var canvas;
+
+      //  $modal.modal('hide');
+
+        //if (cropper) {
+         // canvas = cropper.getCroppedCanvas({
+         //   width: 800,
+           // height: 600,
+        //  });
+         // $('.add-photo').addClass('AddImg');
+         // initialAvatarURL = avatar.src;
+         // avatar.src = canvas.toDataURL();
+          //imageHiddenRc.value = canvas.toDataURL()
+      //  }
+     // });
+    //});
+
+    //function zoom(z){
+      //  cropper.zoom(z)
+      //}
+    //$('.Imgremove').click(function(){
+      // $('.PreviewImg').attr('src', '');
+        //$('.AddImg').removeClass('AddImg');
+    //});
+
 </script>

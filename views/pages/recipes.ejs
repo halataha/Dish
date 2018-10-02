@@ -94,17 +94,30 @@
                         var url = '/single-recipes/'+data[i].recipe_id }%>
                     <div class="col-md-4 col-sm-6 col-xs-12">
                         <div class="entry gray_bg">
-                            <figure>
-                                <img src="<%= data[i].recipe_image %>" alt="">
+                            <figure style="width:350px;height:200px;">
+                                    <% if(data[i].recipe_image!='') { %>
+                                       
+                                        <img src="/public/images/recipephotos/<%=data[i].recipe_image%>" alt="" style="width:350px;height:200px;">
+                                        <% } %> 
+                               
                                 <figcaption><a href="<%= url %>"><i class="fa fa-eye"></i> <span>View recipe</span></a></figcaption>
                             </figure>
                             <div class="shortDesc">
                                 <h4><a href="<%= url %>"><%= data[i].recipe_title %></a></h4>
-                                
+                               
                                 <div class="actions">
                                     <div class="rows">
-                                        <div class="difficulty col-xs-12"><img class="img-circle" src="<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
-                                        
+                                             <% if (data[i].imageUrl !='') { %>
+                                                 
+                                                <div class="difficulty col-xs-12"><img class="img-circle" src="/public/images/userphotos/<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+            
+                                                <% } else{ %>  
+                                                    <div class="difficulty col-sm-12"><img class="img-circle" src="https://wpuploads.appadvice.com/wp-content/uploads/2014/10/facebookanon.jpg" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div>
+                                                <% } %>
+            
+
+                                        <!-- <div class="difficulty col-xs-12"><img class="img-circle" src="<%= data[i].imageUrl %>" alt=""><a href="/dishmizer-profile/<%= data[i].user_id %>"><span><%= data[i].firstname %> <%= data[i].lastname %></span></a></div> -->
+                                      
                                         <div class="clearfix"></div>
                                         <% if( sess_val === undefined || data[i].likeStatus === 0 ) { %>
                                         <div class="likes col-xs-3"><a href="javascript:void(0);" onclick="actOnPost(event)"><i class="fa fa-heart" data-post-id="<%= data[i].recipe_id %>" data-post-action="Like" aria-hidden="true"></i> <span id="likes-count-<%= data[i].recipe_id %>"><%= data[i].like_count %></span> </a></div>

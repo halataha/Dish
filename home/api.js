@@ -12,7 +12,7 @@ const router = express.Router();
 router.use(bodyParser.json());
 
 router.get('/', (req, res, next) => {
- 
+
   getModel().list(10, req.query.pageToken, (err, entities, cursor) => {
     if (err) {
       next(err);

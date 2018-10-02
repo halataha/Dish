@@ -72,7 +72,11 @@
                             <form action="/blog/<%= action %>" method="post" id="addBlog" enctype="multipart/form-data">
                                 <div class="form-group col-sm-12">
                                     <div class="add-photo">
-                                        <label class="icon-picture gray" for="blogImage">
+                                        <input type="file" id="myimage" name="myimage" />
+                                        <img id="selectedimage" src="/public/images/recipeupload.jpg" style="width:3500px; height:200px;">
+                                        <div id="ValidImage" style="color:red"></div>
+                                        
+                                        <!--label class="icon-picture gray" for="blogImage">
                                             <span>Browse</span>
                                             <button type="button" class="Imgremove">X</button>
                                             <img class="PreviewImg" id="avatar" src="" alt="avatar">
@@ -80,7 +84,7 @@
                                             <input type="hidden" value="<% if(blogData != ''){ %><%= blogData[0].image_blog %><% } %>" name="savedBlogImage" id="savedBlogImage">
                                             <input type="hidden" class="" name="imageHiddenRc" id="imageHiddenRc">
                                             <input type="hidden" class="" name="blog_id" id="blog_id" value="<% if(blogData != ''){ %><%= blogData[0].blog_id %><% } %>">
-                                        </label>
+                                        </label-->
                                     </div>
                                 </div>
                                 <div class="form-group col-sm-12">
@@ -184,88 +188,127 @@
 <script type="text/javascript">
     $('#addBlog').validate();
 
-    var cropper;
-    window.addEventListener('DOMContentLoaded', function () {
-      var avatar = document.getElementById('avatar');
-      var image = document.getElementById('image');
-      var input = document.getElementById('blogImage');
-      var $alert = $('.alert');
-      var $modal = $('#modal');
+   // var cropper;
+   // window.addEventListener('DOMContentLoaded', function () {
+     // var avatar = document.getElementById('avatar');
+      //var image = document.getElementById('image');
+      //var input = document.getElementById('blogImage');
+      //var $alert = $('.alert');
+      //var $modal = $('#modal');
 
       // $('[data-toggle="tooltip"]').tooltip();
 
-      input.addEventListener('change', function (e) {
-        var files = e.target.files;
-        var done = function (url) {
-          input.value = '';
-          image.src = url;
-          $alert.hide();
-          $modal.modal('show');
-        };
-        var reader;
-        var file;
-        var url;
+      //input.addEventListener('change', function (e) {
+        //var files = e.target.files;
+        //var done = function (url) {
+          //input.value = '';
+          //image.src = url;
+          //$alert.hide();
+          //$modal.modal('show');
+        //};
+        //var reader;
+        //var file;
+        //var url;
 
-        if (files && files.length > 0) {
-          file = files[0];
+        //if (files && files.length > 0) {
+          //file = files[0];
 
-          if (URL) {
-            done(URL.createObjectURL(file));
-          } else if (FileReader) {
-            reader = new FileReader();
-            reader.onload = function (e) {
-              done(reader.result);
-            };
-            reader.readAsDataURL(file);
-          }
-        }
-      });
+          //if (URL) {
+            //done(URL.createObjectURL(file));
+          //} else if (FileReader) {
+            //reader = new FileReader();
+            //reader.onload = function (e) {
+              //done(reader.result);
+            //};
+            //reader.readAsDataURL(file);
+          //}
+        //}
+      //});
 
-      $modal.on('shown.bs.modal', function () {
-        cropper = new Cropper(image, {
-          dragMode: 'move',
-          aspectRatio: 800 / 600,
-          strict: false,
-          autoCropArea: 0,
-          restore: false,
-          zoomable: true,
-          guides: false,
-          center: true,
-          highlight: false,
-          cropBoxMovable: false,
-          cropBoxResizable: false,
-          toggleDragModeOnDblclick: false,
-          zoomOnWheel:false,
-        });
-      }).on('hidden.bs.modal', function () {
-        cropper.destroy();
-        cropper = null;
-      });
+      //$modal.on('shown.bs.modal', function () {
+        //cropper = new Cropper(image, {
+          //dragMode: 'move',
+          //aspectRatio: 800 / 600,
+          //strict: false,
+          //autoCropArea: 0,
+          //restore: false,
+          //zoomable: true,
+          //guides: false,
+          //center: true,
+          //highlight: false,
+          //cropBoxMovable: false,
+          //cropBoxResizable: false,
+          //toggleDragModeOnDblclick: false,
+          //zoomOnWheel:false,
+        //});
+      //}).on('hidden.bs.modal', function () {
+        //cropper.destroy();
+        //cropper = null;
+      //});
 
-      document.getElementById('crop').addEventListener('click', function () {
-        var initialAvatarURL;
-        var canvas;
+      //document.getElementById('crop').addEventListener('click', function () {
+       // var initialAvatarURL;
+        //var canvas;
 
-        $modal.modal('hide');
+        //$modal.modal('hide');
 
-        if (cropper) {
-          canvas = cropper.getCroppedCanvas({
-            width: 800,
-            height: 600,
-          });
-          $('.add-photo').addClass('AddImg');
-          initialAvatarURL = avatar.src;
-          avatar.src = canvas.toDataURL();
-          imageHiddenRc.value = canvas.toDataURL()
-        }
-      });
-    });
+        //if (cropper) {
+          //canvas = cropper.getCroppedCanvas({
+            //width: 800,
+            //height: 600,
+          //});
+          //$('.add-photo').addClass('AddImg');
+          //initialAvatarURL = avatar.src;
+          //avatar.src = canvas.toDataURL();
+          //imageHiddenRc.value = canvas.toDataURL()
+        //}
+      //});
+   // });
 
-    function zoom(z){
-        cropper.zoom(z)
-      }
-    $('.Imgremove').click(function(){
-       $('.PreviewImg').attr('src', '');
-        $('.AddImg').removeClass('AddImg');
-    });
+    //function zoom(z){
+      //  cropper.zoom(z)
+      //}
+    //$('.Imgremove').click(function(){
+      // $('.PreviewImg').attr('src', '');
+        //$('.AddImg').removeClass('AddImg');
+    //});
+
+//check image file 
+$("#myimage").change(function () {
+              
+              readIMG(this);
+           })
+
+
+
+function readIMG(input) {
+               if (input.files && input.files[0]) {
+
+                   var file = input.files[0];
+                   var fileType = file["type"];
+                   var ValidImageTypes = ["image/gif", "image/jpeg", "image/png"];
+                   if ($.inArray(fileType, ValidImageTypes) < 0) {
+                       // invalid file type code goes here.
+                       // alert('Choose Image Only Please');
+                       $('#selectedimage').attr('src', "/public/images/recipeupload.jpg");
+                       var inpp = $('#myimage');
+                       $(inpp).val('');
+                       $('#ValidImage').html('Choose Image Only Please');
+                       return false;
+                   }
+                   else {
+                       $('#ValidImage').html('');
+                   }
+
+                   var reader = new FileReader();
+
+                   reader.onload = function (e) {
+                       $('#selectedimage').attr('src', e.target.result);
+                   }
+
+                   reader.readAsDataURL(input.files[0]);
+               }
+           }
+
+
 </script> 

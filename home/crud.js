@@ -17,6 +17,7 @@ router.use((req, res, next) => {
 
 
 router.get('/', (req, res, next) => {
+  console.log('home');
 	getModel().recipeOftheDay((err, recipeOftheDay) => {
 		getModel().recipesUser(6, req.query.pagerToken, (err, dataUser, rcursor) => {
 			getModel().blog(3, req.query.pagebToken, (err, dataBlog , bcursor) => {
@@ -28,10 +29,12 @@ router.get('/', (req, res, next) => {
 									getModel().totalBlog((err,totalB) => {	
 									   getModel().getParchesedRecipe(req.session.user_id, (err, recipeids) =>{
                                             if (err) {
+                                              console.log('errorrrrrrrrrrr');
+                                              console.log(err);
                                                 next(err);
                                                 return;
                                             }
-
+                                           
                                                 res.render('pages/index', { 
                                                 title:"Home", 
                                                 recipeOftheDay:recipeOftheDay,

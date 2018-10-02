@@ -28,7 +28,7 @@ var sql = "select u.firstname,u.user_id,u.username,u.lastname,u.imageUrl,u.email
 
 
 function updateUserdata (id, data, cb) {
-var query = connection.query('UPDATE `dz_user` SET ? WHERE `user_id` = ?', [data, id], (err) => {
+  var query = connection.query('UPDATE `dz_user` SET ? WHERE `user_id` = ?', [data, id], (err) => {
       if (err) {
         cb(err);
         return;
@@ -39,6 +39,10 @@ var query = connection.query('UPDATE `dz_user` SET ? WHERE `user_id` = ?', [data
 
 
 function updateMetaDdata (id, data, cb) {
+  
+  console.log('data')
+  console.log(data);
+
 var query = connection.query('UPDATE `dz_meta` SET ? WHERE `content_type`="dishmizer" and `con_key`="profile_comment" and `content_type_id`= '+id+' and `user_id` = ?', [data, id], (err) => {
       if (err) {
         cb(err);

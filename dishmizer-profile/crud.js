@@ -46,6 +46,7 @@ router.post('/edit',
    (req, res, next) => {
 	
    const data = req.body;
+  // console.log(data);
    var dt = convertDate(new Date()); 	
 	
     var uData = {
@@ -93,7 +94,8 @@ router.post('/edit',
 	'value': req.body.Favorite_spices,
 	'con_key':'Favorite_spices'
 	}];    
-   
+  
+
  getModel().updateUserdata(req.session.user_id, uData, (err, updateUserdata) => {
     if (err) {
 				req.flash('error','Error Occured !')
@@ -159,6 +161,8 @@ router.get('/:user_id', (req, res, next) => {
 				next(err);
 				return;
 				}
+                console.log('blog data');
+                console.log(profileData);
                 
 	    	    res.render('pages/dishmizer-profile', { 
 				title:"Dishmizer-Profile", 
