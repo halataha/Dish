@@ -105,6 +105,7 @@ if (module === require.main) {
   // Start the server
     const server = app.listen(config.get('PORT'), () => {
     const port = server.address().port;
+console.log(server.address());
     console.log(`Dishmize New Ready To Attack! on port ${port}`);
   });
 }
